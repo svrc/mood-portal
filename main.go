@@ -23,13 +23,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "<font color='red'>")
 		fmt.Fprintf(w,"Your current mood is sad. We hope you have a better day.")
 		fmt.Fprintf(w, "</font>")
-		fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/adopter-check/main/sad-dog.jpg' alt=''>")
+		fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>")
 		
     } else {
 		fmt.Fprintf(w, "<font color='green'>")
 		fmt.Fprintf(w,"Your current mood is happy. Have an awsome rest of your day!")
 		fmt.Fprintf(w, "</font>")
-		fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/adopter-check/main/happy-dog.jpg' alt=''>")
+		fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>")
 	}
 	fmt.Fprintf(w, "</H2>")
 }
