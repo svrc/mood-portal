@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-var IS_HAPPY = true
+var IS_HAPPY = false
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
