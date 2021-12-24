@@ -7,7 +7,8 @@ import (
 	"net/http"
 )
 
-var IS_HAPPY = true
+//override backend APIs
+var IS_HAPPY = false
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
