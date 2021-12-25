@@ -28,6 +28,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 		responseData, err := ioutil.ReadAll(response.Body)
 		
+		log.Println(err.Error())
+		
 		fmt.Fprintf(w,string(responseData))
 	}
 	
