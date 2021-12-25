@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"io/ioutil"
 )
 
-//override backend APIs
 var IS_HAPPY = false
+
+var OVERRIDE_BACKEND_API = true
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
@@ -19,6 +21,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<H2><font color='maroon'>What is your mood today?</font>")
 	
 	fmt.Fprintf(w, "</font><BR><BR>")
+	
+	if OVERRIDE_BACKEND_API == false {
+	
+		response, err := http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/sensors-data")
+
+		responseData, err := ioutil.ReadAll(response.Body)
+		
+		fmt.Fprintf(w,string(responseData))
+	}
 	
 	if IS_HAPPY == false {
 		fmt.Fprintf(w, "<font color='red'>")
