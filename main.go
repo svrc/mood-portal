@@ -1,6 +1,5 @@
 package main
 
-var IS_HAPPY = false
 
 import (
 	"flag"
@@ -10,9 +9,13 @@ import (
 	"io/ioutil"
 )
 
-var OVERRIDE_BACKEND_API = true
+var IS_HAPPY = false
+
+
 
 func handler(w http.ResponseWriter, r *http.Request) {
+	
+	var override_backend = true
 	
 	log.Println(r.RemoteAddr, r.Method, r.URL.String())
 	
@@ -22,7 +25,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	fmt.Fprintf(w, "</font><BR><BR>")
 	
-	if OVERRIDE_BACKEND_API == false {
+	if override_backend == false {
 	
 		response, err := http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/sensors-data")
 
