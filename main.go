@@ -1,5 +1,7 @@
 package main
 
+var IS_HAPPY = false
+
 import (
 	"flag"
 	"fmt"
@@ -8,9 +10,7 @@ import (
 	"io/ioutil"
 )
 
-var IS_HAPPY = false
-
-var OVERRIDE_BACKEND_API = false
+var OVERRIDE_BACKEND_API = true
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
