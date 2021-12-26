@@ -25,11 +25,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	fmt.Fprintf(w, "</font><BR><BR>")
 	
-	response, err := http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/write")
+	http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/write")
 	
-	response, err := http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/write")
+	http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/write")
 
-	response, err := http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/write")
+	http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/write")
 	
 	response, err := http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/sensors-data")
 	
