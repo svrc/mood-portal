@@ -38,7 +38,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	} else {
 	
 	defer response.Body.Close()
-		responseData, err := io.ReadAll(response.Body)
+		responseData, err := ioutil.ReadAll(response.Body)
 		fmt.Fprintf(w,string(responseData))
 	}	
 	
