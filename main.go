@@ -43,9 +43,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 				fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>")
 			}
 		}
-	}
-	
-    	} else {
+	} else {
 		fmt.Fprintf(w, "<font color='green'>")
 		fmt.Fprintf(w,"Your current mood is happy. Have an awsome rest of your day!")
 		fmt.Fprintf(w, "</font>")
