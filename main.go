@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"io/ioutil"
+	"github.com/iotdog/json2table/j2t"
 )
 
 var ALWAYS_HAPPY = true
@@ -34,7 +35,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 				fmt.Fprintf(w,"ERROR! in reading body")
 			} else {
 				fmt.Fprintf(w, "<font color='gray'>")
-				fmt.Fprintf(w,string(responseData))
+				ok, resTable := j2t.JSON2HtmlTable(string(responseData), []string{"title2", "title1"}, []string{"title1"})
+				if ok {
+					fmt.Println(resTable)
+				} else {
+					fmt.Fprintf(w,string(responseData))
+				}
 				fmt.Fprintf(w, "</font><BR><BR>")
 				fmt.Fprintf(w, "<font color='red'>")
 				fmt.Fprintf(w,"Your overall mood is not great. We hope it will get better.")
