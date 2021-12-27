@@ -16,11 +16,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	log.Println(r.RemoteAddr, r.Method, r.URL.String())
 	
-        fmt.Fprintf(w, "<H1><font color='navy'>Welcome to the DevX Mood Analyzer </font></H1>")
+        fmt.Fprintf(w, "<H1><font color='navy'>Welcome to the DevX Mood Analyzer </font></H1><H2>")
 
 	if ALWAYS_HAPPY == false {
 	
-		fmt.Fprintf(w, "<H2><font color='maroon'>Your mood sensors' current data:</font>")
+		fmt.Fprintf(w, "<font color='maroon'>Your mood sensors' current data:</font>")
 		fmt.Fprintf(w, "</font><BR><BR>")
 
 		response, err := http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/sensors-data")
