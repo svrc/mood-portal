@@ -20,7 +20,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	if ALWAYS_HAPPY == false {
 	
-		fmt.Fprintf(w, "<H2><font color='maroon'>What are your mood sensors reporting?</font>")
+		fmt.Fprintf(w, "<H2><font color='maroon'>Your mood sensors' current data:</font>")
 		fmt.Fprintf(w, "</font><BR><BR>")
 
 		response, err := http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/sensors-data")
