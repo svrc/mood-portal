@@ -18,12 +18,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
         fmt.Fprintf(w, "<H1><font color='navy'>Welcome to the DevX Mood Analyzer </font></H1>")
 
-	fmt.Fprintf(w, "<H2><font color='maroon'>What are your mood sensors reporting?</font>")
-	
-	fmt.Fprintf(w, "</font><BR><BR>")
-	
 	if ALWAYS_HAPPY == false {
 	
+		fmt.Fprintf(w, "<H2><font color='maroon'>What are your mood sensors reporting?</font>")
+		fmt.Fprintf(w, "</font><BR><BR>")
+
 		response, err := http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/sensors-data")
 	
 		if err != nil {
@@ -38,14 +37,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 				fmt.Fprintf(w,string(responseData))
 				fmt.Fprintf(w, "</font><BR><BR>")
 				fmt.Fprintf(w, "<font color='red'>")
-				fmt.Fprintf(w,"Your overall mood is not great. We hope you have a better day.")
+				fmt.Fprintf(w,"Your overall mood is not great. We hope it will get better.")
 				fmt.Fprintf(w, "</font>")
 				fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>")
 			}
 		}
 	} else {
 		fmt.Fprintf(w, "<font color='green'>")
-		fmt.Fprintf(w,"Your current mood is happy. Have an awsome rest of your day!")
+		fmt.Fprintf(w,"Your mood is always happy. Good for you!")
 		fmt.Fprintf(w, "</font>")
 		fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>")
 	}
