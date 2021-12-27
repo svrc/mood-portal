@@ -35,11 +35,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 				fmt.Fprintf(w,"ERROR! in reading body")
 			} else {
 				fmt.Fprintf(w, "<font color='gray'>")
-				ok, resTable := j2t.JSON2HtmlTable(string(responseData), []string{"title2", "title1"}, []string{"title1"})
+				jsonStr := string(responseData),
+				ok, resTable := j2t.JSON2HtmlTable(jsonStr, []string{"title2", "title1"}, []string{"title1"})
 				if ok {
 					fmt.Println(resTable)
 				} else {
-					fmt.Fprintf(w,string(responseData))
+					fmt.Fprintf(w,jsonStr)
 				}
 				fmt.Fprintf(w, "</font><BR><BR>")
 				fmt.Fprintf(w, "<font color='red'>")
