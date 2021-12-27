@@ -34,13 +34,16 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	response, err := http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/sensors-data")
 	
 	if err != nil {
-		fmt.Fprintf(w,"ERROR!")
+		fmt.Fprintf(w,"ERROR! in calling API")
 	} else {
-	
-	defer response.Body.Close()
+		defer response.Body.Close()
 		responseData, err := ioutil.ReadAll(response.Body)
-		fmt.Fprintf(w,string(responseData))
-	}	
+		if err != nil {
+			fmt.Fprintf(w,"ERROR! in reading body")
+		} else {
+			fmt.Fprintf(w,string(responseData))
+		}
+	}
 	
 	if override_backend == false {
 	
