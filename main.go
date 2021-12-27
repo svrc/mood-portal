@@ -16,7 +16,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	log.Println(r.RemoteAddr, r.Method, r.URL.String())
 	
-        fmt.Fprintf(w, "<H1><font color='navy'>Welcome to DevX on K8s demo</font></H1>")
+        fmt.Fprintf(w, "<H1><font color='navy'>Welcome to the DevX Mood Analyzer </font></H1>")
 
 	fmt.Fprintf(w, "<H2><font color='maroon'>What are your mood sensors reporting?</font>")
 	
