@@ -48,7 +48,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		} else {
 			fmt.Fprintf(w, "<font color='gray'>")
 			fmt.Fprintf(w,string(responseData))
+		}	
 	}
+}
 
 
 func main() {
