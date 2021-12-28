@@ -37,7 +37,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 				fmt.Fprintf(w,"ERROR! in reading body")
 			} else {
 				fmt.Fprintf(w, "<font color='gray'>")
-				jsonStr := string(responseData),
+				jsonStr := string(responseData)
 				ok, resTable := JSON2HtmlTable(jsonStr, []string{"title2", "title1"}, []string{"title1"})
 				if ok {
 					fmt.Println(resTable)
