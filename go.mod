@@ -1,3 +1,3 @@
-module github.com/dektlong/adopter-check
+module github.com/dektlong/devx-mood
 
 go 1.16
