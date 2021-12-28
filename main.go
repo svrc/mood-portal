@@ -40,7 +40,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 				jsonStr := string(responseData)
 				ok, resTable := JSON2HtmlTable(jsonStr, []string{"title2", "title1"}, []string{"title1"})
 				if ok {
-					fmt.Println(resTable)
+					fmt.Println(w,resTable)
 				} else {
 					fmt.Fprintf(w,jsonStr)
 				}
