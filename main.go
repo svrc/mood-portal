@@ -9,7 +9,7 @@ import (
 	"io/ioutil"
 )
 
-var ALWAYS_HAPPY = false
+var ALWAYS_HAPPY = true
 
 
 func handler(w http.ResponseWriter, r *http.Request) {
