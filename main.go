@@ -36,7 +36,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
     		http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/write")
 	}
 	//call api to read sensor data and display it
-	fmt.Fprintf(w, "<BR><BR>Mood sensors raw data:<BR>")
+	fmt.Fprintf(w, "<BR><BR>Mood sensors raw data: ")
 	response, err := http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/sensors-data")
 	if err != nil {
 		fmt.Fprintf(w,"ERROR! in calling API")
@@ -46,7 +46,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Fprintf(w,"ERROR! in reading body")
 		} else {
-			fmt.Fprintf(w, "<font color='gray'>")
 			fmt.Fprintf(w,string(responseData))
 		}	
 	}
