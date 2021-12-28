@@ -12,7 +12,7 @@ import (
 	"sort"
 )
 
-var ALWAYS_HAPPY = true
+var ALWAYS_HAPPY = false
 
 
 func handler(w http.ResponseWriter, r *http.Request) {
