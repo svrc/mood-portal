@@ -32,7 +32,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "</H2>")
 	
 	//call api to write sensor data backend-api and display sensor data
-	for i := 1; i < 5; i++ {
+	for i := 1; i < 6; i++ {
     		http.Get("http://devx-mood-backend.dekt-apps.serving.dekt.io/write")
 	}
 	//call api to read sensor data and display it
