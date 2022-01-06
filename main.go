@@ -26,12 +26,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "</H2>")
 		
 		//call api to write sensor data backend-api and display sensor data
-		for i := 1; i < 6; i++ {
-    			http.Get("http://devx-mood-backend.cnr.dekt.io/write")
-		}
+		//for i := 1; i < 6; i++ {
+    		//	http.Get("http://devx-mood-sensors.cnr.dekt.io/write")
+		//}
 		//call api to read sensor data and display it
 		fmt.Fprintf(w, "<BR><BR>Mood sensors raw data: ")
-		response, err := http.Get("http://devx-mood-backend.cnr.dekt.io/sensors-data")
+		response, err := http.Get("http://devx-mood-sensors.cnr.dekt.io/sensors-data")
 		if err != nil {
 			fmt.Fprintf(w,"ERROR! in calling API")
 		} else {
