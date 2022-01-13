@@ -9,7 +9,7 @@ import (
 	"io/ioutil"
 )
 
-var ALWAYS_HAPPY = true
+var ALWAYS_HAPPY = false
 
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -31,7 +31,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		//}
 		//call api to read sensor data and display it
 		fmt.Fprintf(w, "<BR><BR>Mood sensors raw data: ")
-		response, err := http.Get("http://devx-mood-sensors.cnr.dekt.io/sensors-data")
+		response, err := http.Get("http://devx-mood-sensors.apps.dekt.io/sensors-data")
 		if err != nil {
 			fmt.Fprintf(w,"ERROR! in calling API")
 		} else {
