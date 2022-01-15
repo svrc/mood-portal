@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 )
 
+//bypass backend api call and always be happy
 var ALWAYS_HAPPY = true
 
 var sensorsWriteAPI="http://mood-sensors.apps.dekt.io/write"
