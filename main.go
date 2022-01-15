@@ -11,6 +11,8 @@ import (
 
 var ALWAYS_HAPPY = false
 
+var sensorsWriteAPI="http://mood-sensors.apps.dekt.io/write"
+var sensorsReadAPI="http://mood-sensors.apps.dekt.io/sensors-data"
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
@@ -27,11 +29,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		
 		//call api to write sensor data backend-api and display sensor data
 		for i := 1; i < 11; i++ {
-    			http.Get("http://mood-sensors.apps.dekt.io/write")
+    			http.Get(sensorsWriteAPI)
 		}
 		//call api to read sensor data and display it
-		fmt.Fprintf(w, "<BR><BR>Mood sensors raw data: ")
-		response, err := http.Get("http://mood-sensors.apps.dekt.io/sensors-data")
+		fmt.Fprintf(w, "<BR><BR>")
+		response, err := http.Get("")
 		if err != nil {
 			fmt.Fprintf(w,"ERROR! in calling API")
 		} else {
@@ -40,6 +42,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 			fmt.Fprintf(w,"ERROR! in reading body")
 		} else {
+			fmt.Fprintf(w, sensorsReadAPI)
+			fmt.Fprintf(w, ": ")
 			fmt.Fprintf(w,string(responseData))
 		}	
 	}
