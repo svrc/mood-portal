@@ -9,7 +9,7 @@ import (
 	"io/ioutil"
 )
 
-var ALWAYS_HAPPY = false
+var ALWAYS_HAPPY = true
 
 var sensorsWriteAPI="http://mood-sensors.apps.dekt.io/write"
 var sensorsReadAPI="http://mood-sensors.apps.dekt.io/sensors-data"
