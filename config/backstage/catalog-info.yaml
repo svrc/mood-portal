@@ -1,12 +1,12 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: devx-mood
+  name: mood-portal
   description: Backend Spring Boot app for the DexMood app
   tags:
     - devx-mood-app
   annotations:
-    'backstage.io/kubernetes-label-selector': 'app.kubernetes.io/part-of=devx-mood-app'
+    'backstage.io/kubernetes-label-selector': 'app.kubernetes.io/part-of=devx-mood'
 spec:
   type: service
   lifecycle: experimental
