@@ -33,7 +33,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		}
 		//call api to read sensor data and display it
 		fmt.Fprintf(w, "<BR><BR>")
-		response, err := http.Get("")
+		response, err := http.Get(sensorsReadAPI)
 		if err != nil {
 			fmt.Fprintf(w,"ERROR! in calling API")
 		} else {
