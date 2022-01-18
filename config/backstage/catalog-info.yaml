@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: mood-portal
-  description: Backend Spring Boot app for the DexMood app
+  description: Web portal for the DexMood app
   tags:
     - devx-mood-app
   annotations:
