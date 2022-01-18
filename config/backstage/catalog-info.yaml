@@ -8,6 +8,6 @@ metadata:
   annotations:
     'backstage.io/kubernetes-label-selector': 'app.kubernetes.io/part-of=devx-mood'
 spec:
-  type: service
-  lifecycle: experimental
+  type: website
+  lifecycle: development
   owner: dekt
