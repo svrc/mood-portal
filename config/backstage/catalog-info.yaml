@@ -1,13 +1,11 @@
 apiVersion: backstage.io/v1alpha1
-kind: Component
+kind: Location
 metadata:
-  name: mood-portal
-  description: Web portal for the DexMood app
-  tags:
-    - devx-mood-app
+  name: mood-portal-info
+  description: A catalog for the mood-portal component
   annotations:
-    'backstage.io/kubernetes-label-selector': 'app.kubernetes.io/part-of=devx-mood'
+    'backstage.io/techdocs-ref': dir:.
 spec:
-  type: website
-  lifecycle: development
-  owner: dekt
+  targets:
+    - components.yaml
+    - systems.yaml
