@@ -12,8 +12,8 @@ import (
 //bypass backend api call and always be happy
 var ALWAYS_HAPPY = false
 
-var sensorsWriteAPI="http://mood-sensors.apps.dekt.io/write"
-var sensorsReadAPI="http://mood-sensors.apps.dekt.io/sensors-data"
+var sensorsWriteAPI="http://sensors.apps.dekt.io/write"
+var sensorsReadAPI="http://sensors.apps.dekt.io/sensors-data"
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
