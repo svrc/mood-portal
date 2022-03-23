@@ -43,8 +43,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 			fmt.Fprintf(w,"ERROR! in reading body")
 		} else {
-			fmt.Fprintf(w, "/measure:")
-			fmt.Fprintf(w, ": ")
+			//fmt.Fprintf(w, sensorsReadAPI)
+			fmt.Fprintf(w, "/measure: ")
 			fmt.Fprintf(w,string(responseData))
 		}	
 	}
