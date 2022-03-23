@@ -10,10 +10,10 @@ import (
 )
 
 //bypass backend api call and always be happy
-var ALWAYS_HAPPY = true
+var ALWAYS_HAPPY = false
 
-var sensorsWriteAPI="http://sensors.apps.dekt.io/measure-mood"
-var sensorsReadAPI="http://sensors.apps.dekt.io/read-mood"
+var sensorsWriteAPI="http://sensors.apps.dekt.io/activate"
+var sensorsReadAPI="http://sensors.apps.dekt.io/measure"
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
@@ -43,7 +43,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 			fmt.Fprintf(w,"ERROR! in reading body")
 		} else {
-			//fmt.Fprintf(w, sensorsReadAPI)
 			fmt.Fprintf(w, "/measure: ")
 			fmt.Fprintf(w,string(responseData))
 		}	
