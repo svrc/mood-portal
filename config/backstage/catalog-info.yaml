@@ -8,6 +8,3 @@ metadata:
 spec:
   targets:
     - ./components/mood-portal.yaml
-    - ./systems/devx-mood.yaml
-    - ./groups/dekt-teams.yaml
-    - ./domains/dekt-domain.yaml
