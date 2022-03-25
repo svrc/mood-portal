@@ -1,8 +1,8 @@
 apiVersion: backstage.io/v1alpha1
 kind: Location
 metadata:
-  name: devx-mood-app-info
-  description: A catalog for the DevX Mood application
+  name: mood-portal-info
+  description: A catalog for mood-portal microservice
   annotations:
     'backstage.io/techdocs-ref': dir:.
 spec:
