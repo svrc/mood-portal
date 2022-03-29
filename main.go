@@ -10,7 +10,7 @@ import (
 )
 
 //bypass backend api call and always be happy
-var ALWAYS_HAPPY = false
+var ALWAYS_HAPPY = true
 
 var sensorsWriteAPI="http://mood-sensors.apps.dekt.io/activate"
 var sensorsReadAPI="http://mood-sensors.apps.dekt.io/measure"
