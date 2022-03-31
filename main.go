@@ -12,7 +12,7 @@ import (
 func handler(w http.ResponseWriter, r *http.Request) {
 	
 	//bypass backend api call and always be happy
-	ALWAYS_HAPPY := true
+	alwaysHappy := true
 
 	sensorsWriteAPI := "http://mood-sensors.apps.dekt.io/activate"
 	sensorsReadAPI := "http://mood-sensors.apps.dekt.io/measure"
@@ -21,7 +21,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
         fmt.Fprintf(w, "<H1><font color='navy'>Welcome to the DevX Mood Analyzer </font></H1><H2>")
 
-	if ALWAYS_HAPPY {
+	if !alwaysHappy {
 		fmt.Fprintf(w, "<font color='red'>")
 		fmt.Fprintf(w,"Your overall mood is not great. We hope it will get better.")
 		fmt.Fprintf(w, "</font>")
