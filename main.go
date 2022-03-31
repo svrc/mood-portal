@@ -7,16 +7,14 @@ import (
 	"log"
 	"net/http"
 	"io/ioutil"
-)
-
-//bypass backend api call and always be happy
-ALWAYS_HAPPY := false
-
-sensorsWriteAPI := "http://mood-sensors.apps.dekt.io/activate"
-sensorsReadAPI := "http://mood-sensors.apps.dekt.io/measure"
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
+	//bypass backend api call and always be happy
+	ALWAYS_HAPPY := true
+
+	sensorsWriteAPI := "http://mood-sensors.apps.dekt.io/activate"
+	sensorsReadAPI := "http://mood-sensors.apps.dekt.io/measure"
 	log.Println(r.RemoteAddr, r.Method, r.URL.String())
 	
         fmt.Fprintf(w, "<H1><font color='navy'>Welcome to the DevX Mood Analyzer </font></H1><H2>")
