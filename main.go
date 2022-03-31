@@ -10,7 +10,7 @@ import (
 )
 
 //bypass backend api call and always be happy
-ALWAYS_HAPPY := false
+ALWAYS_HAPPY := true
 
 sensorsWriteAPI := "http://mood-sensors.apps.dekt.io/activate"
 sensorsReadAPI := "http://mood-sensors.apps.dekt.io/measure"
