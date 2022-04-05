@@ -12,7 +12,7 @@ import (
 func handler(w http.ResponseWriter, r *http.Request) {
 	
 	//bypass backend api call and always be happy
-	bypassBackend := true
+	bypassBackend := false
 
 	sensorsWriteAPI := "http://mood-sensors.apps.dekt.io/activate"
 	sensorsReadAPI := "http://mood-sensors.apps.dekt.io/measure"
