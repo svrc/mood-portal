@@ -17,7 +17,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	//sensorsWriteAPI := "http://mood-sensors.apps.dekt.io/activate"
 	sensorsWriteAPI := "localhost:8081/activate"
 	//sensorsReadAPI := "http://mood-sensors.apps.dekt.io/measure"
-	sensorsWriteAPI := "localhost:8081/measure"
+	sensorsReadAPI := "localhost:8081/measure"
 	
 	log.Println(r.RemoteAddr, r.Method, r.URL.String())
 	
