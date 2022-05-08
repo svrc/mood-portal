@@ -30,6 +30,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>")
 		fmt.Fprintf(w, "</H2>")
 		
+		fmt.Fprintf(w, "<BR><BR>")
+		fmt.Fprintf(w, "/activate ... sensors activated. ")
 		//call api to write sensor data backend-api and display sensor data
 		for i := 1; i < 11; i++ {
     			http.Get(sensorsWriteAPI)
@@ -45,7 +47,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 			fmt.Fprintf(w,"ERROR! in reading body")
 		} else {
-			fmt.Fprintf(w, "/measure: ")
+			fmt.Fprintf(w, "/measure ... sensors output: ")
+			fmt.Fprintf(w, "<BR>")
 			fmt.Fprintf(w,string(responseData))
 		}	
 	}
