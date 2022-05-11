@@ -35,7 +35,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "</font>")
 		fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>")
 		fmt.Fprintf(w, "</H2>")
-		fmt.Fprintf(w, "<BR><BR>Mood sensors ignored.")
 	}	
 	
 	//API section
