@@ -23,16 +23,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
         fmt.Fprintf(w, "<H1><font color='navy'>Welcome to the DevX Mood Analyzer </font></H1><H2>")
 
-	if !bypassBackend 
-	{ 
+	if !bypassBackend { 
 		fmt.Fprintf(w, "<font color='red'>")
 		fmt.Fprintf(w,"Your overall mood is not great. We hope it will get better.")
 		fmt.Fprintf(w, "</font>")
 		fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>")
 		fmt.Fprintf(w, "</H2>")
-	} 
-	else 
-	{ //always happy
+	} else { //always happy
 		fmt.Fprintf(w, "<font color='green'>")
 		fmt.Fprintf(w,"Your mood is always happy. Good for you!")
 		fmt.Fprintf(w, "</font>")
