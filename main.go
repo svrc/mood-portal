@@ -40,7 +40,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	//API section
 	fmt.Fprintf(w, "<BR><BR>")
 	fmt.Fprintf(w, "<font color='purple'>/activate</font><BR>")
+	fmt.Fprintf(w, "<font color='gray'>")
 	fmt.Fprintf(w, "sensors activated. ")
+	fmt.Fprintf(w, "</font>")
 	//call api to write sensor data backend-api and display sensor data
 	for i := 1; i < 11; i++ {
 		http.Get(sensorsWriteAPI)
@@ -57,7 +59,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w,"ERROR! in reading body")
 	} else {
 		fmt.Fprintf(w, "<font color='purple'>/measure</font><BR>")
+		fmt.Fprintf(w, "<font color='gray'>")
 		fmt.Fprintf(w,string(responseData))
+		fmt.Fprintf(w, "</font>")
 	}	
 	}
 	
