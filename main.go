@@ -27,16 +27,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "</font>")
 		fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>")
 		fmt.Fprintf(w, "</H2>")
-		fmt.Fprintf(w, "<BR><font color='brown'>Mood sniffing algorithm: </font>")
-		fmt.Fprintf(w, "<font color='purple'>Aggressive</font><BR>")
+		fmt.Fprintf(w, "<BR><font color='brown'>Aggressive mood sniffing algorithm</font><BR>")
 	} else { //always happy
 		fmt.Fprintf(w, "<font color='green'>")
 		fmt.Fprintf(w,"Your mood is always happy. Good for you!")
 		fmt.Fprintf(w, "</font>")
 		fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>")
 		fmt.Fprintf(w, "</H2>")
-		fmt.Fprintf(w, "<BR><font color='brown'>Mood sniffing algorithm: </font>")
-		fmt.Fprintf(w, "<font color='purple'>Mild</font><BR>")
+		fmt.Fprintf(w, "<BR><font color='brown'>Mild mood sniffing algorithm</font><BR>")
 
 	}	
 	
