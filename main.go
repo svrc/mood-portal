@@ -27,21 +27,24 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "</font>")
 		fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>")
 		fmt.Fprintf(w, "</H2>")
+		fmt.Fprintf(w, "<BR><font color='brown'>Mood sniffing algorithm: </font>")
+		fmt.Fprintf(w, "<font color='purple'>Aggressive</font><BR>")
 	} else { //always happy
 		fmt.Fprintf(w, "<font color='green'>")
 		fmt.Fprintf(w,"Your mood is always happy. Good for you!")
 		fmt.Fprintf(w, "</font>")
 		fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>")
 		fmt.Fprintf(w, "</H2>")
-		fmt.Fprintf(w, "<BR><font color='brown'>Mood sensors ignored</font><BR>")
+		fmt.Fprintf(w, "<BR><font color='brown'>Mood sniffing algorithm: </font>")
+		fmt.Fprintf(w, "<font color='purple'>Mild</font><BR>")
 
 	}	
 	
 	//API section
 	fmt.Fprintf(w, "<BR><BR>")
-	fmt.Fprintf(w, "<font color='purple'>/activate</font><BR>")
+	fmt.Fprintf(w, "<font color='purple'>/activate:	</font>")
 	fmt.Fprintf(w, "<font color='gray'>")
-	fmt.Fprintf(w, "sensors activated. ")
+	fmt.Fprintf(w, "[{\"sensorsStatus\":\"activated\"}]")
 	fmt.Fprintf(w, "</font>")
 	//call api to write sensor data backend-api and display sensor data
 	for i := 1; i < 11; i++ {
@@ -58,7 +61,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 		fmt.Fprintf(w,"ERROR! in reading body")
 	} else {
-		fmt.Fprintf(w, "<font color='purple'>/measure</font><BR>")
+		fmt.Fprintf(w, "<font color='purple'>/measure: </font>")
 		fmt.Fprintf(w, "<font color='gray'>")
 		fmt.Fprintf(w,string(responseData))
 		fmt.Fprintf(w, "</font>")
