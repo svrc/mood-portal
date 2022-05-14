@@ -11,8 +11,8 @@ import (
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
-	//bypass backend api call and always be happy
-	bypassBackend := false
+	//conrtol the mood sniffing algorithm intensity
+	beHappy := false
 
 	sensorsWriteAPI := "http://mysensors.dev.dekt.io/activate"
 	sensorsReadAPI := "http://mysensors.dev.dekt.io/measure"
@@ -21,7 +21,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
         fmt.Fprintf(w, "<H1><font color='navy'>Welcome to the DevX Mood Analyzer </font></H1><H2>")
 
-	if !bypassBackend { 
+	if !beHappy { 
 		fmt.Fprintf(w, "<font color='red'>")
 		fmt.Fprintf(w,"Your overall mood is not great. We hope it will get better.")
 		fmt.Fprintf(w, "</font>")
