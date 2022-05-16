@@ -1,10 +1,10 @@
 apiVersion: backstage.io/v1alpha1
 kind: Location
 metadata:
-  name: myportal-info
+  name: mood-portal-info
   description: A catalog for mood-portal microservice
   annotations:
     'backstage.io/techdocs-ref': dir:.
 spec:
   targets:
-    - ./components/myportal.yaml
+    - ./components/mood-portal.yaml

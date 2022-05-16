@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: myportal
+  name: mood-portal
   description: Web Portal frontend component for the DevX Mood app
   tags:
     - golang
@@ -12,4 +12,4 @@ spec:
   type: service
   lifecycle: development
   owner: dekt-dev-team1
-  system: mymood
+  system: devx-mood
