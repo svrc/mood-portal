@@ -13,3 +13,5 @@ spec:
   lifecycle: development
   owner: dekt-dev-team1
   system: devx-mood
+  dependsOn: 
+    - api:mood-sensors-apis
