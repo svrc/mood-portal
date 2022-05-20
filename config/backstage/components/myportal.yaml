@@ -12,6 +12,5 @@ spec:
   type: service
   lifecycle: development
   owner: dekt-dev-team1
-  system: devx-mood
   consumesApis:
     - mood-sensors-apis
