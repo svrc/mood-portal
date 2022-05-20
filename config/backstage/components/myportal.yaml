@@ -1,16 +1,16 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: mood-portal
+  name: myportal
   description: Web Portal frontend component for the DevX Mood app
   tags:
     - golang
     - functions
   annotations:
-    'backstage.io/kubernetes-label-selector': 'app.kubernetes.io/part-of=mood-portal'
+    'backstage.io/kubernetes-label-selector': 'app.kubernetes.io/part-of=myportal'
 spec:
   type: service
-  lifecycle: integration
+  lifecycle: development
   owner: dekt-dev-team1
   system: devx-mood
   consumesApis:
