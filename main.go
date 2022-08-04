@@ -73,10 +73,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
         fmt.Println("Can not unmarshal JSON")
     }
 		
-	// Loop through the measurements and display 
-    for _, rec := range sensor {
-        fmt.Fprintf(w,"Planet: ",rec.Planet)
-    }
+	fmt.Fprintf(w,"Planet: ",sensor.Planet)
+    
 			//fmt.Fprintf(w, sensor.mood)
 	fmt.Fprintf(w,string(responseData))
 	fmt.Fprintf(w, "</font>")
