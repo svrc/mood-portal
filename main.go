@@ -51,8 +51,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<BR><BR>")
 	fmt.Fprintf(w, "<font color='purple'>/activate:	</font>")
 	fmt.Fprintf(w, "<font color='gray'>")
-	fmt.Printf(w, "sensor: %s, Mood: %s", sensor.planet, sensor.mood)
-	#fmt.Fprintf(w, "[{\"sensorsStatus\":\"activated\"}]")
+	fmt.Fprintf(w, "status: Sensors activated in all planets")
+	//fmt.Fprintf(w, "[{\"sensorsStatus\":\"activated\"}]")
 	fmt.Fprintf(w, "</font>")
 	//call api to write sensor data backend-api and display sensor data
 	for i := 1; i < 11; i++ {
