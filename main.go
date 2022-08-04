@@ -73,6 +73,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "<font color='gray'>")
 		json.Unmarshal([]byte(responseData), &sensor)
 		fmt.Fprintf(w, sensor.planet)
+		fmt.Fprintf(w, sensor.mood)
 		//fmt.Fprintf(w, "Planet: %s, Mood: %s", sensor.planet, sensor.mood)
 		//fmt.Fprintf(w,string(responseData))
 		fmt.Fprintf(w, "</font>")
