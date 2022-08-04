@@ -11,9 +11,9 @@ import (
 )
 
 type Sensor struct {
-	id string
-	planet string
-	mood string
+	ID string `json:"id"`
+	Planet string `json:"planet"`
+	Mood string `json:"mood"`
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -21,8 +21,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	//conrtol the mood sniffing algorithm intensity
 	beHappy := false
 	
-	var sensor Sensor
-
 	sensorsWriteAPI := "http://mood-sensors.dev.dekt.io/activate"
 	sensorsReadAPI := "http://mood-sensors.dev.dekt.io/measure"
 	
@@ -47,36 +45,41 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	}	
 	
-	//API section
+	//activate sensors
 	fmt.Fprintf(w, "<BR><BR>")
 	fmt.Fprintf(w, "<font color='purple'>/activate:	</font>")
 	fmt.Fprintf(w, "<font color='gray'>")
-	fmt.Fprintf(w, "status: Sensors activated on all planets")
-	//fmt.Fprintf(w, "[{\"sensorsStatus\":\"activated\"}]")
-	fmt.Fprintf(w, "</font>")
-	//call api to write sensor data backend-api and display sensor data
 	for i := 1; i < 11; i++ {
 		http.Get(sensorsWriteAPI)
 	}
-	//call api to read sensor data and display it
+	fmt.Fprintf(w, "status: Sensors activated on all planets")
+	//fmt.Fprintf(w, "[{\"sensorsStatus\":\"activated\"}]")
+	fmt.Fprintf(w, "</font>")
+	
+	//collect measurements from sensors
+	fmt.Fprintf(w, "<font color='purple'>/measure: </font>")
+	fmt.Fprintf(w, "<font color='gray'>")
 	fmt.Fprintf(w, "<BR><BR>")
 	response, err := http.Get(sensorsReadAPI)
 	if err != nil {
 		fmt.Fprintf(w,"ERROR! in calling measure API")
-	} else {
-		defer response.Body.Close()
-		responseData, err := ioutil.ReadAll(response.Body)
-		json.Unmarshal(responseData, &sensor)
+	} 
+
+	defer response.Body.Close()
+	responseData, err := ioutil.ReadAll(response.Body)
+	
+	var sensor Sensor
+	if err := json.Unmarshal(responseData, &sensor); err != nil {  // Parse []byte to the go struct pointer
+        fmt.Println("Can not unmarshal JSON")
+    }
 		
-		if err != nil {
-			fmt.Fprintf(w,"ERROR! in decoding measurment")
-		} else {
-			fmt.Fprintf(w, "<font color='purple'>/measure: </font>")
-			fmt.Fprintf(w, "<font color='gray'>")
-			fmt.Fprintf(w, "Test: %s", sensor.planet)
+	// Loop through the measurements and display 
+    for _, rec := range sensor {
+        fmt.Fprintf(w,"Planet: ",rec.Planet)
+    }
 			//fmt.Fprintf(w, sensor.mood)
-			fmt.Fprintf(w,string(responseData))
-			fmt.Fprintf(w, "</font>")
+	fmt.Fprintf(w,string(responseData))
+	fmt.Fprintf(w, "</font>")
 
 			
 		}	
