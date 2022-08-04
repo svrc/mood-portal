@@ -47,19 +47,18 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	//activate sensors
 	fmt.Fprintf(w, "<BR><BR>")
-	fmt.Fprintf(w, "<font color='purple'>/activate:	</font>")
+	fmt.Fprintf(w, "<font color='purple'>/activate:	</font><BR>")
 	fmt.Fprintf(w, "<font color='gray'>")
 	for i := 1; i < 11; i++ {
 		http.Get(sensorsWriteAPI)
 	}
-	fmt.Fprintf(w, "status: Sensors activated on all planets")
+	fmt.Fprintf(w, "status: sensors activated on all planets")
 	//fmt.Fprintf(w, "[{\"sensorsStatus\":\"activated\"}]")
 	fmt.Fprintf(w, "</font>")
 	
 	//collect measurements from sensors
-	fmt.Fprintf(w, "<font color='purple'>/measure: </font>")
+	fmt.Fprintf(w, "<font color='purple'>/measure: </font><BR>")
 	fmt.Fprintf(w, "<font color='gray'>")
-	fmt.Fprintf(w, "<BR><BR>")
 	response, err := http.Get(sensorsReadAPI)
 	if err != nil {
 		fmt.Fprintf(w,"ERROR! in calling measure API")
@@ -70,13 +69,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	var sensor Sensor
 	if err := json.Unmarshal(responseData, &sensor); err != nil {  // Parse []byte to the go struct pointer
-        fmt.Println("Can not unmarshal JSON")
+        fmt.Fprintf(w,"Can not unmarshal JSON")
     }
 		
-	fmt.Fprintf(w,"Planet: ",sensor.Planet)
+	fmt.Fprintf(w,"%+v\n", sensor)
     
 			//fmt.Fprintf(w, sensor.mood)
-	fmt.Fprintf(w,string(responseData))
+	//fmt.Fprintf(w,string(responseData))
 	fmt.Fprintf(w, "</font>")
 }
 
