@@ -66,9 +66,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		defer response.Body.Close()
 		responseData, err := ioutil.ReadAll(response.Body)
-		err := json.NewDecoder(r.Body).Decode(&sensor)
+		err1 := json.NewDecoder(r.Body).Decode(&sensor)
 		
-		if err != nil {
+		if err1 != nil {
 			fmt.Fprintf(w,"ERROR! in decoding measurment")
 		} else {
 			fmt.Fprintf(w, "<font color='purple'>/measure: </font>")
@@ -79,7 +79,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "</font>")
 
 			json.NewDecoder(response.Body).Decode(&sensor)
-			fmt.Fprintf(w,sensor)
+			fmt.Fprintf(w,sensor.planet)
 		}	
 	}
 }
