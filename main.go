@@ -77,9 +77,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		//fmt.Fprintf(w,string(responseData))
 		fmt.Fprintf(w, "</font>")
 	}	
-	}
-	
-	
+
 }
 
 func main() {
