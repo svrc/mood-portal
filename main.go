@@ -7,12 +7,21 @@ import (
 	"log"
 	"net/http"
 	"io/ioutil"
+	"encoding/json"
 )
+
+type Sensor struct {
+	id string
+	planet string
+	mood string
+}
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
 	//conrtol the mood sniffing algorithm intensity
 	beHappy := false
+	
+	var sensor Sensor
 
 	sensorsWriteAPI := "http://mood-sensors.dev.dekt.io/activate"
 	sensorsReadAPI := "http://mood-sensors.dev.dekt.io/measure"
@@ -61,7 +70,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Fprintf(w, "<font color='purple'>/measure: </font>")
 		fmt.Fprintf(w, "<font color='gray'>")
-		fmt.Fprintf(w,string(responseData.planet))
+		json.Unmarshal([]byte(responseData), &sensor)
+		fmt.Printf("Planet: %s, Mood: %s", sensor.planet, sensor.mood)
+		//fmt.Fprintf(w,string(responseData.planet))
 		fmt.Fprintf(w, "</font>")
 	}	
 	}
