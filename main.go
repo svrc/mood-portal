@@ -75,7 +75,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "<font color='gray'>")
 			fmt.Fprintf(w, "Test: %s", sensor.planet)
 			//fmt.Fprintf(w, sensor.mood)
-			//fmt.Fprintf(w,string(responseData))
+			fmt.Fprintf(w,string(responseData))
 			fmt.Fprintf(w, "</font>")
 
 			
