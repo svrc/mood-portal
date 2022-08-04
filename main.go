@@ -61,7 +61,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Fprintf(w, "<font color='purple'>/measure: </font>")
 		fmt.Fprintf(w, "<font color='gray'>")
-		fmt.Fprintf(w,string(responseData))
+		fmt.Fprintf(w,string(responseData.planet))
 		fmt.Fprintf(w, "</font>")
 	}	
 	}
