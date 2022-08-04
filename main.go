@@ -60,22 +60,25 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 	//call api to read sensor data and display it
 	fmt.Fprintf(w, "<BR><BR>")
-	//response, err := http.Get(sensorsReadAPI)
-	//if err != nil {
-		//fmt.Fprintf(w,"ERROR! in calling API")
-	//} else {
-		//defer response.Body.Close()
-		//responseData, err := ioutil.ReadAll(response.Body)
+	response, err := http.Get(sensorsReadAPI)
+	if err != nil {
+		fmt.Fprintf(w,"ERROR! in calling measure API")
+	} else {
+		defer response.Body.Close()
+		responseData, err := ioutil.ReadAll(response.Body)
 	err := json.NewDecoder(r.Body).Decode(&sensor)
 	if err != nil {
-		fmt.Fprintf(w,"ERROR! in reading body")
+		fmt.Fprintf(w,"ERROR! in decoding measurment")
 	} else {
 		fmt.Fprintf(w, "<font color='purple'>/measure: </font>")
 		fmt.Fprintf(w, "<font color='gray'>")
-		fmt.Fprintf(w, sensor.planet)
-		fmt.Fprintf(w, sensor.mood)
-		//fmt.Fprintf(w,string(responseData))
+		//fmt.Fprintf(w, sensor.planet)
+		//fmt.Fprintf(w, sensor.mood)
+		fmt.Fprintf(w,string(responseData))
 		fmt.Fprintf(w, "</font>")
+
+		json.NewDecoder(response.Body).Decode(&sensor)
+		fmt.Fprintf(w,sensor)
 	}	
 
 }
