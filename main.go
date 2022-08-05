@@ -10,14 +10,16 @@ import (
 	"encoding/json"
 )
 
-type Measurements struct {
-	Sensor sensors
-}
 type Sensor struct {
 	ID int `json:"id"`
 	Planet string `json:"planet"`
 	Mood string `json:"mood"`
 }
+
+type Measurements struct {
+	Sensor sensors
+}
+
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
