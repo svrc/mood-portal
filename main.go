@@ -10,6 +10,9 @@ import (
 	"encoding/json"
 )
 
+type Measurements struct {
+	Sensor sensors
+}
 type Sensor struct {
 	ID int `json:"id"`
 	Planet string `json:"planet"`
@@ -52,7 +55,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	for i := 1; i < 11; i++ {
 		http.Get(sensorsWriteAPI)
 	}
-	fmt.Fprintf(w, "status: sensors activated on all planets")
+	fmt.Fprintf(w, "sensors activated on all planets")
 	//fmt.Fprintf(w, "[{\"sensorsStatus\":\"activated\"}]")
 	fmt.Fprintf(w, "</font><BR>")
 	
@@ -67,12 +70,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	defer response.Body.Close()
 	responseData, err := ioutil.ReadAll(response.Body)
 	
-	var sensor Sensor
-	if err := json.Unmarshal(responseData, &sensor); err != nil {  // Parse []byte to the go struct pointer
+	var measurements Measurements
+	if err := json.Unmarshal(responseData, &measurements); err != nil {  // Parse []byte to the go struct pointer
         fmt.Fprintf(w,"Can not unmarshal JSON")
     }
 		
-	fmt.Fprintf(w,"%+v\n", sensor)
+	fmt.Fprintf(w,"%+v\n", measurements)
     
 			//fmt.Fprintf(w, sensor.mood)
 	//fmt.Fprintf(w,string(responseData))
