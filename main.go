@@ -7,25 +7,13 @@ import (
 	"log"
 	"net/http"
 	"io/ioutil"
-	"encoding/json"
 )
-
-type Sensor struct {
-	ID int `json:"id"`
-	Planet string `json:"planet"`
-	Mood string `json:"mood"`
-}
-
-type Measurements struct {
-	Sensor sensors
-}
-
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
 	//conrtol the mood sniffing algorithm intensity
 	beHappy := false
-	
+
 	sensorsWriteAPI := "http://mood-sensors.dev.dekt.io/activate"
 	sensorsReadAPI := "http://mood-sensors.dev.dekt.io/measure"
 	
@@ -50,38 +38,35 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	}	
 	
-	//activate sensors
+	//API section
 	fmt.Fprintf(w, "<BR><BR>")
-	fmt.Fprintf(w, "<font color='purple'>/activate:	</font><BR>")
+	fmt.Fprintf(w, "<font color='purple'>/activate:	</font>")
 	fmt.Fprintf(w, "<font color='gray'>")
+	fmt.Fprintf(w, "[{\"sensorsStatus\":\"activated\"}]")
+	fmt.Fprintf(w, "</font>")
+	//call api to write sensor data backend-api and display sensor data
 	for i := 1; i < 11; i++ {
 		http.Get(sensorsWriteAPI)
 	}
-	fmt.Fprintf(w, "sensors activated on all planets")
-	//fmt.Fprintf(w, "[{\"sensorsStatus\":\"activated\"}]")
-	fmt.Fprintf(w, "</font><BR>")
-	
-	//collect measurements from sensors
-	fmt.Fprintf(w, "<font color='purple'>/measure: </font><BR>")
-	fmt.Fprintf(w, "<font color='gray'>")
+	//call api to read sensor data and display it
+	fmt.Fprintf(w, "<BR><BR>")
 	response, err := http.Get(sensorsReadAPI)
 	if err != nil {
-		fmt.Fprintf(w,"ERROR! in calling measure API")
-	} 
-
-	defer response.Body.Close()
-	responseData, err := ioutil.ReadAll(response.Body)
+		fmt.Fprintf(w,"ERROR! in calling API")
+	} else {
+		defer response.Body.Close()
+		responseData, err := ioutil.ReadAll(response.Body)
+		if err != nil {
+		fmt.Fprintf(w,"ERROR! in reading body")
+	} else {
+		fmt.Fprintf(w, "<font color='purple'>/measure: </font>")
+		fmt.Fprintf(w, "<font color='gray'>")
+		fmt.Fprintf(w,string(responseData))
+		fmt.Fprintf(w, "</font>")
+	}	
+	}
 	
-	var measurements Measurements
-	if err := json.Unmarshal(responseData, &measurements); err != nil {  // Parse []byte to the go struct pointer
-        fmt.Fprintf(w,"Can not unmarshal JSON")
-    }
-		
-	fmt.Fprintf(w,"%+v\n", measurements)
-    
-			//fmt.Fprintf(w, sensor.mood)
-	//fmt.Fprintf(w,string(responseData))
-	fmt.Fprintf(w, "</font>")
+	
 }
 
 func main() {
@@ -92,5 +77,3 @@ func main() {
 	log.Printf("listening on %s", *addr)
 	log.Fatal(http.ListenAndServe(*addr, nil))
 }
-
-
