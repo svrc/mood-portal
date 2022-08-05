@@ -11,7 +11,7 @@ import (
 )
 
 type Sensor struct {
-	ID string `json:"id"`
+	ID int `json:"id"`
 	Planet string `json:"planet"`
 	Mood string `json:"mood"`
 }
@@ -54,7 +54,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Fprintf(w, "status: sensors activated on all planets")
 	//fmt.Fprintf(w, "[{\"sensorsStatus\":\"activated\"}]")
-	fmt.Fprintf(w, "</font>")
+	fmt.Fprintf(w, "</font><BR>")
 	
 	//collect measurements from sensors
 	fmt.Fprintf(w, "<font color='purple'>/measure: </font><BR>")
