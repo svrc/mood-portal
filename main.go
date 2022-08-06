@@ -12,7 +12,7 @@ import (
 func handler(w http.ResponseWriter, r *http.Request) {
 	
 	//conrtol the mood sniffing algorithm intensity
-	beHappy := true
+	beHappy := false
 
 	sensorsWriteAPI := "http://mood-sensors.dev.dekt.io/activate"
 	sensorsReadAPI := "http://mood-sensors.dev.dekt.io/measure"
