@@ -72,7 +72,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	var tmpl = `<tr><td>%s</td></tr>`
 	//displayData := []string(responseData)
 	for _, v := range responseData {
-    	fmt.Fprintf(w, tmpl, v)
+    	fmt.Fprintf(w, tmpl,(string)v)
 	}
 	fmt.Fprintf(w,"</table>")
 		//fmt.Fprintf(w,string(responseData))
