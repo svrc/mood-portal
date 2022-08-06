@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 	"io/ioutil"
+	"encoding/json"
+	"bytes"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -53,7 +55,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "</font>")
 	
 	//call 'measure' api to read sensor data and display it
-	fmt.Fprintf(w, "<BR>")
+	fmt.Fprintf(w, "<BR><BR>")
 	fmt.Fprintf(w, "<font color='purple'>/measure: </font>")
 	fmt.Fprintf(w, "<font color='gray'>")
 	
@@ -68,14 +70,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w,"ERROR! in reading response from measure API")
 	}
 
-	fmt.Fprintf(w,"<BR><table>")
-	var tmpl = `<tr><td>%s</td></tr>`
-	displayData := string(responseData)
-	for _, v := range displayData {
-    	fmt.Fprintf(w, tmpl,v)
-	}
-	fmt.Fprintf(w,"</table>")
-		//fmt.Fprintf(w,string(responseData))
+	var prettyJSON bytes.Buffer
+    if err := json.Indent(&prettyJSON, responseData, "", "    "); err != nil {
+        fmt.Fprintf(w,"ERROR! in converting JSON response")
+    }
+	fmt.Fprintf(w,prettyJSON) 
+	//fmt.Fprintf(w,string(responseData))
+	
 	fmt.Fprintf(w, "</font>")
 	
 }
