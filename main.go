@@ -74,7 +74,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
     if err := json.Indent(&prettyJSON, responseData, "", "    "); err != nil {
         fmt.Fprintf(w,"ERROR! in converting JSON response")
     }
-	fmt.Fprintf(w,prettyJSON) 
+	fmt.Fprintf(w,prettyJSON.String()) 
 	//fmt.Fprintf(w,string(responseData))
 	
 	fmt.Fprintf(w, "</font>")
