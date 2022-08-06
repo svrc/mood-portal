@@ -21,6 +21,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
         fmt.Fprintf(w, "<H1><font color='navy'>Welcome to the DevX Mood Analyzer </font></H1><H2>")
 
+	//display happy or sad dog
 	if !beHappy { 
 		fmt.Fprintf(w, "<font color='red'>")
 		fmt.Fprintf(w,"Your overall mood is not great. We hope it will get better.")
@@ -38,37 +39,47 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	}	
 	
-	//API section
+	//call 'activate' api to write sensor data
+	
 	fmt.Fprintf(w, "<BR><BR>")
 	fmt.Fprintf(w, "<font color='purple'>/activate:	</font>")
 	fmt.Fprintf(w, "<font color='gray'>")
-	fmt.Fprintf(w, "[{\"sensorsStatus\":\"activated\"}]")
-	fmt.Fprintf(w, "</font>")
-	//call api to write sensor data backend-api and display sensor data
+	
 	for i := 1; i < 11; i++ {
 		http.Get(sensorsWriteAPI)
 	}
-	//call api to read sensor data and display it
-	fmt.Fprintf(w, "<BR><BR>")
+	
+	fmt.Fprintf(w, "[{\"sensorsStatus\":\"activated\"}]")
+	fmt.Fprintf(w, "</font>")
+	
+	//call 'measure' api to read sensor data and display it
+	fmt.Fprintf(w, "<BR>")
+	fmt.Fprintf(w, "<font color='purple'>/measure: </font>")
+	fmt.Fprintf(w, "<font color='gray'>")
+	
 	response, err := http.Get(sensorsReadAPI)
 	if err != nil {
-		fmt.Fprintf(w,"ERROR! in calling API")
-	} else {
-		defer response.Body.Close()
-		responseData, err := ioutil.ReadAll(response.Body)
-		if err != nil {
-		fmt.Fprintf(w,"ERROR! in reading body")
-	} else {
-		fmt.Fprintf(w, "<font color='purple'>/measure: </font>")
-		fmt.Fprintf(w, "<font color='gray'>")
-		fmt.Fprintf(w,string(responseData))
-		fmt.Fprintf(w, "</font>")
-	}	
-	}
+		fmt.Fprintf(w,"ERROR! in calling measure API")
+	} 
 	
+	defer response.Body.Close()
+	responseData, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		fmt.Fprintf(w,"ERROR! in reading response from measure API")
+	}
+
+	fmt.Fprintf(w,"<BR><table>")
+	var tmpl = `<tr><td>%s</td></tr>`
+	displayData := []string(responseData)
+	for _, v := range displayData {
+    	fmt.Fprintf(w, tmpl, v)
+	}
+	fmt.Printf(w,"</table>")
+		//fmt.Fprintf(w,string(responseData))
+	fmt.Fprintf(w, "</font>")
 	
 }
-
+	
 func main() {
 	
 	http.HandleFunc("/", handler)
