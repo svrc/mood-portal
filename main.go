@@ -7,8 +7,6 @@ import (
 	"log"
 	"net/http"
 	"io/ioutil"
-	"encoding/json"
-	"bytes"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -70,12 +68,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w,"ERROR! in reading response from measure API")
 	}
 
-	var prettyJSON bytes.Buffer
-    if err := json.Indent(&prettyJSON, responseData, "", "    "); err != nil {
-        fmt.Fprintf(w,"ERROR! in converting JSON response")
-    }
-	fmt.Fprintf(w,prettyJSON.String()) 
-	//fmt.Fprintf(w,string(responseData))
+	fmt.Fprintf(w,string(responseData))
 	
 	fmt.Fprintf(w, "</font>")
 	
