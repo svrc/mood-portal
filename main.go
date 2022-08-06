@@ -74,7 +74,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	for _, v := range responseData {
     	fmt.Fprintf(w, tmpl, v)
 	}
-	fmt.Printf(w,"</table>")
+	fmt.Fprintf(w,"</table>")
 		//fmt.Fprintf(w,string(responseData))
 	fmt.Fprintf(w, "</font>")
 	
