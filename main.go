@@ -48,38 +48,38 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>")
 		fmt.Fprintf(w, "</H2>")
 		fmt.Fprintf(w, "<BR><font color='brown'>Mild mood sniffing algorithm</font><BR>")
-
 	}	
 	
 	//sensors activation
 	fmt.Fprintf(w, "<BR><BR>")
 	fmt.Fprintf(w, "<font color='purple'>/activate</font><BR>")
 	fmt.Fprintf(w, "<font color='gray'>")
-	fmt.Fprintf(w,processSensorActivation(10))
+	fmt.Fprintf(w, processSensorActivation(10))
 	fmt.Fprintf(w, "</font>")
 	
 	//sensors measurements
 	fmt.Fprintf(w, "<BR><BR>")
 	fmt.Fprintf(w, "<font color='purple'>/measure</font>")
 	fmt.Fprintf(w, "<font color='gray'>")
-	fmt.Fprintf(w,processSensorsMeasurement())
+	fmt.Fprintf(w, processSensorsMeasurement())
 	fmt.Fprintf(w, "</font>")
 }
 
-func processSensorActivation (numSensors int) (htmlOutput string) {
-	
+func processSensorActivation(numSensors int) (htmlOutput string) {
+
 	for i := 0; i < numSensors; i++ {
 		err := http.Get(ACTIVATE_SENSORS_API)	
 		if err != nil { 
 			htmlOutput = "ERROR! in calling activate API"
 		return 
-	} 	 	
+		} 	 	
+	}
 	
 	htmlOutput += "Succefully activated " + strconv.Itoa(numSensors) + " sensors."
 	return
 }
 
-func processSensorsMeasurement () (htmlOutput string) {
+func processSensorsMeasurement() (htmlOutput string) {
 	
 	err := http.Get(MEASURE_SENSORS_API)	 
 
