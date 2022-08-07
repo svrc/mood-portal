@@ -68,11 +68,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func processSensorActivation(numSensors int) (htmlOutput string) {
 
 	for i := 0; i < numSensors; i++ {
-		err := http.Get(ACTIVATE_SENSORS_API)	
-		if err != nil { 
-			htmlOutput = "ERROR! in calling activate API"
-		return 
-		} 	 	
+		http.Get(ACTIVATE_SENSORS_API)	
 	}
 	
 	htmlOutput += "Succefully activated " + strconv.Itoa(numSensors) + " sensors."
@@ -81,7 +77,7 @@ func processSensorActivation(numSensors int) (htmlOutput string) {
 
 func processSensorsMeasurement() (htmlOutput string) {
 	
-	err := http.Get(MEASURE_SENSORS_API)	 
+	http.Get(MEASURE_SENSORS_API)	 
 
 	if err != nil { 
 		htmlOutput = "ERROR! in calling measure API"
