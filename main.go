@@ -68,7 +68,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func processSensorActivation(numSensors int) (htmlOutput string) {
 
 	for i := 0; i < numSensors; i++ {
-		http.Get(ACTIVATE_SENSORS_API)	
+		response, err := http.Get(ACTIVATE_SENSORS_API)	
+		if err != nil { 
+			htmlOutput = "ERROR! in calling activate API"
+			return 
+		} 	 	
+		defer response.Body.Close()
 	}
 	
 	htmlOutput += "Succefully activated " + strconv.Itoa(numSensors) + " sensors."
