@@ -7,19 +7,30 @@ import (
 	"log"
 	"net/http"
 	"io/ioutil"
+	"encoding/json"
 )
+
+type Sensor struct {
+	Id int `json:"id"`
+	Team string `json:"team"`
+	Mood string `json:"mood"`
+}
+
+type AllSensors struct {
+	Sensors []*Sensor
+}
+
+var ACTIVATE_SENSORS_API string = "http://mood-sensors.dev.dekt.io/activate"
+var MEASURE_SENSORS_API string = "http://mood-sensors.dev.dekt.io/measure"
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
 	//conrtol the mood sniffing algorithm intensity
 	beHappy := false
 
-	sensorsWriteAPI := "http://mood-sensors.dev.dekt.io/activate"
-	sensorsReadAPI := "http://mood-sensors.dev.dekt.io/measure"
-	
 	log.Println(r.RemoteAddr, r.Method, r.URL.String())
 	
-        fmt.Fprintf(w, "<H1><font color='navy'>Welcome to the DevX Mood Analyzer </font></H1><H2>")
+    fmt.Fprintf(w, "<H1><font color='navy'>Welcome to the DevX Mood Analyzer </font></H1><H2>")
 
 	//display happy or sad dog
 	if !beHappy { 
@@ -39,11 +50,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	}	
 	
-	//call 'activate' api to write sensor data
-	
+	//sensors activation
 	fmt.Fprintf(w, "<BR><BR>")
 	fmt.Fprintf(w, "<font color='purple'>/activate:	</font>")
 	fmt.Fprintf(w, "<font color='gray'>")
+	for i := 1; i < 11; i++ {
+		fmt.Fprintf(w,processSensorActivation())
+	}
+
+	fmt.Fprintf(w,"<BR><BR><BR><BR>")
 	
 	for i := 1; i < 11; i++ {
 		http.Get(sensorsWriteAPI)
@@ -52,11 +67,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "[{\"sensorsStatus\":\"activated\"}]")
 	fmt.Fprintf(w, "</font>")
 	
-	//call 'measure' api to read sensor data and display it
+	//sensors measurements
 	fmt.Fprintf(w, "<BR><BR>")
 	fmt.Fprintf(w, "<font color='purple'>/measure: </font>")
 	fmt.Fprintf(w, "<font color='gray'>")
 	
+	fmt.Fprintf(w,processSensorsMeasurement())
+
+	fmt.Fprintf(w,"<BR><BR><BR><BR>")
 	response, err := http.Get(sensorsReadAPI)
 	if err != nil {
 		fmt.Fprintf(w,"ERROR! in calling measure API")
@@ -72,6 +90,65 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	fmt.Fprintf(w, "</font>")
 	
+}
+
+func processSensorActivation () (htmlOutput string) {
+	
+	response, err := http.Get(ACTIVATE_SENSORS_API)	
+	if err != nil { 
+		htmlOutput = "ERROR! in calling activate API"
+		return 
+	} 	 	
+		
+	defer response.Body.Close()
+	responseData, err := ioutil.ReadAll(response.Body) 	
+	if err != nil { 	
+		htmlOutput = "ERROR! in reading response from activate API"
+		return
+	}
+	
+	htmlOutput += string(responseData)
+	return
+}
+
+func processSensorsMeasurement () (htmlOutput string) {
+	
+	response, err := http.Get(MEASURE_SENSORS_API)	 
+
+	if err != nil { 
+		htmlOutput = "ERROR! in calling measure API"
+		return 
+	} 	 	
+
+	defer response.Body.Close()
+	responseData, err := ioutil.ReadAll(response.Body) 	
+
+	if err != nil { 	
+		htmlOutput = "ERROR! in reading response from measure API"
+		return
+	}
+
+	var allSensors AllSensors
+	err := json.Unmarshal(responseData, &allSensors.Sensors)
+
+	if err != nil { 	
+		htmlOutput = "ERROR! in parsing  json response from measure API"
+		return
+	}
+
+	htmlOutput += "<table>"
+	htmlOutput += "<tr><th><b>Sensor ID</b></th><th><b>Team</b></th><th><b>Mood</b></th></tr>"
+
+	for _, sensor := range allSensors.Sensors {
+  		htmlOutput += "<tr>"
+  		htmlOutput += "<th>sensor.Id</th>"
+  		htmlOutput += "<th>sensor.Team</th>"
+  		htmlOutput += "<th>sensor.Mood</th>"
+		htmlOutput += "</tr>"
+	}
+
+	htmlOutput += "</table>"
+	return 
 }
 	
 func main() {
