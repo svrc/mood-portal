@@ -135,11 +135,13 @@ func processSensorsMeasurement () (htmlOutput string) {
 	htmlOutput += "<tr><th><b>Sensor ID</b></th><th><b>Team</b></th><th><b>Mood</b></th></tr>"
 
 	for _, sensor := range allSensors.Sensors {
-  		htmlOutput += "<tr>"
-  		htmlOutput += "<th>sensor.Id</th>"
-  		htmlOutput += "<th>sensor.Team</th>"
-  		htmlOutput += "<th>sensor.Mood</th>"
-		htmlOutput += "</tr>"
+  		htmlOutput += "<tr><th>"
+  		htmlOutput += sensor.Id
+		htmlOutput += "</th><th>"
+  		htmlOutput += sensor.Team
+		htmlOutput += "</th><th>"
+  		htmlOutput += sensor.Mood
+		htmlOutput += "</th></tr>"
 	}
 
 	htmlOutput += "</table>"
