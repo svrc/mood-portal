@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"io/ioutil"
 	"encoding/json"
+	"strconv"
 )
 
 type Sensor struct {
@@ -52,68 +53,35 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	//sensors activation
 	fmt.Fprintf(w, "<BR><BR>")
-	fmt.Fprintf(w, "<font color='purple'>/activate:	</font>")
+	fmt.Fprintf(w, "<font color='purple'>/activate</font><BR>")
 	fmt.Fprintf(w, "<font color='gray'>")
-	for i := 1; i < 11; i++ {
-		fmt.Fprintf(w,processSensorActivation())
-	}
-
-	fmt.Fprintf(w,"<BR><BR><BR><BR>")
-	
-	for i := 1; i < 11; i++ {
-		http.Get(ACTIVATE_SENSORS_API)
-	}
-	
-	fmt.Fprintf(w, "[{\"sensorsStatus\":\"activated\"}]")
+	fmt.Fprintf(w,processSensorActivation(10))
 	fmt.Fprintf(w, "</font>")
 	
 	//sensors measurements
 	fmt.Fprintf(w, "<BR><BR>")
-	fmt.Fprintf(w, "<font color='purple'>/measure: </font>")
+	fmt.Fprintf(w, "<font color='purple'>/measure</font>")
 	fmt.Fprintf(w, "<font color='gray'>")
-	
 	fmt.Fprintf(w,processSensorsMeasurement())
-
-	fmt.Fprintf(w,"<BR><BR><BR><BR>")
-	response, err := http.Get(MEASURE_SENSORS_API)
-	if err != nil {
-		fmt.Fprintf(w,"ERROR! in calling measure API")
-	} 
-	
-	defer response.Body.Close()
-	responseData, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		fmt.Fprintf(w,"ERROR! in reading response from measure API")
-	}
-
-	fmt.Fprintf(w,string(responseData))
-	
 	fmt.Fprintf(w, "</font>")
-	
 }
 
-func processSensorActivation () (htmlOutput string) {
+func processSensorActivation (numSensors int) (htmlOutput string) {
 	
-	response, err := http.Get(ACTIVATE_SENSORS_API)	
-	if err != nil { 
-		htmlOutput = "ERROR! in calling activate API"
+	for i := 0; i < numSensors; i++ {
+		err := http.Get(ACTIVATE_SENSORS_API)	
+		if err != nil { 
+			htmlOutput = "ERROR! in calling activate API"
 		return 
 	} 	 	
-		
-	defer response.Body.Close()
-	responseData, err := ioutil.ReadAll(response.Body) 	
-	if err != nil { 	
-		htmlOutput = "ERROR! in reading response from activate API"
-		return
-	}
 	
-	htmlOutput += string(responseData)
+	htmlOutput += "Succefully activated " + strconv.Itoa(numSensors) + " sensors."
 	return
 }
 
 func processSensorsMeasurement () (htmlOutput string) {
 	
-	response, err := http.Get(MEASURE_SENSORS_API)	 
+	err := http.Get(MEASURE_SENSORS_API)	 
 
 	if err != nil { 
 		htmlOutput = "ERROR! in calling measure API"
@@ -132,17 +100,17 @@ func processSensorsMeasurement () (htmlOutput string) {
 	json.Unmarshal(responseData, &allSensors.Sensors)
 
 	htmlOutput += "<table>"
-	//htmlOutput += "<tr><th><b>Sensor ID</b></th><th><b>Team</b></th><th><b>Mood</b></th></tr>"
-	htmlOutput += "<tr><th><b>Team</b></th><th><b>Mood</b></th></tr>"
+	
+	htmlOutput += "<tr>"
+	htmlOutput += "<th>Sensor ID</th>" + "<th>Team</th>" + "<th>Mood</th></tr>"
+	htmlOutput += "</tr>"
 
 	for _, sensor := range allSensors.Sensors {
-  		//htmlOutput += "<tr><th>"
-  		//htmlOutput += sensor.Id
-		htmlOutput += "</th><th>"
-  		htmlOutput += sensor.Team
-		htmlOutput += "</th><th>"
-  		htmlOutput += sensor.Mood
-		htmlOutput += "</th></tr>"
+  		htmlOutput += "<tr>"
+		htmlOutput += "<td>" + strconv.Itoa(sensor.Id) + "</td>"
+		htmlOutput += "<td>" + sensor.Team + "</td>"
+		htmlOutput += "<td>" + sensor.Mood + "</td>"
+		htmlOutput += "</tr>"
 	}
 
 	htmlOutput += "</table>"
