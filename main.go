@@ -132,11 +132,12 @@ func processSensorsMeasurement () (htmlOutput string) {
 	json.Unmarshal(responseData, &allSensors.Sensors)
 
 	htmlOutput += "<table>"
-	htmlOutput += "<tr><th><b>Sensor ID</b></th><th><b>Team</b></th><th><b>Mood</b></th></tr>"
+	//htmlOutput += "<tr><th><b>Sensor ID</b></th><th><b>Team</b></th><th><b>Mood</b></th></tr>"
+	htmlOutput += "<tr><th><b>Team</b></th><th><b>Mood</b></th></tr>"
 
 	for _, sensor := range allSensors.Sensors {
-  		htmlOutput += "<tr><th>"
-  		htmlOutput += sensor.Id
+  		//htmlOutput += "<tr><th>"
+  		//htmlOutput += sensor.Id
 		htmlOutput += "</th><th>"
   		htmlOutput += sensor.Team
 		htmlOutput += "</th><th>"
