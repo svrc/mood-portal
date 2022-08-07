@@ -77,7 +77,7 @@ func processSensorActivation(numSensors int) (htmlOutput string) {
 
 func processSensorsMeasurement() (htmlOutput string) {
 	
-	http.Get(MEASURE_SENSORS_API)	 
+	response, err := http.Get(MEASURE_SENSORS_API)	 
 
 	if err != nil { 
 		htmlOutput = "ERROR! in calling measure API"
