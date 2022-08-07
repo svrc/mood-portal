@@ -61,7 +61,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w,"<BR><BR><BR><BR>")
 	
 	for i := 1; i < 11; i++ {
-		http.Get(sensorsWriteAPI)
+		http.Get(ACTIVATE_SENSORS_API)
 	}
 	
 	fmt.Fprintf(w, "[{\"sensorsStatus\":\"activated\"}]")
@@ -75,7 +75,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w,processSensorsMeasurement())
 
 	fmt.Fprintf(w,"<BR><BR><BR><BR>")
-	response, err := http.Get(sensorsReadAPI)
+	response, err := http.Get(MEASURE_SENSORS_API)
 	if err != nil {
 		fmt.Fprintf(w,"ERROR! in calling measure API")
 	} 
@@ -129,12 +129,7 @@ func processSensorsMeasurement () (htmlOutput string) {
 	}
 
 	var allSensors AllSensors
-	err := json.Unmarshal(responseData, &allSensors.Sensors)
-
-	if err != nil { 	
-		htmlOutput = "ERROR! in parsing  json response from measure API"
-		return
-	}
+	json.Unmarshal(responseData, &allSensors.Sensors)
 
 	htmlOutput += "<table>"
 	htmlOutput += "<tr><th><b>Sensor ID</b></th><th><b>Team</b></th><th><b>Mood</b></th></tr>"
