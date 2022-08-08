@@ -31,23 +31,26 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	log.Println(r.RemoteAddr, r.Method, r.URL.String())
 	
-    fmt.Fprintf(w, "<H1><font color='navy'>Welcome to the DevX Mood Analyzer </font></H1><H2>")
+	fmt.Fprintf(w, openPage("DevX Mood Analyzer"))
+    //fmt.Fprintf(w, "<H1><font color='navy'>Welcome to the DevX Mood Analyzer </font></H1><H2>")
 
 	//display happy or sad dog
 	if !beHappy { 
-		fmt.Fprintf(w, "<font color='red'>")
-		fmt.Fprintf(w,"Your overall mood is not great. We hope it will get better.")
-		fmt.Fprintf(w, "</font>")
-		fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>")
-		fmt.Fprintf(w, "</H2>")
-		fmt.Fprintf(w, "<BR><font color='brown'>Aggressive mood sniffing algorithm</font><BR>")
-	} else { //always happy
-		fmt.Fprintf(w, "<font color='green'>")
-		fmt.Fprintf(w,"Your mood is always happy. Good for you!")
-		fmt.Fprintf(w, "</font>")
-		fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>")
-		fmt.Fprintf(w, "</H2>")
-		fmt.Fprintf(w, "<BR><font color='brown'>Mild mood sniffing algorithm</font><BR>")
+		fmt.Fprintf(w, sadMood())
+		//fmt.Fprintf(w, "<font color='red'>")
+		//fmt.Fprintf(w,"Your overall mood is not great. We hope it will get better.")
+		//fmt.Fprintf(w, "</font>")
+		//fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>")
+		//fmt.Fprintf(w, "</H2>")
+		//fmt.Fprintf(w, "<BR><font color='brown'>Aggressive mood sniffing algorithm</font><BR>")
+	} else { 
+		fmt.Fprintf(w, happyMood())
+		//fmt.Fprintf(w, "<font color='green'>")
+		//fmt.Fprintf(w,"Your mood is always happy. Good for you!")
+		//fmt.Fprintf(w, "</font>")
+		//fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>")
+		//fmt.Fprintf(w, "</H2>")
+		//fmt.Fprintf(w, "<BR><font color='brown'>Mild mood sniffing algorithm</font><BR>")
 	}	
 	
 	//sensors activation
@@ -59,6 +62,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<BR><BR>")
 	fmt.Fprintf(w, "<font color='purple'>/measure</font>")
 	fmt.Fprintf(w, processSensorsMeasurement())
+
+	fmt.Fprintf(w, closePage())
 }
 
 func processSensorActivation(numSensors int) (htmlOutput string) {
@@ -113,7 +118,47 @@ func processSensorsMeasurement() (htmlOutput string) {
 	htmlOutput += "</table>"
 	return 
 }
-	
+
+func openPage (myHeader string) (htmlOutput string) {
+
+	htmlOutput += "<head>"
+    htmlOutput += "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>"
+	htmlOutput += "<link href='tanzu.css' rel='stylesheet'>"
+    htmlOutput += "</head>"
+	htmlOutput += "<body><div class='container-fluid'>"
+	htmlOutput += "<div class='row'><div class='jumbotron'>"
+	htmlOutput += "<h1>" + myHeader + "</h1>"
+    htmlOutput += "</div><div class='row'>"
+	return
+}
+
+func sadMood () (htmlOutput string) {
+
+	htmlOutput += "<div class='col-sm-6'><form class='form-horizontal'>"
+	htmlOutput += "<div class='form-group'><div class='col-sm-offset-2 col-sm-4'>"
+	htmlOutput += "<p class='panel-title'>Your overall mood is not great. We hope it will get better.</p>"
+	htmlOutput += "<img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>"
+	htmlOutput += "<p class='panel-body'>Mood sniffing algorithm: Aggressive</p>"
+	htmlOutput += "</div></div></form></div>"
+	return
+}
+
+func happyMood () (htmlOutput string) {
+
+	htmlOutput += "<div class='col-sm-6'><form class='form-horizontal'>"
+	htmlOutput += "<div class='form-group'><div class='col-sm-offset-2 col-sm-4'>"
+	htmlOutput += "<p class='panel-title'>Your mood is always happy. Good for you!</p>"
+	htmlOutput += "<img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
+	htmlOutput += "<p class='panel-body'>Mood sniffing algorithm: Mild</p>"
+	htmlOutput += "</div></div></form></div>"
+	return
+}
+
+func closePage () (htmlOutput string) {
+
+	htmlOutput += "</body>"
+
+}
 func main() {
 	
 	http.HandleFunc("/", handler)
