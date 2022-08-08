@@ -121,9 +121,12 @@ func processSensorsMeasurement() (htmlOutput string) {
 
 func openPage (myHeader string) (htmlOutput string) {
 
+    htmlOutput += "<!DOCTYPE html><html xmlns='http://www.w3.org/1999/xhtml' xmlns:th='http://www.thymeleaf.org'>"
 	htmlOutput += "<head>"
     htmlOutput += "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>"
+	htmlOutput += "<meta name='viewport' content='width=device-width, initial-scale=1'/>"
 	htmlOutput += "<link href='tanzu.css' rel='stylesheet'>"
+	htmlOutput += "<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css' rel='stylesheet'/>"
     htmlOutput += "</head>"
 	htmlOutput += "<body><div class='container-fluid'>"
 	htmlOutput += "<div class='row'><div class='jumbotron'>"
