@@ -21,8 +21,8 @@ type AllSensors struct {
 	Sensors []*Sensor
 }
 
-var ACTIVATE_SENSORS_API string = "http://mood-sensors.dev.dekt.io/activate"
-var MEASURE_SENSORS_API string = "http://mood-sensors.dev.dekt.io/measure"
+var ACTIVATE_SENSORS_API string = "http://mood-sensors.run.dekt.io/activate"
+var MEASURE_SENSORS_API string = "http://mood-sensors.run.dekt.io/measure"
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
