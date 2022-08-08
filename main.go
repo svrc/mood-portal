@@ -53,16 +53,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	//sensors activation
 	fmt.Fprintf(w, "<BR><BR>")
 	fmt.Fprintf(w, "<font color='purple'>/activate</font><BR>")
-	fmt.Fprintf(w, "<font color='gray'>")
 	fmt.Fprintf(w, processSensorActivation(10))
-	fmt.Fprintf(w, "</font>")
 	
 	//sensors measurements
 	fmt.Fprintf(w, "<BR><BR>")
 	fmt.Fprintf(w, "<font color='purple'>/measure</font>")
-	fmt.Fprintf(w, "<font color='gray'>")
 	fmt.Fprintf(w, processSensorsMeasurement())
-	fmt.Fprintf(w, "</font>")
 }
 
 func processSensorActivation(numSensors int) (htmlOutput string) {
@@ -76,7 +72,7 @@ func processSensorActivation(numSensors int) (htmlOutput string) {
 		defer response.Body.Close()
 	}
 	
-	htmlOutput += "Succefully activated " + strconv.Itoa(numSensors) + " sensors."
+	htmlOutput += "<font color='gray'>" + "Succefully activated " + strconv.Itoa(numSensors) + " sensors." + "</font>"
 	return
 }
 
@@ -102,12 +98,12 @@ func processSensorsMeasurement() (htmlOutput string) {
 
 	htmlOutput += "<table>"
 	
-	htmlOutput += "<tr>"
+	htmlOutput += "<tr style='color:grey'>"
 	htmlOutput += "<th>Sensor ID</th>" + "<th>Team</th>" + "<th>Mood</th></tr>"
 	htmlOutput += "</tr>"
 
 	for _, sensor := range allSensors.Sensors {
-  		htmlOutput += "<tr>"
+  		htmlOutput += "<tr style='color:grey'>"
 		htmlOutput += "<td>" + strconv.Itoa(sensor.Id) + "</td>"
 		htmlOutput += "<td>" + sensor.Team + "</td>"
 		htmlOutput += "<td>" + sensor.Mood + "</td>"
