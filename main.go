@@ -96,7 +96,7 @@ func processSensorsMeasurement() (htmlOutput string) {
 	var allSensors AllSensors
 	json.Unmarshal(responseData, &allSensors.Sensors)
 
-	htmlOutput += "<table>"
+	htmlOutput += "<table align='center'>"
 	
 	htmlOutput += "<tr style='color:grey'>"
 	htmlOutput += "<th>Sensor ID</th>" + "<th>Role</th>" + "<th>Mood</th></tr>"
@@ -105,7 +105,7 @@ func processSensorsMeasurement() (htmlOutput string) {
 	for _, sensor := range allSensors.Sensors {
   		htmlOutput += "<tr style='color:grey'>"
 		htmlOutput += "<td>" + strconv.Itoa(sensor.Id) + "</td>"
-		htmlOutput += "<td>" + sensor.Role + "&nbsp;&nbsp;</td>"
+		htmlOutput += "<td>" + sensor.Role + "&nbsp;&nbsp;&nbsp;&nbsp;</td>"
 		htmlOutput += "<td>" + sensor.Mood + "</td>"
 		htmlOutput += "</tr>"
 	}
