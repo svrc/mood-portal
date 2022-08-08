@@ -72,7 +72,7 @@ func processSensorActivation(numSensors int) (htmlOutput string) {
 		defer response.Body.Close()
 	}
 	
-	htmlOutput += "<font color='gray'>" + "Succefully activated " + strconv.Itoa(numSensors) + " sensors." + "</font>"
+	htmlOutput += "<font color='gray'>" + "Succefully activated sensors." + "</font>"
 	return
 }
 
