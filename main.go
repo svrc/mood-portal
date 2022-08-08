@@ -13,7 +13,7 @@ import (
 
 type Sensor struct {
 	Id int `json:"id"`
-	Team string `json:"team"`
+	Role string `json:"role"`
 	Mood string `json:"mood"`
 }
 
@@ -99,13 +99,13 @@ func processSensorsMeasurement() (htmlOutput string) {
 	htmlOutput += "<table>"
 	
 	htmlOutput += "<tr style='color:grey'>"
-	htmlOutput += "<th>Sensor&nbsp;</th>" + "<th>Team&nbsp;&nbsp;&nbsp;</th>" + "<th>Mood&nbsp;&nbsp;&nbsp;</th></tr>"
+	htmlOutput += "<th>Sensor&nbsp;</th>" + "<th>Role&nbsp;&nbsp;&nbsp;</th>" + "<th>Mood</th></tr>"
 	htmlOutput += "</tr>"
 
 	for _, sensor := range allSensors.Sensors {
   		htmlOutput += "<tr style='color:grey'>"
 		htmlOutput += "<td>" + strconv.Itoa(sensor.Id) + "</td>"
-		htmlOutput += "<td>" + sensor.Team + "</td>"
+		htmlOutput += "<td>" + sensor.Role + "</td>"
 		htmlOutput += "<td>" + sensor.Mood + "</td>"
 		htmlOutput += "</tr>"
 	}
