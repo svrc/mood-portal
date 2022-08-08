@@ -27,7 +27,7 @@ var MEASURE_SENSORS_API string = "http://mood-sensors.dev.dekt.io/measure"
 func handler(w http.ResponseWriter, r *http.Request) {
 	
 	//conrtol the mood sniffing algorithm intensity
-	beHappy := true
+	beHappy := false
 
 	log.Println(r.RemoteAddr, r.Method, r.URL.String())
 	
@@ -96,7 +96,7 @@ func processSensorsMeasurement() (htmlOutput string) {
 	var allSensors AllSensors
 	json.Unmarshal(responseData, &allSensors.Sensors)
 
-	htmlOutput += "<table>"
+	htmlOutput += "<table border='1'>"
 	
 	htmlOutput += "<tr style='color:grey' align='center'>"
 	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Mood</th></tr>"
@@ -105,7 +105,7 @@ func processSensorsMeasurement() (htmlOutput string) {
 	for _, sensor := range allSensors.Sensors {
   		htmlOutput += "<tr style='color:grey' align='left'>"
 		htmlOutput += "<td>" + strconv.Itoa(sensor.Id) + "</td>"
-		htmlOutput += "<td>" + sensor.Role + "&nbsp;&nbsp;&nbsp;&nbsp</td>"
+		htmlOutput += "<td>" + sensor.Role + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>"
 		htmlOutput += "<td>" + sensor.Mood + "</td>"
 		htmlOutput += "</tr>"
 	}
