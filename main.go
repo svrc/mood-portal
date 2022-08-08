@@ -59,7 +59,7 @@ func processSensorActivation(numSensors int) (htmlOutput string) {
 		defer response.Body.Close()
 	}
 	
-	htmlOutput += "Succefully activated sensors."
+	htmlOutput += "All sensors activated successfully"
 	return
 }
 
