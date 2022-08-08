@@ -31,39 +31,21 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	log.Println(r.RemoteAddr, r.Method, r.URL.String())
 	
-	fmt.Fprintf(w, openPage("DevX Mood Analyzer"))
-    //fmt.Fprintf(w, "<H1><font color='navy'>Welcome to the DevX Mood Analyzer </font></H1><H2>")
-
-	//display happy or sad dog
+	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
+    
 	if !beHappy { 
 		fmt.Fprintf(w, sadMood())
-		//fmt.Fprintf(w, "<font color='red'>")
-		//fmt.Fprintf(w,"Your overall mood is not great. We hope it will get better.")
-		//fmt.Fprintf(w, "</font>")
-		//fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>")
-		//fmt.Fprintf(w, "</H2>")
-		//fmt.Fprintf(w, "<BR><font color='brown'>Aggressive mood sniffing algorithm</font><BR>")
 	} else { 
 		fmt.Fprintf(w, happyMood())
-		//fmt.Fprintf(w, "<font color='green'>")
-		//fmt.Fprintf(w,"Your mood is always happy. Good for you!")
-		//fmt.Fprintf(w, "</font>")
-		//fmt.Fprintf(w, "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>")
-		//fmt.Fprintf(w, "</H2>")
-		//fmt.Fprintf(w, "<BR><font color='brown'>Mild mood sniffing algorithm</font><BR>")
 	}	
 	
 	//sensors activation
-	fmt.Fprintf(w, "<BR><BR>")
-	fmt.Fprintf(w, "<font color='purple'>/activate</font><BR>")
-	fmt.Fprintf(w, processSensorActivation(10))
+	fmt.Fprintf(w,addDataTitle("/activate"))
+	fmt.Fprintf(w,addDataContent(processSensorActivation(10)))
 	
 	//sensors measurements
-	fmt.Fprintf(w, "<BR><BR>")
-	fmt.Fprintf(w, "<font color='purple'>/measure</font>")
-	fmt.Fprintf(w, processSensorsMeasurement())
-
-	fmt.Fprintf(w, closePage())
+	fmt.Fprintf(w,addDataTitle("/measure"))
+	fmt.Fprintf(w,addDataContent(processSensorsMeasurement()))
 }
 
 func processSensorActivation(numSensors int) (htmlOutput string) {
@@ -77,7 +59,7 @@ func processSensorActivation(numSensors int) (htmlOutput string) {
 		defer response.Body.Close()
 	}
 	
-	htmlOutput += "<font color='gray'>" + "Succefully activated sensors." + "</font>"
+	htmlOutput += "Succefully activated sensors."
 	return
 }
 
@@ -110,7 +92,7 @@ func processSensorsMeasurement() (htmlOutput string) {
 	for _, sensor := range allSensors.Sensors {
   		htmlOutput += "<tr style='color:grey' align='left'>"
 		htmlOutput += "<td>" + strconv.Itoa(sensor.Id) + "</td>"
-		htmlOutput += "<td>" + sensor.Role + "</td>"
+		htmlOutput += "<td>" + sensor.Role + "&nbsp;</td>"
 		htmlOutput += "<td>" + sensor.Mood + "</td>"
 		htmlOutput += "</tr>"
 	}
@@ -119,49 +101,53 @@ func processSensorsMeasurement() (htmlOutput string) {
 	return 
 }
 
-func openPage (myHeader string) (htmlOutput string) {
+func addHeader (myHeader string) (htmlOutput string) {
 
-    htmlOutput += "<!DOCTYPE html><html xmlns='http://www.w3.org/1999/xhtml' xmlns:th='http://www.thymeleaf.org'>"
-	htmlOutput += "<head>"
-    htmlOutput += "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>"
-	htmlOutput += "<meta name='viewport' content='width=device-width, initial-scale=1'/>"
-	htmlOutput += "<link href='tanzu.css' rel='stylesheet'>"
-	htmlOutput += "<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css' rel='stylesheet'/>"
-    htmlOutput += "</head>"
-	htmlOutput += "<body><div class='container-fluid'>"
-	htmlOutput += "<div class='row'><div class='jumbotron'>"
-	htmlOutput += "<h1>" + myHeader + "</h1>"
-    htmlOutput += "</div><div class='row'>"
+    htmlOutput += "<H1><font color='navy'>"
+	htmlOutput += myHeader
+	htmlOutput += "</font></H1>"
 	return
 }
 
 func sadMood () (htmlOutput string) {
 
-	htmlOutput += "<div class='col-sm-6'><form class='form-horizontal'>"
-	htmlOutput += "<div class='form-group'><div class='col-sm-offset-2 col-sm-4'>"
-	htmlOutput += "<p class='panel-title'>Your overall mood is not great. We hope it will get better.</p>"
-	htmlOutput += "<img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>"
-	htmlOutput += "<p class='panel-body'>Mood sniffing algorithm: Aggressive</p>"
-	htmlOutput += "</div></div></form></div>"
+	htmlOutput += "<H2><font color='red'>"
+	htmlOutput += "Your overall mood is not great. We hope it will get better."
+	htmlOutput += "</font>"
+	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>"
+	htmlOutput += "</H2>"
+	htmlOutput += addDataTitle("mood sniffing algorithm:")
+	htmlOutput += addDataContent("Agressive")
 	return
 }
 
 func happyMood () (htmlOutput string) {
 
-	htmlOutput += "<div class='col-sm-6'><form class='form-horizontal'>"
-	htmlOutput += "<div class='form-group'><div class='col-sm-offset-2 col-sm-4'>"
-	htmlOutput += "<p class='panel-title'>Your mood is always happy. Good for you!</p>"
-	htmlOutput += "<img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
-	htmlOutput += "<p class='panel-body'>Mood sniffing algorithm: Mild</p>"
-	htmlOutput += "</div></div></form></div>"
+	htmlOutput += "<H2><font color='green'>"
+	htmlOutput += "Your mood is always happy. Good for you!"
+	htmlOutput += "</font>"
+	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
+	htmlOutput += "</H2>"
+	htmlOutput += addDataTitle("mood sniffing algorithm:")
+	htmlOutput += addDataContent("Mild")
 	return
 }
 
-func closePage () (htmlOutput string) {
+func addDataTitle (title string) (htmlOutput string) {
 
-	htmlOutput += "</body>"
+	htmlOutput += "<BR><BR>"
+	htmlOutput += "<font color='purple'>"
+	htmlOutput += title
+	htmlOutput += "</font><BR>"
 	return
+}
 
+func addDataContent (content string) (htmlOutput string) {
+
+	htmlOutput += "<font color='gray'>" 
+	htmlOutput += content
+	htmlOutput += "</font>"
+	return
 }
 
 func main() {
