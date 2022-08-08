@@ -27,7 +27,7 @@ var MEASURE_SENSORS_API string = "http://mood-sensors.dev.dekt.io/measure"
 func handler(w http.ResponseWriter, r *http.Request) {
 	
 	//conrtol the mood sniffing algorithm intensity
-	beHappy := false
+	beHappy := true
 
 	log.Println(r.RemoteAddr, r.Method, r.URL.String())
 	
