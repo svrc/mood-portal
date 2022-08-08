@@ -99,13 +99,13 @@ func processSensorsMeasurement() (htmlOutput string) {
 	htmlOutput += "<table>"
 	
 	htmlOutput += "<tr style='color:grey' align='center'>"
-	htmlOutput += "<th>Sensor ID</th>" + "<th>Role</th>" + "<th>Mood</th></tr>"
+	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Mood</th></tr>"
 	htmlOutput += "</tr>"
 
 	for _, sensor := range allSensors.Sensors {
-  		htmlOutput += "<tr style='color:grey' align='center'>"
+  		htmlOutput += "<tr style='color:grey' align='left'>"
 		htmlOutput += "<td>" + strconv.Itoa(sensor.Id) + "</td>"
-		htmlOutput += "<td>" + sensor.Role + "&nbsp;&nbsp;&nbsp;&nbsp;</td>"
+		htmlOutput += "<td>" + sensor.Role + "&nbsp;&nbsp;&nbsp;&nbsp</td>"
 		htmlOutput += "<td>" + sensor.Mood + "</td>"
 		htmlOutput += "</tr>"
 	}
