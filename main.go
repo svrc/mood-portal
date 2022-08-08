@@ -116,7 +116,7 @@ func sadMood () (htmlOutput string) {
 	htmlOutput += "</font>"
 	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>"
 	htmlOutput += "</H2>"
-	htmlOutput += addDataTitle("mood sniffing algorithm:")
+	htmlOutput += addDataTitle("mood sniffing algorithm")
 	htmlOutput += addDataContent("Agressive")
 	return
 }
@@ -128,7 +128,7 @@ func happyMood () (htmlOutput string) {
 	htmlOutput += "</font>"
 	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
 	htmlOutput += "</H2>"
-	htmlOutput += addDataTitle("mood sniffing algorithm:")
+	htmlOutput += addDataTitle("mood sniffing algorithm")
 	htmlOutput += addDataContent("Mild")
 	return
 }
