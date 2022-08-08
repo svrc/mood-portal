@@ -105,7 +105,7 @@ func processSensorsMeasurement() (htmlOutput string) {
 	for _, sensor := range allSensors.Sensors {
   		htmlOutput += "<tr style='color:grey' align='left'>"
 		htmlOutput += "<td>" + strconv.Itoa(sensor.Id) + "</td>"
-		htmlOutput += "<td>" + sensor.Role + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</td>"
+		htmlOutput += "<td>" + sensor.Role + "</td>"
 		htmlOutput += "<td>" + sensor.Mood + "</td>"
 		htmlOutput += "</tr>"
 	}
