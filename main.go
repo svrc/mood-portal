@@ -157,8 +157,10 @@ func happyMood () (htmlOutput string) {
 func closePage () (htmlOutput string) {
 
 	htmlOutput += "</body>"
+	return
 
 }
+
 func main() {
 	
 	http.HandleFunc("/", handler)
