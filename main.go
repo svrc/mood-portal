@@ -124,7 +124,7 @@ func sadMood () (htmlOutput string) {
 func happyMood () (htmlOutput string) {
 
 	htmlOutput += "<H2><font color='green'>"
-	htmlOutput += "Your mood is always happy. Good for you!"
+	htmlOutput += "Your overall mood is happy. Keep it that way!"
 	htmlOutput += "</font>"
 	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
 	htmlOutput += "</H2>"
