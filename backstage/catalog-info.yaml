@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: mood-portal
+  description: Mood portal
+spec:
+  type: service
+  lifecycle: integration
+  owner: dekt-dev-team1
+  system: devx-mood
+  subcomponentOf: mood-portal
+  consumesApis:
+    - mood-sensors-apis
