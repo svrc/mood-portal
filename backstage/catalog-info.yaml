@@ -8,6 +8,5 @@ spec:
   lifecycle: integration
   owner: dekt-dev-team1
   system: devx-mood
-  subcomponentOf: mood-portal
   consumesApis:
     - mood-sensors-apis
