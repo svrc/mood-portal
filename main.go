@@ -32,6 +32,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	log.Println(r.RemoteAddr, r.Method, r.URL.String())
 	
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
+
+	fmt.Fprintf(w,r.URL.Host())
     
 	if !beHappy { 
 		fmt.Fprintf(w, sadMood())
@@ -46,9 +48,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	//sensors measurements
 	fmt.Fprintf(w,addDataTitle("/measure"))
 	fmt.Fprintf(w,addDataContent(processSensorsMeasurement()))
-
-	fmt.Fprintf(w,"test host")
-	fmt.Fprintf(w,r.URL.Host)
 }
 
 func processSensorActivation(numSensors int) (htmlOutput string) {
