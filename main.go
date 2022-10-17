@@ -46,6 +46,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	//sensors measurements
 	fmt.Fprintf(w,addDataTitle("/measure"))
 	fmt.Fprintf(w,addDataContent(processSensorsMeasurement()))
+
+	fmt.Fprintf(w,"test host")
+	fmt.Fprintf(w,,r.URL.Host)
 }
 
 func processSensorActivation(numSensors int) (htmlOutput string) {
