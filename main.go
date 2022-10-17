@@ -4,7 +4,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
+	"os"
 	"net/http"
 	"io/ioutil"
 	"encoding/json"
@@ -29,11 +29,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	//conrtol the mood sniffing algorithm intensity
 	beHappy := false
 
-	fmt.Fprintf(w, r.RemoteAddr+r.Method+r.URL.String())
-	
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
 
-	fmt.Fprintf(w, r.URL.String())
+	fmt.Fprintf(w,os.Getenv("SENSORS_URL")
     
 	if !beHappy { 
 		fmt.Fprintf(w, sadMood())
@@ -155,8 +153,4 @@ func addDataContent (content string) (htmlOutput string) {
 func main() {
 	
 	http.HandleFunc("/", handler)
-
-	var addr = flag.String("addr", ":8080", "addr to bind to")
-	log.Printf("listening on %s", *addr)
-	log.Fatal(http.ListenAndServe(*addr, nil))
 }
