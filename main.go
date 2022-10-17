@@ -33,7 +33,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
 
-	fmt.Fprintf(w,r.URL.Host())
+	fmt.Fprintf(w, r.URL.String())
     
 	if !beHappy { 
 		fmt.Fprintf(w, sadMood())
