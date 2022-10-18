@@ -29,11 +29,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	//conrtol the mood sniffing algorithm intensity
 	beHappy := false
 
-	fmt.Fprintf(w, r.RemoteAddr+r.Method+r.URL.String())
-	
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
 
-	fmt.Fprintf(w,os.Getenv("SENSORS_URL"))
+	fmt.Fprintf(w, "SENSROS_URL=")
+	fmt.Fprintf(w, os.Getenv("SENSORS_URL"))
     
 	if !beHappy { 
 		fmt.Fprintf(w, sadMood())
