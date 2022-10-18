@@ -21,20 +21,12 @@ type AllSensors struct {
 	Sensors []*Sensor
 }
 
-var ACTIVATE_SENSORS_API string = "http://mood-sensors.dev.dekt.io/activate"
-var MEASURE_SENSORS_API string = "http://mood-sensors.dev.dekt.io/measure"
-
 func handler(w http.ResponseWriter, r *http.Request) {
 	
 	//conrtol the mood sniffing algorithm intensity
 	beHappy := false
 
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
-
-	fmt.Fprintf(w, "SENSORS_ACTIVATE_API=")
-	fmt.Fprintf(w, os.Getenv("SENSORS_ACTIVATE_API"))
-	fmt.Fprintf(w, "SENSORS_MEASURE_API")
-	fmt.Fprintf(w, os.Getenv("SENSORS_MEASURE_API"))
     
 	if !beHappy { 
 		fmt.Fprintf(w, sadMood())
@@ -54,7 +46,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func processSensorActivation(numSensors int) (htmlOutput string) {
 
 	for i := 0; i < numSensors; i++ {
-		response, err := http.Get(ACTIVATE_SENSORS_API)	
+		response, err := http.Get(os.Getenv("SENSORS_ACTIVATE_API"))	
 		if err != nil { 
 			htmlOutput = "ERROR! in calling activate API"
 			return 
@@ -68,7 +60,7 @@ func processSensorActivation(numSensors int) (htmlOutput string) {
 
 func processSensorsMeasurement() (htmlOutput string) {
 	
-	response, err := http.Get(MEASURE_SENSORS_API)	 
+	response, err := http.Get(os.Getenv("SENSORS_MEASURE_API"))	 
 
 	if err != nil { 
 		htmlOutput = "ERROR! in calling measure API"
