@@ -31,8 +31,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
 
-	fmt.Fprintf(w, "SENSROS_URL=")
-	fmt.Fprintf(w, os.Getenv("SENSORS_URL"))
+	fmt.Fprintf(w, "SENSORS_ACTIVATE_API=")
+	fmt.Fprintf(w, os.Getenv("SENSORS_ACTIVATE_API"))
+	fmt.Fprintf(w, "SENSORS_MEASURE_API")
+	fmt.Fprintf(w, os.Getenv("SENSORS_MEASURE_API"))
     
 	if !beHappy { 
 		fmt.Fprintf(w, sadMood())
