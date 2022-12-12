@@ -24,7 +24,7 @@ type AllSensors struct {
 func handler(w http.ResponseWriter, r *http.Request) {
 	
 	//conrtol the mood sniffing algorithm intensity
-	beHappy := true
+	beHappy := false
 
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
     
