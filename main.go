@@ -152,7 +152,7 @@ func main() {
 	
 	//http.ListenAndServe(*addr, nil)
 	
-	err := http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
+	http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
     	//if err != nil {
         //	log.Fatal("ListenAndServe: ", err)
 }
