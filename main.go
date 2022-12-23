@@ -45,8 +45,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func processSensorActivation(numSensors int) (htmlOutput string) {
 
+	transCfg := &http.Transport{
+                 TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // ignore expired SSL certificates
+        }
+        client := &http.Client{Transport: transCfg}
+	
 	for i := 0; i < numSensors; i++ {
-		response, err := http.Get(os.Getenv("SENSORS_ACTIVATE_API"))	
+		response, err := client.Get(os.Getenv("SENSORS_ACTIVATE_API"))	
 		if err != nil { 
 			htmlOutput = "ERROR! in calling activate API"
 			return 
@@ -60,7 +65,12 @@ func processSensorActivation(numSensors int) (htmlOutput string) {
 
 func processSensorsMeasurement() (htmlOutput string) {
 	
-	response, err := http.Get(os.Getenv("SENSORS_MEASURE_API"))	 
+	transCfg := &http.Transport{
+                 TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // ignore expired SSL certificates
+        }
+        client := &http.Client{Transport: transCfg}
+	
+	response, err := client.Get(os.Getenv("SENSORS_MEASURE_API"))	 
 
 	if err != nil { 
 		htmlOutput = "ERROR! in calling measure API"
@@ -156,8 +166,6 @@ func main() {
 	transCfg := &http.Transport{
                  TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // accept self signed SSL certificates
          }
-	
-	http.Client{Transport: transCfg}
 	
 	http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
     	//if err != nil {
