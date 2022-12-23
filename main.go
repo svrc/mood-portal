@@ -163,11 +163,11 @@ func main() {
 	
 	//http.ListenAndServe(*addr, nil)
 	
-	transCfg := &http.Transport{
-                 TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // accept self signed SSL certificates
-         }
+	//transCfg := &http.Transport{
+           //      TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // accept self signed SSL certificates
+         //}
 	
-	http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
+	//http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
     	//if err != nil {
         //	log.Fatal("ListenAndServe: ", err)
 }
