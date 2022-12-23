@@ -56,8 +56,7 @@ func processSensorActivation(numSensors int) (htmlOutput string) {
 	for i := 0; i < numSensors; i++ {
 		response, err := tlsClient.Get(os.Getenv("SENSORS_ACTIVATE_API"))	
 		if err != nil { 
-			htmlOutput = err
-			return 
+			return err
 		} 	 	
 		defer response.Body.Close()
 	}
@@ -78,16 +77,14 @@ func processSensorsMeasurement() (htmlOutput string) {
 	response, err := tlsClient.Get(os.Getenv("SENSORS_MEASURE_API"))	 
 
 	if err != nil { 
-		htmlOutput = "ERROR! in calling measure API"
-		return 
+		return err
 	} 	 	
 
 	defer response.Body.Close()
 	responseData, err := ioutil.ReadAll(response.Body) 	
 
 	if err != nil { 	
-		htmlOutput = "ERROR! in reading response from measure API"
-		return
+		return err
 	}
 
 	var allSensors AllSensors
