@@ -15,6 +15,7 @@ type Sensor struct {
 	Id int `json:"id"`
 	Role string `json:"role"`
 	Mood string `json:"mood"`
+	Legacy string `json:"legacy"`
 }
 
 type AllSensors struct {
@@ -81,14 +82,15 @@ func processSensorsMeasurement() (htmlOutput string) {
 	htmlOutput += "<table border='1'>"
 	
 	htmlOutput += "<tr style='color:grey' align='center'>"
-	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Mood Information</th></tr>"
+	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Current Mood</th>"+ "<th>Pre-Existing Conditions</th>"
 	htmlOutput += "</tr>"
 
 	for _, sensor := range allSensors.Sensors {
   		htmlOutput += "<tr style='color:grey' align='left'>"
 		htmlOutput += "<td>" + strconv.Itoa(sensor.Id) + "</td>"
 		htmlOutput += "<td>" + sensor.Role + "&nbsp;</td>"
-		htmlOutput += "<td>" + sensor.Mood + "</td>"
+		htmlOutput += "<td>" + sensor.Mood + "&nbsp;</td>"
+		htmlOutput += "<td>" + sensor.Legacy + "</td>"
 		htmlOutput += "</tr>"
 	}
 
