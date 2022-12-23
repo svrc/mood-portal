@@ -27,7 +27,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
     
-	fmt.Fprintf(w, happyMood())
+	fmt.Fprintf(w, sadMood())
 		
 	//sensors activation
 	fmt.Fprintf(w,addDataTitle("/activate"))
@@ -122,7 +122,7 @@ func sadMood () (htmlOutput string) {
 	return
 }
 
-func happyMood () (htmlOutput string) {
+func sadMood () (htmlOutput string) {
 
 	htmlOutput += "<H2><font color='green'>"
 	htmlOutput += "Your overall mood is happy. Keep it that way!"
