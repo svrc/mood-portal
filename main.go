@@ -56,7 +56,7 @@ func processSensorActivation(numSensors int) (htmlOutput string) {
 	for i := 0; i < numSensors; i++ {
 		response, err := tlsClient.Get(os.Getenv("SENSORS_ACTIVATE_API"))	
 		if err != nil { 
-			htmlOutput = "ERROR! in calling activate API"
+			htmlOutput = err
 			return 
 		} 	 	
 		defer response.Body.Close()
