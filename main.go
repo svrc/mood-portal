@@ -2,7 +2,6 @@ package main
 
 
 import (
-	"flag"
 	"fmt"
 	"os"
 	"net/http"
@@ -154,7 +153,7 @@ func main() {
 	//http.ListenAndServe(*addr, nil)
 	
 	err := http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
-    	if err != nil {
-        	log.Fatal("ListenAndServe: ", err)
+    	//if err != nil {
+        //	log.Fatal("ListenAndServe: ", err)
     }
 }
