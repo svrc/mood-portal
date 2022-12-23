@@ -122,7 +122,7 @@ func sadMood () (htmlOutput string) {
 	return
 }
 
-func sadMood () (htmlOutput string) {
+func happyMood () (htmlOutput string) {
 
 	htmlOutput += "<H2><font color='green'>"
 	htmlOutput += "Your overall mood is happy. Keep it that way!"
