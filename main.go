@@ -2,10 +2,10 @@ package main
 
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"net/http"
-	"crypto/tls"
 	"io/ioutil"
 	"encoding/json"
 	"strconv"
@@ -45,13 +45,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func processSensorActivation(numSensors int) (htmlOutput string) {
 
-	transCfg := &http.Transport{
-                 TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // ignore expired SSL certificates
-        }
-        client := &http.Client{Transport: transCfg}
-	
 	for i := 0; i < numSensors; i++ {
-		response, err := client.Get(os.Getenv("SENSORS_ACTIVATE_API"))	
+		response, err := http.Get(os.Getenv("SENSORS_ACTIVATE_API"))	
 		if err != nil { 
 			htmlOutput = "ERROR! in calling activate API"
 			return 
@@ -65,12 +60,7 @@ func processSensorActivation(numSensors int) (htmlOutput string) {
 
 func processSensorsMeasurement() (htmlOutput string) {
 	
-	transCfg := &http.Transport{
-                 TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // ignore expired SSL certificates
-        }
-        client := &http.Client{Transport: transCfg}
-	
-	response, err := client.Get(os.Getenv("SENSORS_MEASURE_API"))	 
+	response, err := http.Get(os.Getenv("SENSORS_MEASURE_API"))	 
 
 	if err != nil { 
 		htmlOutput = "ERROR! in calling measure API"
@@ -159,15 +149,6 @@ func main() {
 	
 	http.HandleFunc("/", handler)
 
-	//var addr = flag.String("addr", ":8080", "addr to bind to")
-	
-	//http.ListenAndServe(*addr, nil)
-	
-	//transCfg := &http.Transport{
-           //      TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // accept self signed SSL certificates
-         //}
-	
-	//http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
-    	//if err != nil {
-        //	log.Fatal("ListenAndServe: ", err)
+	var addr = flag.String("addr", ":8080", "addr to bind to")
+	http.ListenAndServe(*addr, nil)
 }
