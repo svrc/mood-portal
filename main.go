@@ -81,7 +81,7 @@ func processSensorsMeasurement() (htmlOutput string) {
 	htmlOutput += "<table border='1'>"
 	
 	htmlOutput += "<tr style='color:grey' align='center'>"
-	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Mood</th></tr>"
+	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Mood Information</th></tr>"
 	htmlOutput += "</tr>"
 
 	for _, sensor := range allSensors.Sensors {
