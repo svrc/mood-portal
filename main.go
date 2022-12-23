@@ -48,7 +48,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func processSensorActivation(numSensors int) (htmlOutput string) {
 
 	tlsConfig := &http.Transport{
-	 	TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	 	TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
 	 }
 
 
@@ -69,7 +69,7 @@ func processSensorActivation(numSensors int) (htmlOutput string) {
 func processSensorsMeasurement() (htmlOutput string) {
 	
 	tlsConfig := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
 	}
 
 
