@@ -26,11 +26,11 @@ type AllSensors struct {
 func handler(w http.ResponseWriter, r *http.Request) {
 	
 	//conrtol the mood sniffing algorithm intensity
-	moodAlgo:= "agressive"
+	moodAlgo:= "mild-snif"
 
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
     
-	if moodAlgo == "agressive" { 
+	if moodAlgo == "agressive-snif" { 
 		fmt.Fprintf(w, sadMood())
 	} else { 
 		fmt.Fprintf(w, happyMood())
