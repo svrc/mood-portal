@@ -149,6 +149,12 @@ func main() {
 	
 	http.HandleFunc("/", handler)
 
-	var addr = flag.String("addr", ":8080", "addr to bind to")
-	http.ListenAndServe(*addr, nil)
+	//var addr = flag.String("addr", ":8080", "addr to bind to")
+	
+	//http.ListenAndServe(*addr, nil)
+	
+	err := http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
+    	if err != nil {
+        	log.Fatal("ListenAndServe: ", err)
+    }
 }
