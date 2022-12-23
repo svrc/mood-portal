@@ -26,11 +26,11 @@ type AllSensors struct {
 func handler(w http.ResponseWriter, r *http.Request) {
 	
 	//conrtol the mood sniffing algorithm intensity
-	beHappy := false
+	moodAlgo:= "agressive"
 
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
     
-	if !beHappy { 
+	if moodAlgo == "agressive" { 
 		fmt.Fprintf(w, sadMood())
 	} else { 
 		fmt.Fprintf(w, happyMood())
@@ -48,7 +48,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func processSensorActivation(numSensors int) (htmlOutput string) {
 
 	tlsConfig := &http.Transport{
-	 	TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
+	 	TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	 }
 
 
@@ -68,7 +68,7 @@ func processSensorActivation(numSensors int) (htmlOutput string) {
 func processSensorsMeasurement() (htmlOutput string) {
 	
 	tlsConfig := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 
 
