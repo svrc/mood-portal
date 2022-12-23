@@ -27,7 +27,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
     
-	fmt.Fprintf(w, sadMood())
+	fmt.Fprintf(w, happyMood())
 		
 	//sensors activation
 	fmt.Fprintf(w,addDataTitle("/activate"))
