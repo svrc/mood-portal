@@ -157,6 +157,8 @@ func main() {
                  TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // accept self signed SSL certificates
          }
 	
+	http.Client{Transport: transCfg}
+	
 	http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
     	//if err != nil {
         //	log.Fatal("ListenAndServe: ", err)
