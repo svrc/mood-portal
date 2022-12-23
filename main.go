@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"net/http"
+	"crypto/tls"
 	"io/ioutil"
 	"encoding/json"
 	"strconv"
@@ -46,8 +47,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func processSensorActivation(numSensors int) (htmlOutput string) {
 
+	tlsConfig := &http.Transport{
+	 	TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	 }
+
+
+	tlsClient := &http.Client{Transport: tlsConfig}
 	for i := 0; i < numSensors; i++ {
-		response, err := http.Get(os.Getenv("SENSORS_ACTIVATE_API"))	
+		response, err := tlsClient.Get(os.Getenv("SENSORS_ACTIVATE_API"))	
 		if err != nil { 
 			htmlOutput = "ERROR! in calling activate API"
 			return 
@@ -61,7 +68,14 @@ func processSensorActivation(numSensors int) (htmlOutput string) {
 
 func processSensorsMeasurement() (htmlOutput string) {
 	
-	response, err := http.Get(os.Getenv("SENSORS_MEASURE_API"))	 
+	tlsConfig := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+
+
+	tlsClient := &http.Client{Transport: tlsConfig}
+
+	response, err := tlsClient.Get(os.Getenv("SENSORS_MEASURE_API"))	 
 
 	if err != nil { 
 		htmlOutput = "ERROR! in calling measure API"
