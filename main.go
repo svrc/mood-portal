@@ -27,8 +27,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
     
-	fmt.Fprintf(w, processAgressiveSniffing())
-	//fmt.Fprintf(w, processMildSniffing())
+	if os.Getenv("MOOD_SNIFFING_ALGO") == "aggressive" {
+		fmt.Fprintf(w, processAgressiveSniffing())
+	}
+	
+	if os.Getenv("MOOD_SNIFFING_ALGO") == "mild" {
+		fmt.Fprintf(w, processMildSniffing())
+	}
 		
 	//sensors activation
 	fmt.Fprintf(w,addDataTitle("/activate"))
