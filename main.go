@@ -27,8 +27,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
 
-	sniffLevel := os.Getenv("SNIFF_LEVEL")
-    
 	fmt.Fprintf(w, 	sniffLevel)
 
 	if sniffLevel == "2" {
