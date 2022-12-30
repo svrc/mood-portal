@@ -27,8 +27,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
 
-	fmt.Fprintf(w, 	sniffLevel)
-
 	if sniffLevel == "2" {
 		fmt.Fprintf(w, processAgressiveSniffing())
 	}
@@ -125,8 +123,8 @@ func processAgressiveSniffing () (htmlOutput string) {
 	htmlOutput += "</font>"
 	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>"
 	htmlOutput += "</H2>"
-	htmlOutput += addDataTitle("mood sniffing algorithm")
-	htmlOutput += addDataContent("Agressive")
+	htmlOutput += addDataTitle("mood sniffing level")
+	htmlOutput += addDataContent("2 (aggressive)")
 	return
 }
 
@@ -137,8 +135,8 @@ func processMildSniffing () (htmlOutput string) {
 	htmlOutput += "</font>"
 	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
 	htmlOutput += "</H2>"
-	htmlOutput += addDataTitle("mood sniffing algorithm")
-	htmlOutput += addDataContent("Mild")
+	htmlOutput += addDataTitle("mood sniffing level")
+	htmlOutput += addDataContent("1 (mild)")
 	return
 }
 
