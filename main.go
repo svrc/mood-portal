@@ -26,7 +26,11 @@ type AllSensors struct {
 func handler(w http.ResponseWriter, r *http.Request) {
 	
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
+
+	sniffLevel := os.Getenv("MOOD_SNIFFING_ALGO")
     
+	fmt.Fprintf(w, 	sniffLevel)
+	
 	if os.Getenv("MOOD_SNIFFING_ALGO") == "aggressive" {
 		fmt.Fprintf(w, processAgressiveSniffing())
 	}
