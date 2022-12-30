@@ -31,11 +31,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
     
 	fmt.Fprintf(w, 	sniffLevel)
 
-	if sniffLevel== "1" {
+	if sniffLevel == "1" {
 		fmt.Fprintf(w, processAgressiveSniffing())
 	}
 	
-	if sniffLevel== "2" {
+	if sniffLevel == "2" {
 		fmt.Fprintf(w, processMildSniffing())
 	}
 		
