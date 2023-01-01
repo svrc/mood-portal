@@ -99,7 +99,7 @@ func processSensorsMeasurement() (htmlOutput string) {
 		//if sensor.Mood == "happy" {
 //			numHappy++
 //		}
-		numHappy++
+		//numHappy++
 //	}
 
 	//ratioHappy := numHappy / SENSORS_BATCH
