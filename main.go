@@ -47,11 +47,30 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	sniffLevel := os.Getenv("SNIFF_LEVEL")
 
 	if sniffLevel == "2" {
-		fmt.Fprintf(w, processAgressiveSniffing())
+
+		if happyRatio > 9 {
+			fmt.Fprintf(w, addHappyDog())
+
+		}
+		else {
+			fmt.Fprintf(w, addSadDog())
+
+		}
+		fmt.Fprintf(w,addDataTitle("mood sniffing level"))
+		fmt.Fprintf(w,addDataContent("2 (agressive)"))
 	}
 	
 	if sniffLevel == "1" {
-		fmt.Fprintf(w, processMildSniffing())
+		if happyRatio > 1 {
+			fmt.Fprintf(w, addHappyDog())
+
+		}
+		else {
+			fmt.Fprintf(w, addSadDog())
+
+		}
+		addDataTitle("mood sniffing level")
+		addDataContent("1 (mild)")
 	}
 		
 	
@@ -148,27 +167,23 @@ func addHeader (myHeader string) (htmlOutput string) {
 	return
 }
 
-func processAgressiveSniffing () (htmlOutput string) {
+func addSadDog () (htmlOutput string) {
 
 	htmlOutput += "<H2><font color='red'>"
 	htmlOutput += "Your overall mood is not great. We hope it will get better."
 	htmlOutput += "</font>"
 	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>"
 	htmlOutput += "</H2>"
-	htmlOutput += addDataTitle("mood sniffing level")
-	htmlOutput += addDataContent("2 (aggressive)")
 	return
 }
 
-func processMildSniffing () (htmlOutput string) {
+func addHappyDog () (htmlOutput string) {
 
 	htmlOutput += "<H2><font color='green'>"
 	htmlOutput += "Your overall mood is happy. Keep it that way!"
 	htmlOutput += "</font>"
 	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
 	htmlOutput += "</H2>"
-	htmlOutput += addDataTitle("mood sniffing level")
-	htmlOutput += addDataContent("1 (mild)")
 	return
 }
 
