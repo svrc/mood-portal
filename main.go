@@ -44,7 +44,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 
 
-	happyRatio: calculateHappyRatio()
+	happyRatio:= calculateHappyRatio()
+	fmt.Fprintf(w,"<BR><BR>happyRatio="+strconv.Itoa(happyRatio)+"<BR><BR>")
 
 	//render dog section
 	sniffLevel := os.Getenv("SNIFF_LEVEL")
