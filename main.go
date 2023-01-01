@@ -13,8 +13,8 @@ import (
 )
 
 var SENSORS_BATCH int = 20
-var AGRRESSIVE_HAPPY_THRESHOLD uint64 = 0.1
-var MILD_HAPPY_THRESHOLD uint64 = 0.9
+var AGRRESSIVE_HAPPY_THRESHOLD float32 = 0.1
+var MILD_HAPPY_THRESHOLD float32 = 0.9
 
 type Sensor struct {
 	Id int `json:"id"`
@@ -34,8 +34,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
 
 	//process APIs calls
-	processSensorActivation()
-	processSensorsMeasurement()
+	if processSensorActivation() != "success" {
+		return
+	}
+	
+	if processSensorsMeasurement() != "success" {
+		return
+	}
+
+
 
 	//happyRatio: calculateHappyRatio()
 
@@ -70,7 +77,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w,addDataContent(createResultsTable()))
 }
 
-func processSensorActivation() {
+func processSensorActivation() (String status){
 
 	tlsConfig := &http.Transport{
 	 	TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
@@ -81,13 +88,15 @@ func processSensorActivation() {
 	for i := 0; i < SENSORS_BATCH ; i++ {
 		response, err := tlsClient.Get(os.Getenv("SENSORS_ACTIVATE_API"))	
 		if err != nil { 
-			fmt.Fprintf("Error in calling activate API: " + err.Error())
+			status = "Error in calling activate API: " + err.Error()
 		} 	 	
 		defer response.Body.Close()
 	}
+	status = "success"
+	return 
 }
 
-func processSensorsMeasurement() {
+func processSensorsMeasurement() (String status){
 	
 	tlsConfig := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
@@ -99,20 +108,23 @@ func processSensorsMeasurement() {
 	response, err := tlsClient.Get(os.Getenv("SENSORS_MEASURE_API"))	 
 
 	if err != nil { 
-		fmt.Fprintf("Error in calling measure API: " + err.Error())
+		status = "Error in calling measure API: " + err.Error()
 	} 	 	
 
 	defer response.Body.Close()
 	responseData, err := ioutil.ReadAll(response.Body) 	
 
 	if err != nil { 	
-		fmt.Fprintf("Error in reading measure results: " + err.Error())
+		status = "Error in reading measure results: " + err.Error())
 	}
 
 	json.Unmarshal(responseData, &AllSensorsData.Sensors)
+
+	status = "success"
+	return 
 }
 
-func calculateHappyRatio () (uint64 happyRatio){
+func calculateHappyRatio () (float32 happyRatio){
 	
 	for _, sensor := range AllSensorsData.Sensors {
 		//happyRatio++
