@@ -77,7 +77,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w,addDataContent(createResultsTable()))
 }
 
-func processSensorActivation() (String status) {
+func processSensorActivation() (status string) {
 
 	tlsConfig := &http.Transport{
 	 	TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
@@ -95,7 +95,7 @@ func processSensorActivation() (String status) {
 	status = "success"
 }
 
-func processSensorsMeasurement() (String status) {
+func processSensorsMeasurement() (status string) {
 	
 	tlsConfig := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
@@ -122,7 +122,7 @@ func processSensorsMeasurement() (String status) {
 	status = "success"
 }
 
-func calculateHappyRatio () (float32 happyRatio){
+func calculateHappyRatio () (happyRatio float32){
 	
 	for _, sensor := range AllSensorsData.Sensors {
 		//happyRatio++
