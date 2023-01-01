@@ -50,21 +50,21 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	sniffLevel := os.Getenv("SNIFF_LEVEL")
 	if sniffLevel == "2" {
 
-		//if happyRatio > AGRRESSIVE_HAPPY_THRESHOLD {
-		//	fmt.Fprintf(w, addHappyDog())
-		//} else {
+		if happyRatio > AGRRESSIVE_HAPPY_THRESHOLD {
+			fmt.Fprintf(w, addHappyDog())
+		} else {
 			fmt.Fprintf(w, addSadDog())
-		//}
+		}
 		fmt.Fprintf(w,addDataTitle("mood sniffing level"))
 		fmt.Fprintf(w,addDataContent("2 (agressive)"))
 	}
 	
 	if sniffLevel == "1" {
-		//if happyRatio > MILD_HAPPY_THRESHOLD {
+		if happyRatio > MILD_HAPPY_THRESHOLD {
 			fmt.Fprintf(w, addHappyDog())
-	//	} else {
-	//		fmt.Fprintf(w, addSadDog())
-	//	}
+		} else {
+			fmt.Fprintf(w, addSadDog())
+		}
 		fmt.Fprintf(w,addDataTitle("mood sniffing level"))
 		fmt.Fprintf(w,addDataContent("1 (mild)"))
 	}
