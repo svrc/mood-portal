@@ -38,29 +38,27 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	
-	happyRatio: calculateHappyRatio()
+	//happyRatio: calculateHappyRatio()
 
-	fmt.Fprintf(w,"<BR><BR>happyRatio="+ strconv.Itoa(happyRatio) + "<BR><BR>")
-	
 	//render dog section
 	sniffLevel := os.Getenv("SNIFF_LEVEL")
 	if sniffLevel == "2" {
 
-		if happyRatio > 9 {
-			fmt.Fprintf(w, addHappyDog())
-		} else {
+		//if happyRatio > 9 {
+		//	fmt.Fprintf(w, addHappyDog())
+		//} else {
 			fmt.Fprintf(w, addSadDog())
-		}
+		//}
 		fmt.Fprintf(w,addDataTitle("mood sniffing level"))
 		fmt.Fprintf(w,addDataContent("2 (agressive)"))
 	}
 	
 	if sniffLevel == "1" {
-		if happyRatio > 1 {
+		//if happyRatio > 1 {
 			fmt.Fprintf(w, addHappyDog())
-		} else {
-			fmt.Fprintf(w, addSadDog())
-		}
+	//	} else {
+	//		fmt.Fprintf(w, addSadDog())
+	//	}
 		addDataTitle("mood sniffing level")
 		addDataContent("1 (mild)")
 	}
@@ -125,6 +123,7 @@ func calculateHappyRatio (int happyRatio){
 	for _, sensor := range allSensors.Sensors {
 		happyRatio++
 	}
+	fmt.Fprintf(w,"<BR><BR>happyRatio="+ strconv.Itoa(happyRatio) + "<BR><BR>")
 	return 
 
 }
