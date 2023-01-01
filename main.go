@@ -96,9 +96,10 @@ func processSensorsMeasurement() (htmlOutput string) {
 	numHappy := 0
 	for _, sensor := range allSensors.Sensors {
 
-		//if sensor.Mood == "happy" {
+		if sensor.Mood == "happy" {
 			numHappy++
-		//}
+		}
+		numHappy++
 	}
 
 	//ratioHappy := numHappy / SENSORS_BATCH
