@@ -12,7 +12,7 @@ import (
 	"strconv"
 )
 
-var SENSORS_BATCH int = 10
+var SENSORS_BATCH int = 20
 
 type Sensor struct {
 	Id int `json:"id"`
@@ -29,6 +29,19 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
 
+	//process APIs calls
+	err := processSensorActivation()
+	err := processSensorsMeasurement()
+
+	if err != nil {
+		fmt.Fprintf(w, err())
+		return
+	}
+	
+	happyRatio: calculateHappyRatio()
+	
+	//render dog section
+	
 	sniffLevel := os.Getenv("SNIFF_LEVEL")
 
 	if sniffLevel == "2" {
@@ -39,16 +52,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, processMildSniffing())
 	}
 		
-	//sensors activation
-	fmt.Fprintf(w,addDataTitle("/activate"))
-	fmt.Fprintf(w,addDataContent(processSensorActivation(SENSORS_BATCH)))
 	
-	//sensors measurements
+	//render API section
+	fmt.Fprintf(w,addDataTitle("/activate"))
+	fmt.Fprintf(w,addDataContent("All sensors activated successfully"))
 	fmt.Fprintf(w,addDataTitle("/measure"))
-	fmt.Fprintf(w,addDataContent(processSensorsMeasurement()))
+	fmt.Fprintf(w,addDataContent(createResultsTable()))
 }
 
-func processSensorActivation(numSensors int) (htmlOutput string) {
+func processSensorActivation() (err string) {
 
 	tlsConfig := &http.Transport{
 	 	TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
@@ -59,16 +71,14 @@ func processSensorActivation(numSensors int) (htmlOutput string) {
 	for i := 0; i < numSensors; i++ {
 		response, err := tlsClient.Get(os.Getenv("SENSORS_ACTIVATE_API"))	
 		if err != nil { 
-			return err.Error()
+			return "Error in calling activate API: " + err.Error()
 		} 	 	
 		defer response.Body.Close()
 	}
-	
-	htmlOutput += "All sensors activated successfully"
-	return
+	return nil
 }
 
-func processSensorsMeasurement() (htmlOutput string) {
+func processSensorsMeasurement() (err string){
 	
 	tlsConfig := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
@@ -80,30 +90,33 @@ func processSensorsMeasurement() (htmlOutput string) {
 	response, err := tlsClient.Get(os.Getenv("SENSORS_MEASURE_API"))	 
 
 	if err != nil { 
-		return err.Error()
+		return "Error in calling measure API: " err.Error()
 	} 	 	
 
 	defer response.Body.Close()
 	responseData, err := ioutil.ReadAll(response.Body) 	
 
 	if err != nil { 	
-		err.Error()
+		return "Error in reading measure results: " err.Error()
 	}
 
 	var allSensors AllSensors
 	json.Unmarshal(responseData, &allSensors.Sensors)
 
-	//numHappy := 0
-	//for _, sensor := range allSensors.Sensors {
+	return
 
-		//if sensor.Mood == "happy" {
-//			numHappy++
-//		}
-		//numHappy++
-//	}
+}
 
-	//ratioHappy := numHappy / SENSORS_BATCH
-//	htmlOutput += "<BR><BR>ratioHappy=" + strconv.Itoa(numHappy) + "<BR><BR>"
+func calculateHappyRatio (int happyRatio){
+	
+	for _, sensor := range allSensors.Sensors {
+		happyRatio++
+	}
+	return 
+
+}
+
+func createResultsTable (htmlOutput string) {
 
 	htmlOutput += "<table border='1'>"
 	
@@ -121,7 +134,8 @@ func processSensorsMeasurement() (htmlOutput string) {
 	}
 
 	htmlOutput += "</table>"
-	return 
+	return
+	
 }
 
 func addHeader (myHeader string) (htmlOutput string) {
