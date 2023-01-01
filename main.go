@@ -43,18 +43,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w,"<BR><BR>happyRatio="+ strconv.Itoa(happyRatio) + "<BR><BR>")
 	
 	//render dog section
-	
 	sniffLevel := os.Getenv("SNIFF_LEVEL")
-
 	if sniffLevel == "2" {
 
 		if happyRatio > 9 {
 			fmt.Fprintf(w, addHappyDog())
-
-		}
-		else {
+		} else {
 			fmt.Fprintf(w, addSadDog())
-
 		}
 		fmt.Fprintf(w,addDataTitle("mood sniffing level"))
 		fmt.Fprintf(w,addDataContent("2 (agressive)"))
@@ -63,11 +58,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if sniffLevel == "1" {
 		if happyRatio > 1 {
 			fmt.Fprintf(w, addHappyDog())
-
-		}
-		else {
+		} else {
 			fmt.Fprintf(w, addSadDog())
-
 		}
 		addDataTitle("mood sniffing level")
 		addDataContent("1 (mild)")
