@@ -12,6 +12,8 @@ import (
 	"strconv"
 )
 
+var SENSORS_BATCH int = 10
+
 type Sensor struct {
 	Id int `json:"id"`
 	Role string `json:"role"`
@@ -39,7 +41,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		
 	//sensors activation
 	fmt.Fprintf(w,addDataTitle("/activate"))
-	fmt.Fprintf(w,addDataContent(processSensorActivation(10)))
+	fmt.Fprintf(w,addDataContent(processSensorActivation(SENSORS_BATCH)))
 	
 	//sensors measurements
 	fmt.Fprintf(w,addDataTitle("/measure"))
@@ -90,6 +92,17 @@ func processSensorsMeasurement() (htmlOutput string) {
 
 	var allSensors AllSensors
 	json.Unmarshal(responseData, &allSensors.Sensors)
+
+	numHappy := 0
+	for _, sensor := range allSensors.Sensors {
+
+		if sensor.Mood == "happy" {
+			numHappy++
+		}
+	}
+
+	ratioHappy := numHappy / SENSORS_BATCH
+	htmlOutput += "<BR><BR>ratioHappy=" + ratioHappy + "<BR><BR>"
 
 	htmlOutput += "<table border='1'>"
 	
