@@ -77,7 +77,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w,addDataContent(createResultsTable()))
 }
 
-func processSensorActivation() (String status){
+func processSensorActivation() (String status) {
 
 	tlsConfig := &http.Transport{
 	 	TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
@@ -93,9 +93,9 @@ func processSensorActivation() (String status){
 		defer response.Body.Close()
 	}
 	status = "success"
+}
 
-
-func processSensorsMeasurement() (String status){
+func processSensorsMeasurement() (String status) {
 	
 	tlsConfig := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
