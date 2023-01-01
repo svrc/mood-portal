@@ -13,8 +13,8 @@ import (
 )
 
 var SENSORS_BATCH int = 20
-var AGRRESSIVE_HAPPY_THRESHOLD float32 = 0.1
-var MILD_HAPPY_THRESHOLD float32 = 0.9
+var AGRRESSIVE_HAPPY_THRESHOLD int = 15
+var MILD_HAPPY_THRESHOLD int = 2
 
 type Sensor struct {
 	Id int `json:"id"`
@@ -44,14 +44,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 
 
-	happyRatio:= calculateHappyRatio()
-	fmt.Fprintf(w,"<BR><BR>happyRatio="+strconv.Itoa(happyRatio)+"<BR><BR>")
+	fmt.Fprintf(w,"<BR><BR>happyRatio="+strconv.Itoa(getNumHappy())+"<BR><BR>")
 
 	//render dog section
 	sniffLevel := os.Getenv("SNIFF_LEVEL")
 	if sniffLevel == "2" {
 
-		if happyRatio > AGRRESSIVE_HAPPY_THRESHOLD {
+		if getNumHappy > AGRRESSIVE_HAPPY_THRESHOLD {
 			fmt.Fprintf(w, addHappyDog())
 		} else {
 			fmt.Fprintf(w, addSadDog())
@@ -61,7 +60,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 	
 	if sniffLevel == "1" {
-		if happyRatio > MILD_HAPPY_THRESHOLD {
+		if getNumHappy > MILD_HAPPY_THRESHOLD {
 			fmt.Fprintf(w, addHappyDog())
 		} else {
 			fmt.Fprintf(w, addSadDog())
@@ -125,15 +124,13 @@ func processSensorsMeasurement() (status string) {
 	return
 }
 
-func calculateHappyRatio () (happyRatio float32){
+func getNumHappy () (numHappy int){
 	
-	numHappy := 0
 	for _, sensor := range AllSensorsData.Sensors {
 		if sensor.Mood == "happy" {
 			numHappy++
 		}
 	}
-	happyRatio=numHappy/SENSORS_BATCH
 	return
 }
 
