@@ -13,6 +13,8 @@ import (
 )
 
 var SENSORS_BATCH int = 20
+var AGRRESSIVE_HAPPY_THRESHOLD long = 0.1
+var MILD_HAPPY_THRESHOLD long = 0.9
 
 type Sensor struct {
 	Id int `json:"id"`
@@ -30,21 +32,16 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
 
 	//process APIs calls
-	err := processSensorActivation()
-	err := processSensorsMeasurement()
+	processSensorActivation()
+	processSensorsMeasurement()
 
-	if err != nil {
-		fmt.Fprintf(w, err())
-		return
-	}
-	
 	//happyRatio: calculateHappyRatio()
 
 	//render dog section
 	sniffLevel := os.Getenv("SNIFF_LEVEL")
 	if sniffLevel == "2" {
 
-		//if happyRatio > 9 {
+		//if happyRatio > AGRRESSIVE_HAPPY_THRESHOLD {
 		//	fmt.Fprintf(w, addHappyDog())
 		//} else {
 			fmt.Fprintf(w, addSadDog())
@@ -54,7 +51,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 	
 	if sniffLevel == "1" {
-		//if happyRatio > 1 {
+		//if happyRatio > MILD_HAPPY_THRESHOLD {
 			fmt.Fprintf(w, addHappyDog())
 	//	} else {
 	//		fmt.Fprintf(w, addSadDog())
@@ -71,7 +68,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w,addDataContent(createResultsTable()))
 }
 
-func processSensorActivation() (err string) {
+func processSensorActivation() {
 
 	tlsConfig := &http.Transport{
 	 	TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
@@ -82,14 +79,13 @@ func processSensorActivation() (err string) {
 	for i := 0; i < SENSORS_BATCH ; i++ {
 		response, err := tlsClient.Get(os.Getenv("SENSORS_ACTIVATE_API"))	
 		if err != nil { 
-			return "Error in calling activate API: " + err.Error()
+			fmt.Fprintf("Error in calling activate API: " + err.Error())
 		} 	 	
 		defer response.Body.Close()
 	}
-	return nil
 }
 
-func processSensorsMeasurement() (err string){
+func processSensorsMeasurement() {
 	
 	tlsConfig := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
@@ -101,24 +97,21 @@ func processSensorsMeasurement() (err string){
 	response, err := tlsClient.Get(os.Getenv("SENSORS_MEASURE_API"))	 
 
 	if err != nil { 
-		return "Error in calling measure API: " + err.Error()
+		fmt.Fprintf("Error in calling measure API: " + err.Error())
 	} 	 	
 
 	defer response.Body.Close()
 	responseData, err := ioutil.ReadAll(response.Body) 	
 
 	if err != nil { 	
-		return "Error in reading measure results: " + err.Error()
+		fmt.Fprintf("Error in reading measure results: " + err.Error())
 	}
 
 	var allSensors AllSensors
 	json.Unmarshal(responseData, &allSensors.Sensors)
-
-	return
-
 }
 
-func calculateHappyRatio (int happyRatio){
+func calculateHappyRatio (long happyRatio){
 	
 	for _, sensor := range allSensors.Sensors {
 		happyRatio++
