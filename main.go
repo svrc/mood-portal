@@ -39,6 +39,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 	
 	happyRatio: calculateHappyRatio()
+
+	fmt.Fprintf(w,"<BR><BR>happyRatio="+ strconv.Itoa(happyRatio) + "<BR><BR>"
 	
 	//render dog section
 	
@@ -68,7 +70,7 @@ func processSensorActivation() (err string) {
 
 
 	tlsClient := &http.Client{Transport: tlsConfig}
-	for i := 0; i < numSensors; i++ {
+	for i := 0; i < SENSORS_BATCH ; i++ {
 		response, err := tlsClient.Get(os.Getenv("SENSORS_ACTIVATE_API"))	
 		if err != nil { 
 			return "Error in calling activate API: " + err.Error()
@@ -90,14 +92,14 @@ func processSensorsMeasurement() (err string){
 	response, err := tlsClient.Get(os.Getenv("SENSORS_MEASURE_API"))	 
 
 	if err != nil { 
-		return "Error in calling measure API: " err.Error()
+		return "Error in calling measure API: " + err.Error()
 	} 	 	
 
 	defer response.Body.Close()
 	responseData, err := ioutil.ReadAll(response.Body) 	
 
 	if err != nil { 	
-		return "Error in reading measure results: " err.Error()
+		return "Error in reading measure results: " + err.Error()
 	}
 
 	var allSensors AllSensors
