@@ -40,7 +40,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	happyRatio: calculateHappyRatio()
 
-	fmt.Fprintf(w,"<BR><BR>happyRatio="+ strconv.Itoa(happyRatio) + "<BR><BR>"
+	fmt.Fprintf(w,"<BR><BR>happyRatio="+ strconv.Itoa(happyRatio) + "<BR><BR>")
 	
 	//render dog section
 	
