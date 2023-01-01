@@ -13,8 +13,8 @@ import (
 )
 
 var SENSORS_BATCH int = 20
-var AGRRESSIVE_HAPPY_THRESHOLD long = 0.1
-var MILD_HAPPY_THRESHOLD long = 0.9
+var AGRRESSIVE_HAPPY_THRESHOLD uint64 = 0.1
+var MILD_HAPPY_THRESHOLD uint64 = 0.9
 
 type Sensor struct {
 	Id int `json:"id"`
@@ -26,6 +26,8 @@ type Sensor struct {
 type AllSensors struct {
 	Sensors []*Sensor
 }
+
+var AllSensorsData AllSensors
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
@@ -107,21 +109,21 @@ func processSensorsMeasurement() {
 		fmt.Fprintf("Error in reading measure results: " + err.Error())
 	}
 
-	var allSensors AllSensors
-	json.Unmarshal(responseData, &allSensors.Sensors)
+	json.Unmarshal(responseData, &AllSensorsData.Sensors)
 }
 
-func calculateHappyRatio (long happyRatio){
+func calculateHappyRatio () (uint64 happyRatio){
 	
-	for _, sensor := range allSensors.Sensors {
-		happyRatio++
+	for _, sensor := range AllSensorsData.Sensors {
+		//happyRatio++
 	}
-	fmt.Fprintf(w,"<BR><BR>happyRatio="+ strconv.Itoa(happyRatio) + "<BR><BR>")
-	return 
+	//fmt.Fprintf(w,"<BR><BR>happyRatio="+ strconv.Itoa(happyRatio) + "<BR><BR>")
+	happyRatio=0.9
+	return
 
 }
 
-func createResultsTable (htmlOutput string) {
+func createResultsTable () (htmlOutput string) {
 
 	htmlOutput += "<table border='1'>"
 	
@@ -129,7 +131,7 @@ func createResultsTable (htmlOutput string) {
 	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Current Mood</th>"+ "<th>Pre-Existing</th>"
 	htmlOutput += "</tr>"
 
-	for _, sensor := range allSensors.Sensors {
+	for _, sensor := range AllSensorsData.Sensors {
   		htmlOutput += "<tr style='color:grey' align='left'>"
 		htmlOutput += "<td>" + strconv.Itoa(sensor.Id) + "</td>"
 		htmlOutput += "<td>" + sensor.Role + "&nbsp;</td>"
