@@ -43,14 +43,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 
-
-	fmt.Fprintf(w,"<BR><BR>happyRatio="+strconv.Itoa(getNumHappy())+"<BR><BR>")
+	numHappy:= getNumHappy()
+	fmt.Fprintf(w,"<BR><BR>happyRatio="+strconv.Itoa(numHappy)+"<BR><BR>")
 
 	//render dog section
 	sniffLevel := os.Getenv("SNIFF_LEVEL")
 	if sniffLevel == "2" {
 
-		if getNumHappy > AGRRESSIVE_HAPPY_THRESHOLD {
+		if numHappy > AGRRESSIVE_HAPPY_THRESHOLD {
 			fmt.Fprintf(w, addHappyDog())
 		} else {
 			fmt.Fprintf(w, addSadDog())
@@ -60,7 +60,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 	
 	if sniffLevel == "1" {
-		if getNumHappy > MILD_HAPPY_THRESHOLD {
+		if numHappy > MILD_HAPPY_THRESHOLD {
 			fmt.Fprintf(w, addHappyDog())
 		} else {
 			fmt.Fprintf(w, addSadDog())
