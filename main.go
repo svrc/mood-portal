@@ -96,13 +96,13 @@ func processSensorsMeasurement() (htmlOutput string) {
 	numHappy := 0
 	for _, sensor := range allSensors.Sensors {
 
-		if sensor.Mood == "happy" {
+		//if sensor.Mood == "happy" {
 			numHappy++
-		}
+		//}
 	}
 
 	ratioHappy := numHappy / SENSORS_BATCH
-	htmlOutput += "<BR><BR>ratioHappy=" + strconv.Itoa(ratioHappy) + "<BR><BR>"
+	htmlOutput += "<BR><BR>ratioHappy=" + strconv.Itoa(numHappy) + "<BR><BR>"
 
 	htmlOutput += "<table border='1'>"
 	
