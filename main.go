@@ -102,7 +102,7 @@ func processSensorsMeasurement() (htmlOutput string) {
 	}
 
 	ratioHappy := numHappy / SENSORS_BATCH
-	htmlOutput += "<BR><BR>ratioHappy=" + ratioHappy + "<BR><BR>"
+	htmlOutput += "<BR><BR>ratioHappy=" + strconv.Itoa(ratioHappy) + "<BR><BR>"
 
 	htmlOutput += "<table border='1'>"
 	
