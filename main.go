@@ -93,8 +93,7 @@ func processSensorActivation() (String status){
 		defer response.Body.Close()
 	}
 	status = "success"
-	return 
-}
+
 
 func processSensorsMeasurement() (String status){
 	
@@ -115,13 +114,12 @@ func processSensorsMeasurement() (String status){
 	responseData, err := ioutil.ReadAll(response.Body) 	
 
 	if err != nil { 	
-		status = "Error in reading measure results: " + err.Error())
+		status = "Error in reading measure results: " + err.Error()
 	}
 
 	json.Unmarshal(responseData, &AllSensorsData.Sensors)
 
 	status = "success"
-	return 
 }
 
 func calculateHappyRatio () (float32 happyRatio){
@@ -131,8 +129,6 @@ func calculateHappyRatio () (float32 happyRatio){
 	}
 	//fmt.Fprintf(w,"<BR><BR>happyRatio="+ strconv.Itoa(happyRatio) + "<BR><BR>")
 	happyRatio=0.9
-	return
-
 }
 
 func createResultsTable () (htmlOutput string) {
@@ -153,8 +149,6 @@ func createResultsTable () (htmlOutput string) {
 	}
 
 	htmlOutput += "</table>"
-	return
-	
 }
 
 func addHeader (myHeader string) (htmlOutput string) {
@@ -162,7 +156,6 @@ func addHeader (myHeader string) (htmlOutput string) {
     htmlOutput += "<H1><font color='navy'>"
 	htmlOutput += myHeader
 	htmlOutput += "</font></H1>"
-	return
 }
 
 func addSadDog () (htmlOutput string) {
@@ -172,7 +165,6 @@ func addSadDog () (htmlOutput string) {
 	htmlOutput += "</font>"
 	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>"
 	htmlOutput += "</H2>"
-	return
 }
 
 func addHappyDog () (htmlOutput string) {
@@ -182,7 +174,6 @@ func addHappyDog () (htmlOutput string) {
 	htmlOutput += "</font>"
 	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
 	htmlOutput += "</H2>"
-	return
 }
 
 func addDataTitle (title string) (htmlOutput string) {
@@ -191,7 +182,6 @@ func addDataTitle (title string) (htmlOutput string) {
 	htmlOutput += "<font color='purple'>"
 	htmlOutput += title
 	htmlOutput += "</font><BR>"
-	return
 }
 
 func addDataContent (content string) (htmlOutput string) {
@@ -199,7 +189,6 @@ func addDataContent (content string) (htmlOutput string) {
 	htmlOutput += "<font color='gray'>" 
 	htmlOutput += content
 	htmlOutput += "</font>"
-	return
 }
 
 func main() {
