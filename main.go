@@ -13,7 +13,7 @@ import (
 )
 
 var SENSORS_BATCH int = 20
-var AGRRESSIVE_HAPPY_THRESHOLD int = 15
+var AGRRESSIVE_HAPPY_THRESHOLD int = 18
 var MILD_HAPPY_THRESHOLD int = 2
 
 type Sensor struct {
@@ -44,7 +44,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 
 	numHappy:= getNumHappy()
-	fmt.Fprintf(w,"<BR><BR>happyRatio="+strconv.Itoa(numHappy)+"<BR><BR>")
 
 	//render dog section
 	sniffLevel := os.Getenv("SNIFF_LEVEL")
