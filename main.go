@@ -114,7 +114,7 @@ func calculateHappyPercent () (percentHappy int){
 	
 	numHappy := 0
 	for _, sensor := range AllSensorsData.Sensors {
-		if sensor.Mood == "happy" && sensor.Legacy == "" {
+		if sensor.Mood == "happy" && sensor.Legacy == "none" {
 			numHappy++
 		}
 	}
