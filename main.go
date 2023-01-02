@@ -41,7 +41,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//process happy/sad
-	happyThreshold := strconv.ParseFloat(os.Getenv("HAPPY_THRESHOLD"), 64)
+	happyThreshold, floatErr := strconv.ParseFloat(os.Getenv("HAPPY_THRESHOLD"), 64)
+	if floatErr != nil {
+		return
+	}
 
 	if calculateHappyPercent() > happyThreshold {
 		fmt.Fprintf(w, addHappyDog())
