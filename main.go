@@ -41,11 +41,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//process happy/sad
-	happyThreshold, floatErr := strconv.ParseFloat(os.Getenv("HAPPY_THRESHOLD"), 32)
-	if floatErr != nil {
-		return
-	}
-
+	happyThreshold := strconv.Itoa(os.Getenv("HAPPY_THRESHOLD"))
+	
 	if calculateHappyPercent() > happyThreshold {
 		fmt.Fprintf(w, addHappyDog())
 	} else {
@@ -109,15 +106,15 @@ func processSensorsMeasurement() (status string) {
 	return
 }
 
-func calculateHappyPercent () (percentHappy float32){
+func calculateHappyPercent () (percentHappy int){
 	
-	var numHappy float32
+	var numHappy := 0
 	for _, sensor := range AllSensorsData.Sensors {
 		if sensor.Mood == "happy" && sensor.Legacy == "" {
 			numHappy++
 		}
 	}
-	percentHappy = numHappy / len(AllSensorsData.Sensors)
+	percentHappy = (numHappy / len(AllSensorsData.Sensors))*100
 	return
 }
 
