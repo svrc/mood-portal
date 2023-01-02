@@ -119,7 +119,7 @@ func calculateHappyPercent () (percentHappy int){
 		}
 	}
 	//percentHappy = (numHappy / len(AllSensorsData.Sensors))*100
-	percentHappy = numHappy
+	percentHappy = len(AllSensorsData.Sensors)
 	return
 }
 
