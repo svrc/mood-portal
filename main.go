@@ -53,7 +53,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w,addDataContent("happyThreshold="+strconv.Itoa(happyThreshold)+", calculateHappyPercent()="+strconv.Itoa(calculateHappyPercent())))
 
 	fmt.Fprintf(w,addDataTitle("mood sniffing"))
-	fmt.Fprintf(w,addDataContent("At least " + os.Getenv("HAPPY_THRESHOLD") + " percent of true happiness required"))
+	fmt.Fprintf(w,addDataContent("At least <b>" + os.Getenv("HAPPY_THRESHOLD") + " percent</b> of true happiness required"))
 		
 	
 	//render API section
