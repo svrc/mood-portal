@@ -12,9 +12,7 @@ import (
 	"strconv"
 )
 
-var SENSORS_BATCH int = 20
-var AGRRESSIVE_HAPPY_THRESHOLD int = 18
-var MILD_HAPPY_THRESHOLD int = 2
+var SENSORS_ACTIVATION_BATCH int = 10
 
 type Sensor struct {
 	Id int `json:"id"`
@@ -42,31 +40,17 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	//process happy/sad
+	happyThreshold := os.Getenv("HAPPY_THRESHOLD")
+	happyPercent := calculateHappyPercent()
 
-	numHappy:= getNumHappy()
-
-	//render dog section
-	sniffLevel := os.Getenv("SNIFF_LEVEL")
-	if sniffLevel == "2" {
-
-		if numHappy > AGRRESSIVE_HAPPY_THRESHOLD {
-			fmt.Fprintf(w, addHappyDog())
-		} else {
-			fmt.Fprintf(w, addSadDog())
-		}
-		fmt.Fprintf(w,addDataTitle("mood sniffing level"))
-		fmt.Fprintf(w,addDataContent("2 (agressive)"))
+	if happyPercent > happyThreshold {
+		fmt.Fprintf(w, addHappyDog())
+	} else {
+		fmt.Fprintf(w, addSadDog())
 	}
-	
-	if sniffLevel == "1" {
-		if numHappy > MILD_HAPPY_THRESHOLD {
-			fmt.Fprintf(w, addHappyDog())
-		} else {
-			fmt.Fprintf(w, addSadDog())
-		}
-		fmt.Fprintf(w,addDataTitle("mood sniffing level"))
-		fmt.Fprintf(w,addDataContent("1 (mild)"))
-	}
+	fmt.Fprintf(w,addDataTitle("happy mood sniffing infomration"))
+	fmt.Fprintf(w,addDataContent("At least " + os.Getenv("HAPPY_THRESHOLD") + " percent of true happiness")
 		
 	
 	//render API section
@@ -84,7 +68,7 @@ func processSensorActivation() (status string) {
 
 
 	tlsClient := &http.Client{Transport: tlsConfig}
-	for i := 0; i < SENSORS_BATCH ; i++ {
+	for i := 0; i < SENSORS_ACTIVATION_BATCH ; i++ {
 		response, err := tlsClient.Get(os.Getenv("SENSORS_ACTIVATE_API"))	
 		if err != nil { 
 			status = "Error in calling activate API: " + err.Error()
@@ -123,13 +107,16 @@ func processSensorsMeasurement() (status string) {
 	return
 }
 
-func getNumHappy () (numHappy int){
+func calculateHappyPercent () (percentHappy float32){
 	
-	for _, sensor := range AllSensorsData.Sensors {
-		if sensor.Mood == "happy" {
+	numHappy := 0
+	totalMeasurements := range AllSensorsData.Sensors
+	for _, sensor := totalMeasurements {
+		if sensor.Mood == "happy" && sensor.Legacy == "" {
 			numHappy++
 		}
 	}
+	percentHappy = numHappy / totalMeasurements
 	return
 }
 
