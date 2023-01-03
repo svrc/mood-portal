@@ -44,13 +44,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	happyThreshold, err := strconv.Atoi(os.Getenv("HAPPY_THRESHOLD"))
 	if err != nil {return}
 	
-	if calculateHappyPercent() > float64(happyThreshold) {
+	happyPercent := calculateHappyPercent()
+	if happyPercent > float64(happyThreshold) {
 		fmt.Fprintf(w, addHappyDog())
 	} else {
 		fmt.Fprintf(w, addSadDog())
 	}
 
-	fmt.Fprintf(w,addDataContent("happyThreshold="+strconv.Itoa(happyThreshold)+", calculateHappyPercent()="+strconv.ParseFloat(calculateHappyPercent(),64)))
+	fmt.Fprintf(w,addDataContent("happyThreshold="+strconv.Itoa(happyThreshold)+", happyPercent="+strconv.ParseFloat(happyPercent,64)))
 
 	fmt.Fprintf(w,addDataTitle("happy sniffing"))
 	fmt.Fprintf(w,addDataContent("At least <u>" + os.Getenv("HAPPY_THRESHOLD") + " percent</u> of true happiness required"))
