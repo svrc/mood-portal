@@ -46,16 +46,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	happyPercent := calculateHappyPercent()
 	if happyPercent > float64(happyThreshold) {
-		fmt.Fprintf(w, addHappyDog())
+		fmt.Fprintf(w, addHappyDog(),happyPercent,happyThreshold)
 	} else {
-		fmt.Fprintf(w, addSadDog())
+		fmt.Fprintf(w, addSadDog(),happyPercent,happyThreshold)
 	}
-
-	fmt.Fprintf(w, "happyPercent=%f", happyPercent)
-
-	fmt.Fprintf(w,addDataTitle("happy sniffing"))
-	fmt.Fprintf(w,addDataContent("At least <u>" + os.Getenv("HAPPY_THRESHOLD") + " percent</u> of any happiness required"))
-		
 	
 	//render API section
 	fmt.Fprintf(w,addDataTitle("/activate"))
@@ -115,7 +109,7 @@ func calculateHappyPercent () (percentHappy float64){
 	
 	numHappy := 0
 	for _, sensor := range AllSensorsData.Sensors {
-		if sensor.Mood == "happy" {
+		if sensor.Mood == "happy" && sensor.Legacy == "none" {
 			numHappy++
 		}
 	}
@@ -155,7 +149,7 @@ func addHeader (myHeader string) (htmlOutput string) {
 func addSadDog () (htmlOutput string) {
 
 	htmlOutput += "<H2><font color='red'>"
-	htmlOutput += "Your overall mood is not great. We hope it will get better."
+	htmlOutput += "Your true happiness is only at %v percent and does not meet the %v percent threshold. <BR>We hope it will get better."
 	htmlOutput += "</font>"
 	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>"
 	htmlOutput += "</H2>"
@@ -165,7 +159,7 @@ func addSadDog () (htmlOutput string) {
 func addHappyDog () (htmlOutput string) {
 
 	htmlOutput += "<H2><font color='green'>"
-	htmlOutput += "Your overall mood is happy. Keep it that way!"
+	htmlOutput += "Your true happiness of %v percent exceeds the %v percent threshold. <BR>Keep it that way!"
 	htmlOutput += "</font>"
 	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
 	htmlOutput += "</H2>"
