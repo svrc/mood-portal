@@ -149,7 +149,7 @@ func addHeader (myHeader string) (htmlOutput string) {
 func addSadDog () (htmlOutput string) {
 
 	htmlOutput += "<H2><font color='red'>"
-	htmlOutput += "The team's true happiness is at %b% . It does not meet the %b% threshold. <BR>We hope it will get better."
+	htmlOutput += "The team's true happiness is at %.2f%. It does not meet the %v threshold. <BR>We hope it will get better."
 	htmlOutput += "</font>"
 	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>"
 	htmlOutput += "</H2>"
@@ -159,7 +159,7 @@ func addSadDog () (htmlOutput string) {
 func addHappyDog () (htmlOutput string) {
 
 	htmlOutput += "<H2><font color='green'>"
-	htmlOutput += "The team's true happiness is at %b%. It exceeds the %b% threshold. <BR>Keep it that way!"
+	htmlOutput += "The team's true happiness is at %.2f%. It exceeds the %v threshold. <BR>Keep it that way!"
 	htmlOutput += "</font>"
 	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
 	htmlOutput += "</H2>"
