@@ -54,7 +54,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "happyPercent=%f", happyPercent)
 
 	fmt.Fprintf(w,addDataTitle("happy sniffing"))
-	fmt.Fprintf(w,addDataContent("At least <u>" + os.Getenv("HAPPY_THRESHOLD") + " percent</u> of true happiness required"))
+	fmt.Fprintf(w,addDataContent("At least <u>" + os.Getenv("HAPPY_THRESHOLD") + " percent</u> of any happiness required"))
 		
 	
 	//render API section
@@ -115,7 +115,7 @@ func calculateHappyPercent () (percentHappy float64){
 	
 	numHappy := 0
 	for _, sensor := range AllSensorsData.Sensors {
-		if sensor.Mood == "happy" && sensor.Legacy == "none" {
+		if sensor.Mood == "happy" {
 			numHappy++
 		}
 	}
