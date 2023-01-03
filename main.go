@@ -159,7 +159,7 @@ func addSadDog () (htmlOutput string) {
 func addHappyDog () (htmlOutput string) {
 
 	htmlOutput += "<H2><font color='green'>"
-	htmlOutput += "The team's true happiness is at %b%. It exceeds the %v percent threshold. <BR>Keep it that way!"
+	htmlOutput += "The team's true happiness is at %b%. It exceeds the %b% threshold. <BR>Keep it that way!"
 	htmlOutput += "</font>"
 	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
 	htmlOutput += "</H2>"
