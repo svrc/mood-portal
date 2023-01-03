@@ -31,7 +31,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
 
-	//process APIs calls
+	//process APIs calls and analytics
 	if processSensorActivation() != "success" {
 		return
 	}
@@ -39,23 +39,28 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if processSensorsMeasurement() != "success" {
 		return
 	}
+	pureHappy,existingHappy,pureSad,existingSad,pureAngry,existingAngry := moodAnalysis()
 
-	//process happy/sad
+	//render happy/sad
 	happyThreshold, err := strconv.Atoi(os.Getenv("HAPPY_THRESHOLD"))
+	sadThreshold, err := strconv.Atoi(os.Getenv("SAD_THRESHOLD"))
+	angryThreshold, err := strconv.Atoi(os.Getenv("ANGRY_THRESHOLD"))
 	if err != nil {return}
 	
-	happyPercent := calculateHappyPercent()
-	if happyPercent > float64(happyThreshold) {
-		fmt.Fprintf(w, addHappyDog(),happyPercent,happyThreshold)
+	if pureHappy > float64(happyThreshold) {
+		fmt.Fprintf(w, addHappyDog())
 	} else {
-		fmt.Fprintf(w, addSadDog(),happyPercent,happyThreshold)
+		fmt.Fprintf(w, addSadDog())
 	}
 	
-	//render API section
+	//render data section
+	fmt.Fprintf(w,addAnalyticsTable(),	pureHappy,existingHappy,happyThreshold,
+										pureSad,existingSad,sadThreshold,
+										pureAngry,existingAngry,angryThreshold)
 	fmt.Fprintf(w,addDataTitle("/activate"))
 	fmt.Fprintf(w,addDataContent("All sensors activated successfully"))
 	fmt.Fprintf(w,addDataTitle("/measure"))
-	fmt.Fprintf(w,addDataContent(createResultsTable()))
+	fmt.Fprintf(w,addDataContent(addAPICallsTable()))
 }
 
 func processSensorActivation() (status string) {
@@ -105,24 +110,49 @@ func processSensorsMeasurement() (status string) {
 	return
 }
 
-func calculateHappyPercent () (percentHappy float64){
+func moodAnalysis () (	float64, float64, //pure happy, pre-existing happy
+						float64, float64, //pure sad, pre-existing sad
+						float64, float64) { //pure angry, pre-existing angry
 	
-	numHappy := 0
+	var pureHappy,existingHappy,pureSad,existingSad,pureAngry,existingAngry float64 = 0.0,0.0,0.0,0.0,0.0,0.0
+	var totalMeasurements float64 = float64(len(AllSensorsData.Sensors))
+	
 	for _, sensor := range AllSensorsData.Sensors {
-		if sensor.Mood == "happy" && sensor.Legacy == "none" {
-			numHappy++
+		if sensor.Mood == "happy" {
+			if sensor.Legacy == "none" {
+				pureHappy++
+			} else {
+				existingHappy++
+			}
+		} else if sensor.Mood == "sad" {
+			if sensor.Legacy == "none" {
+				pureSad++
+			} else {
+				existingSad++
+			}
+		} else if sensor.Mood == "angry" {
+			if sensor.Legacy == "none" {
+				pureAngry++
+			} else {
+				existingAngry++
+			}
+		} else { 
+			//error
 		}
 	}
-	percentHappy = (float64(numHappy) / float64(len(AllSensorsData.Sensors)))*100
-	return
+	
+	return	(pureHappy/totalMeasurements)*100,(existingHappy/totalMeasurements)*100,
+			(pureSad/totalMeasurements)*100,(existingSad/totalMeasurements)*100,
+			(pureAngry/totalMeasurements)*100,(existingAngry/totalMeasurements)*100
+	
 }
 
-func createResultsTable () (htmlOutput string) {
+func addAPICallsTable () (htmlOutput string) {
 
 	htmlOutput += "<table border='1'>"
 	
 	htmlOutput += "<tr style='color:grey' align='center'>"
-	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Current Mood</th>"+ "<th>Pre-Existing</th>"
+	htmlOutput += "<th>Happy</th>" + "<th>Role</th>" + "<th>Current Mood</th>"+ "<th>Pre-Existing</th>"
 	htmlOutput += "</tr>"
 
 	for _, sensor := range AllSensorsData.Sensors {
@@ -138,6 +168,30 @@ func createResultsTable () (htmlOutput string) {
 	return
 }
 
+func addAnalyticsTable () (htmlOutput string) {
+
+	htmlOutput += "<table border='1'>"
+	
+	htmlOutput += "<tr style='color:grey' align='center'>"
+	htmlOutput += "<th>Mood</th>" + "<th>Pure</th>" + "<th>Pre-Existing</td>" + "<th>Sniffing Threshold</td>"
+	htmlOutput += "</tr>"
+	htmlOutput += "<tr style='color:grey' align='left'><td>Happy</td>"
+		htmlOutput += "<td>%.2f percent</td>"
+		htmlOutput += "<td>%.2f percent</td>"
+		htmlOutput += "<td>%.2f percent</td></tr>"
+	htmlOutput += "<tr style='color:grey' align='left'><td>Sad</td>"
+		htmlOutput += "<td>%.2f percent</td>"
+		htmlOutput += "<td>%.2f percent</td>"
+		htmlOutput += "<td>%.2f percent</td></tr>"
+	htmlOutput += "<tr style='color:grey' align='left'><td>Angry</td>"
+		htmlOutput += "<td>%.2f percent</td>"
+		htmlOutput += "<td>%.2f percent</td>"
+		htmlOutput += "<td>%.2f percent</td></tr>"
+
+	htmlOutput += "</table>"
+	return
+}
+
 func addHeader (myHeader string) (htmlOutput string) {
 
     htmlOutput += "<H1><font color='navy'>"
@@ -148,22 +202,12 @@ func addHeader (myHeader string) (htmlOutput string) {
 
 func addSadDog () (htmlOutput string) {
 
-	htmlOutput += "<H2><font color='red'>"
-	htmlOutput += "True happiness is at %.2f percent. It does not meet the %v percent threshold. <BR>We hope it will get better."
-	htmlOutput += "</font>"
-	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>"
-	htmlOutput += "</H2>"
-	return
+	return "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''><BR><BR>"
 }
 
 func addHappyDog () (htmlOutput string) {
 
-	htmlOutput += "<H2><font color='green'>"
-	htmlOutput += "True happiness is at %.2f percent. It exceeds the %v percent threshold. <BR>Keep it that way!"
-	htmlOutput += "</font>"
-	htmlOutput += "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
-	htmlOutput += "</H2>"
-	return
+	return "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''><BR><BR>"
 }
 
 func addDataTitle (title string) (htmlOutput string) {
