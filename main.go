@@ -42,7 +42,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	pureHappy,existingHappy,pureSad,existingSad,pureAngry,existingAngry := moodAnalysis()
 
 	//render happy/sad
-	sniffThreshold, err := strconv.ParseFloat(os.Getenv("SNIFF_THRESHOLD"),64)
+	sniffThreshold, err := strconv.ParseFloat(os.Getenv("SNIFFING_THRESHOLD"),64)
 	if err != nil { fmt.Fprintf(w,"!!Error in converting sniffing threhold to float64")}
 	
 	if pureHappy > sniffThreshold {
@@ -52,9 +52,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 	
 	//render data section
-	fmt.Fprintf(w,addAnalyticsTable(),	pureHappy,existingHappy,
-										pureSad,existingSad,
-										pureAngry,existingAngry)
+	fmt.Fprintf(w,addMoodResults(),	pureHappy,existingHappy,
+									pureSad,existingSad,
+									pureAngry,existingAngry)
 										
 	fmt.Fprintf(w,addDataTitle("Sniffing threshold: %.2f percent"),sniffThreshold)
 	fmt.Fprintf(w,addDataTitle("/activate"))
@@ -168,27 +168,23 @@ func addAPICallsTable () (htmlOutput string) {
 	return
 }
 
-func addAnalyticsTable () (htmlOutput string) {
+func addMoodResults () (htmlOutput string) {
 
-	htmlOutput += "<table border='1'>"
+	htmlOutput += "<H2>"
 	
-	htmlOutput += "<tr style='color:grey' align='center'>"
-	htmlOutput += "<th>Mood</th>" + "<th>Pure</th>" + "<th>Pre-Existing</td>"
-	htmlOutput += "</tr>"
-	htmlOutput += "<tr style='color:grey' align='left'><td>Happy</td>"
-		htmlOutput += "<td>%.2f percent</td>"
-		htmlOutput += "<td>%.2f percent</td>"
-		htmlOutput += "<td>%.2f percent</td></tr>"
-	htmlOutput += "<tr style='color:grey' align='left'><td>Sad</td>"
-		htmlOutput += "<td>%.2f percent</td>"
-		htmlOutput += "<td>%.2f percent</td>"
-		htmlOutput += "<td>%.2f percent</td></tr>"
-	htmlOutput += "<tr style='color:grey' align='left'><td>Angry</td>"
-		htmlOutput += "<td>%.2f percent</td>"
-		htmlOutput += "<td>%.2f percent</td>"
-		htmlOutput += "<td>%.2f percent</td></tr>"
+	htmlOutput += "<font color='DarkGreen'>"
+	htmlOutput += "Happy Mood Status: %.2f percent pure, %.2f percent pre-existing"
+	htmlOutput += "</font><BR>"
 
-	htmlOutput += "</table>"
+	htmlOutput += "<font color='DarkRed'>"
+	htmlOutput += "Happy Mood Status: %.2f percent pure, %.2f percent pre-existing"
+	htmlOutput += "</font><BR>"
+
+	htmlOutput += "<font color='DarkTurquoise'>"
+	htmlOutput += "Happy Mood Status: %.2f percent pure, %.2f percent pre-existing"
+	htmlOutput += "</font><BR>"
+
+	htmlOutput += "</H2>"
 	return
 }
 
