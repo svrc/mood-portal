@@ -157,14 +157,18 @@ func addMoodResults () (htmlOutput string) {
 	//pure mood row
 	htmlOutput += "<tr>"
 	htmlOutput += "<td style='font-size:30px;color:DarkGreen'>%.2f%% Happy</td>"
+	htmlOutput += "<td>&nbsp;</td>"
 	htmlOutput += "<td style='font-size:30px;color:DarkRed'>%.2f%% Sad</td>"
+	htmlOutput += "<td>&nbsp;</td>"
 	htmlOutput += "<td style='font-size:30px;color:DarkOrange'>%.2f%% Angry</td>"
 	htmlOutput += "</tr>"
 
 	//pre-existing row	
 	htmlOutput += "<tr style='font-size:15px;color:gray'>"
 	htmlOutput += "<td>(%.2f%% w/ pre-existing)</td>"
+	htmlOutput += "<td>&nbsp;</td>"
 	htmlOutput += "<td>(%.2f%% w/ pre-existing)</td>"
+	htmlOutput += "<td>&nbsp;</td>"
 	htmlOutput += "<td>(%.2f%% w/ pre-existing)</td>"
 	htmlOutput += "</tr>"
 	
