@@ -59,7 +59,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w,addDataTitle("Sniffing threshold"))
 	fmt.Fprintf(w,addDataContent("%.2f%% pure happiness"),sniffThreshold)
 	fmt.Fprintf(w,addDataTitle("/activate API"))
-	fmt.Fprintf(w,addDataContent("%v sensors activated successfully"),len(AllSensorsData.Sensors))
+	fmt.Fprintf(w,addDataContent("%d sensors activated"),len(AllSensorsData.Sensors))
 	fmt.Fprintf(w,addDataTitle("/measure API"))
 	fmt.Fprintf(w,addDataContent(addAPICallsTable()))
 
@@ -157,19 +157,19 @@ func addMoodResults () (htmlOutput string) {
 	//pure mood row
 	htmlOutput += "<tr>"
 	htmlOutput += "<td style='font-size:30px;color:DarkGreen'>%.2f%% Happy</td>"
-	htmlOutput += "<td>&nbsp;</td>"
+	htmlOutput += "<td>&nbsp;</td><td>&nbsp;</td>"
 	htmlOutput += "<td style='font-size:30px;color:DarkRed'>%.2f%% Sad</td>"
-	htmlOutput += "<td>&nbsp;</td>"
+	htmlOutput += "<td>&nbsp;</td><td>&nbsp;</td>"
 	htmlOutput += "<td style='font-size:30px;color:DarkOrange'>%.2f%% Angry</td>"
 	htmlOutput += "</tr>"
 
 	//pre-existing row	
 	htmlOutput += "<tr style='font-size:15px;color:gray'>"
-	htmlOutput += "<td>(%.2f%% w/ pre-existing)</td>"
-	htmlOutput += "<td>&nbsp;</td>"
-	htmlOutput += "<td>(%.2f%% w/ pre-existing)</td>"
-	htmlOutput += "<td>&nbsp;</td>"
-	htmlOutput += "<td>(%.2f%% w/ pre-existing)</td>"
+	htmlOutput += "<td>(%.2f%% pre-existing)</td>"
+	htmlOutput += "<td>&nbsp;</td><td>&nbsp;</td>"
+	htmlOutput += "<td>(%.2f%% pre-existing)</td>"
+	htmlOutput += "<td>&nbsp;</td><td>&nbsp;</td>"
+	htmlOutput += "<td>(%.2f%% pre-existing)</td>"
 	htmlOutput += "</tr>"
 	
 	htmlOutput += "</table></p>"
