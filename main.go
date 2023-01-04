@@ -29,6 +29,8 @@ var AllSensorsData AllSensors
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
+	fmt.Fprintf(w,startPage())
+
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
 
 	//process APIs calls and analytics
@@ -61,6 +63,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w,addDataContent("All sensors activated successfully"))
 	fmt.Fprintf(w,addDataTitle("/measure"))
 	fmt.Fprintf(w,addDataContent(addAPICallsTable()))
+
+	fmt.Fprintf(w,endPage())
 }
 
 func processSensorActivation() (status string) {
@@ -152,19 +156,19 @@ func addMoodResults () (htmlOutput string) {
 	htmlOutput += "<H2><table border='0'>"
 	
 	htmlOutput += "<tr style='color:DarkGreen' align='left'>"
-	htmlOutput += "<td>>Happy:</td>"
+	htmlOutput += "<td>Happy Mood:</td>"
 	htmlOutput += "<td>%.2f%%</td>"
-	htmlOutput += "<td><small>(%.2f%% w/ pre-existing)</small></td>"
+	htmlOutput += "<td><small>(%.2f%%)</small></td>"
 	
 	htmlOutput += "<tr style='color:DarkRed' align='left'>"
-	htmlOutput += "<td>>Sad:</td>"
+	htmlOutput += "<td>Sad Mood:</td>"
 	htmlOutput += "<td>%.2f%%</td>"
-	htmlOutput += "<td><small>(%.2f%% w/ pre-existing)</small></td>"
+	htmlOutput += "<td><small>(%.2f%%)</small></td>"
 
 	htmlOutput += "<tr style='color:DarkOrange' align='left'>"
-	htmlOutput += "<td>>Angery:</td>"
+	htmlOutput += "<td>Angery Mood:</td>"
 	htmlOutput += "<td>%.2f%%</td>"
-	htmlOutput += "<td><small>(%.2f%% w/ pre-existing) </small></td>"
+	htmlOutput += "<td><small>(%.2f%%) </small></td>"
 	
 	htmlOutput += "<tr></table></H2>"
 	return
@@ -199,7 +203,7 @@ func addAPICallsTable () (htmlOutput string) {
 	htmlOutput += "<table border='1'>"
 	
 	htmlOutput += "<tr style='color:grey' align='center'>"
-	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Current Mood</th>"+ "<th>Pre-Existing</th>"
+	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Current Mood</th>"+ "<th>(Pre-Existing)</th>"
 	htmlOutput += "</tr>"
 
 	for _, sensor := range AllSensorsData.Sensors {
@@ -230,6 +234,14 @@ func addDataContent (content string) (htmlOutput string) {
 	htmlOutput += content
 	htmlOutput += "</font>"
 	return
+}
+
+func startPage() (htmlOutput string) {
+	return "<body align='center'>"
+}
+
+func endPage() (htmlOutput string) {
+	return "</body>"
 }
 
 func main() {
