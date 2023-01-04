@@ -175,7 +175,7 @@ func addMoodResults () (htmlOutput string) {
 
 func addHeader (myHeader string) (htmlOutput string) {
 
-    htmlOutput += "<body><p style='font-size:50px;color:navy' align='center'>"
+    htmlOutput += "<body><p style='font-size:40px;color:navy' align='center'>"
 	htmlOutput += myHeader
 	htmlOutput += "</p>"
 	return
