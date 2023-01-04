@@ -41,6 +41,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 	pureHappy,existingHappy,pureSad,existingSad,pureAngry,existingAngry := moodAnalysis()
 
+	//render results section
+	fmt.Fprintf(w,addMoodResults(),	pureHappy,existingHappy,
+									pureSad,existingSad,
+									pureAngry,existingAngry)
+
 	//render happy/sad
 	sniffThreshold, err := strconv.ParseFloat(os.Getenv("SNIFF_THRESHOLD"),64)
 	if err != nil { fmt.Fprintf(w,"!!Error in converting sniffing threhold to float64")}
@@ -50,14 +55,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Fprintf(w, addSadDog())
 	}
+	fmt.Fprintf(w,addDataTitle("Sniffing threshold: %.2f%%"),sniffThreshold)
 	
-	//render data section
-	fmt.Fprintf(w,addMoodResults(),	pureHappy,existingHappy,
-									pureSad,existingSad,
-									pureAngry,existingAngry)
-										
-	fmt.Fprintf(w,addDataTitle("Sniffing threshold"))
-	fmt.Fprintf(w,addDataContent("<b>%.2f percent</b>"),sniffThreshold)
+	//render API section
+	
 	fmt.Fprintf(w,addDataTitle("/activate"))
 	fmt.Fprintf(w,addDataContent("All sensors activated successfully"))
 	fmt.Fprintf(w,addDataTitle("/measure"))
@@ -148,50 +149,23 @@ func moodAnalysis () (	float64, float64, //pure happy, pre-existing happy
 	
 }
 
-func addAPICallsTable () (htmlOutput string) {
-
-	htmlOutput += "<table border='1'>"
-	
-	htmlOutput += "<tr style='color:grey' align='center'>"
-	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Current Mood</th>"+ "<th>Pre-Existing</th>"
-	htmlOutput += "</tr>"
-
-	for _, sensor := range AllSensorsData.Sensors {
-  		htmlOutput += "<tr style='color:grey' align='left'>"
-		htmlOutput += "<td>" + strconv.Itoa(sensor.Id) + "</td>"
-		htmlOutput += "<td>" + sensor.Role + "&nbsp;</td>"
-		htmlOutput += "<td>" + sensor.Mood + "&nbsp;</td>"
-		htmlOutput += "<td>" + sensor.Legacy + "</td>"
-		htmlOutput += "</tr>"
-	}
-
-	htmlOutput += "</table>"
-	return
-}
-
 func addMoodResults () (htmlOutput string) {
 
-	htmlOutput += "<H2><table border='0'>"
+	htmlOutput += "<H2><table border='0'><tr align='left'>"
 	
-	htmlOutput += "<tr style='color:DarkGreen' align='left'>"
-	htmlOutput += "<td>Happy></td>"
-	htmlOutput += "<td>%.2f percent</td>"
-	htmlOutput += "<td><small>(%.2f percent with pre-existing conditions)</small></td>"
-	htmlOutput += "</tr>"
+	htmlOutput += "<td style='color:DarkGreen'>Happy:</td>"
+	htmlOutput += "<td>%.2f%%</td>"
+	htmlOutput += "<td><small>(%.2f%% w/ pre-existing)</small></td>"
+	
+	htmlOutput += "<td style='color:DarkRed'>Sad:</td>"
+	htmlOutput += "<td>%.2f%%</td>"
+	htmlOutput += "<td><small>(%.2f%% w/ pre-existing)</small></td>"
 
-	htmlOutput += "<tr style='color:DarkRed' align='left'>"
-	htmlOutput += "<td>Sad></td>"
-	htmlOutput += "<td>%.2f percent</td>"
-	htmlOutput += "<td><small>(%.2f percent with pre-existing conditions)</small></td>"
-	htmlOutput += "</tr>"
-
-	htmlOutput += "<tr style='color:DarkOrange' align='left'>"
-	htmlOutput += "<td>Angry></td>"
-	htmlOutput += "<td>%.2f percent</td>"
-	htmlOutput += "<td><small>(%.2f percent with pre-existing conditions)</small></td>"
-	htmlOutput += "</tr>"
-
-	htmlOutput += "</table></H2>"
+	htmlOutput += "<td style='color:DarkOrange'>Angry:</td>"
+	htmlOutput += "<td>%.2f%%</td>"
+	htmlOutput += "<td><small>(%.2f%% w/ pre-existing) </small></td>"
+	
+	htmlOutput += "<tr></table></H2>"
 	return
 }
 
@@ -211,6 +185,27 @@ func addSadDog () (htmlOutput string) {
 func addHappyDog () (htmlOutput string) {
 
 	return "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''><BR><BR>"
+}
+
+func addAPICallsTable () (htmlOutput string) {
+
+	htmlOutput += "<table border='1'>"
+	
+	htmlOutput += "<tr style='color:grey' align='center'>"
+	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Current Mood</th>"+ "<th>Pre-Existing</th>"
+	htmlOutput += "</tr>"
+
+	for _, sensor := range AllSensorsData.Sensors {
+  		htmlOutput += "<tr style='color:grey' align='left'>"
+		htmlOutput += "<td>" + strconv.Itoa(sensor.Id) + "</td>"
+		htmlOutput += "<td>" + sensor.Role + "&nbsp;</td>"
+		htmlOutput += "<td>" + sensor.Mood + "&nbsp;</td>"
+		htmlOutput += "<td>" + sensor.Legacy + "</td>"
+		htmlOutput += "</tr>"
+	}
+
+	htmlOutput += "</table>"
+	return
 }
 
 func addDataTitle (title string) (htmlOutput string) {
