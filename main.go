@@ -42,21 +42,21 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	pureHappy,existingHappy,pureSad,existingSad,pureAngry,existingAngry := moodAnalysis()
 
 	//render happy/sad
-	happyThreshold, err := strconv.Atoi(os.Getenv("HAPPY_THRESHOLD"))
-	sadThreshold, err := strconv.Atoi(os.Getenv("SAD_THRESHOLD"))
-	angryThreshold, err := strconv.Atoi(os.Getenv("ANGRY_THRESHOLD"))
-	if err != nil {return}
+	sniffThreshold, err := strconv.ParseFloat(os.Getenv("SNIFF_THRESHOLD"),64)
+	if err != nil { fmt.Fprintf(w,"!!Error in converting sniffing threhold to float64")}
 	
-	if pureHappy > float64(happyThreshold) {
+	if pureHappy > sniffThreshold {
 		fmt.Fprintf(w, addHappyDog())
 	} else {
 		fmt.Fprintf(w, addSadDog())
 	}
 	
 	//render data section
-	fmt.Fprintf(w,addAnalyticsTable(),	pureHappy,existingHappy,happyThreshold,
-										pureSad,existingSad,sadThreshold,
-										pureAngry,existingAngry,angryThreshold)
+	fmt.Fprintf(w,addAnalyticsTable(),	pureHappy,existingHappy,
+										pureSad,existingSad,
+										pureAngry,existingAngry)
+										
+	fmt.Fprintf(w,addDataTitle("Sniffing threshold: %.2f percent"),sniffThreshold)
 	fmt.Fprintf(w,addDataTitle("/activate"))
 	fmt.Fprintf(w,addDataContent("All sensors activated successfully"))
 	fmt.Fprintf(w,addDataTitle("/measure"))
@@ -173,7 +173,7 @@ func addAnalyticsTable () (htmlOutput string) {
 	htmlOutput += "<table border='1'>"
 	
 	htmlOutput += "<tr style='color:grey' align='center'>"
-	htmlOutput += "<th>Mood</th>" + "<th>Pure</th>" + "<th>Pre-Existing</td>" + "<th>Sniffing Threshold</td>"
+	htmlOutput += "<th>Mood</th>" + "<th>Pure</th>" + "<th>Pre-Existing</td>"
 	htmlOutput += "</tr>"
 	htmlOutput += "<tr style='color:grey' align='left'><td>Happy</td>"
 		htmlOutput += "<td>%.2f percent</td>"
