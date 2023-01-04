@@ -42,10 +42,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	pureHappy,existingHappy,pureSad,existingSad,pureAngry,existingAngry := moodAnalysis()
 
 	//render results section
-	fmt.Fprintf(w,addMoodResults(),	pureHappy,existingHappy,
-									pureSad,existingSad,
-									pureAngry,existingAngry)
-
+	fmt.Fprintf(w,addMoodResults(),	pureHappy,pureSad, pureAngry,
+									existingHappy,existingSad,existingAngry)
+									
 	//render happy/sad
 	sniffThreshold, err := strconv.ParseFloat(os.Getenv("SNIFF_THRESHOLD"),64)
 	if err != nil { fmt.Fprintf(w,"!!Error in converting sniffing threhold to float64")}
@@ -155,30 +154,20 @@ func addMoodResults () (htmlOutput string) {
 	htmlOutput += "<p align='center'>"
 	htmlOutput += "<table align='center' border='0'>"
 	
-	htmlOutput += "<tr style='font-size:30px;color:DarkGreen'>"
-	htmlOutput += "<td >%.2f%% Happy</td>"
+	//pure mood row
+	htmlOutput += "<tr>"
+	htmlOutput += "<td style='font-size:30px;color:DarkGreen'>%.2f%% Happy</td>"
+	htmlOutput += "<td style='font-size:30px;color:DarkRed'>%.2f%% Sad</td>"
+	htmlOutput += "<td style='font-size:30px;color:DarkOrange'>%.2f%% Angry</td>"
 	htmlOutput += "</tr>"
+
+	//pre-existing row	
 	htmlOutput += "<tr style='font-size:15px;color:gray'>"
 	htmlOutput += "<td>(%.2f%% w/ pre-existing)</td>"
-	htmlOutput += "<tr><td>&nbsp;</td></tr>"
+	htmlOutput += "<td>(%.2f%% w/ pre-existing)</td>"
+	htmlOutput += "<td>(%.2f%% w/ pre-existing)</td>"
 	htmlOutput += "</tr>"
 	
-	htmlOutput += "<tr style='font-size:30px;color:DarkRed'>"
-	htmlOutput += "<td >%.2f%% Sad</td>"
-	htmlOutput += "</tr>"
-	htmlOutput += "<tr style='font-size:15px;color:gray'>"
-	htmlOutput += "<td>(%.2f%% w/ pre-existing)</td>"
-	htmlOutput += "<tr><td>&nbsp;</td></tr>"
-	htmlOutput += "</tr>"
-
-	htmlOutput += "<tr style='font-size:30px;color:DarkOrange'>"
-	htmlOutput += "<td >%.2f%% Angry</td>"
-	htmlOutput += "</tr>"
-	htmlOutput += "<tr style='font-size:15px;color:gray'>"
-	htmlOutput += "<td>(%.2f%% w/ pre-existing)</td>"
-	htmlOutput += "<tr><td>&nbsp;</td></tr>"
-	htmlOutput += "</tr>"
-
 	htmlOutput += "</table></p>"
 	return
 }
