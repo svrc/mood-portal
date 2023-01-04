@@ -172,18 +172,19 @@ func addAPICallsTable () (htmlOutput string) {
 func addMoodResults () (htmlOutput string) {
 
 	htmlOutput += "<H2>"
+	htmlOutput += "<table border='0'>"
 	
-	htmlOutput += "<font color='DarkGreen'>"
-	htmlOutput += "Happy Mood Status: %.2f percent pure, %.2f percent pre-existing"
-	htmlOutput += "</font><BR>"
+	htmlOutput += "<tr style='color:DarkGreen' align='left'>"
+	htmlOutput += "<td>Happy></td><td>%.2f percent</td><td><small>(%.2f percent with pre-existing conditions)</td></small>"
+	htmlOutput += "</tr"
 
-	htmlOutput += "<font color='DarkRed'>"
-	htmlOutput += "Happy Mood Status: %.2f percent pure, %.2f percent pre-existing"
-	htmlOutput += "</font><BR>"
+	htmlOutput += "<tr style='color:DarkRed' align='left'>"
+	htmlOutput += "<td>Sad></td><td>%.2f percent</td><td><small>(%.2f percent with pre-existing conditions)</td></small>"
+	htmlOutput += "</tr"
 
-	htmlOutput += "<font color='DarkTurquoise'>"
-	htmlOutput += "Happy Mood Status: %.2f percent pure, %.2f percent pre-existing"
-	htmlOutput += "</font><BR>"
+	htmlOutput += "<tr style='color:DarkOrange' align='left'>"
+	htmlOutput += "<td>Angry></td><td>%.2f percent</td><td><small>(%.2f percent with pre-existing conditions)</td></small>"
+	htmlOutput += "</tr"
 
 	htmlOutput += "</H2>"
 	return
