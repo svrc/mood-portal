@@ -57,7 +57,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 									pureAngry,existingAngry)
 										
 	fmt.Fprintf(w,addDataTitle("Sniffing threshold"))
-	fmt.Fprintf(w,addDataContent("<b>%.2f percent<b>"),sniffThreshold)
+	fmt.Fprintf(w,addDataContent("<b>%.2f percent</b>"),sniffThreshold)
 	fmt.Fprintf(w,addDataTitle("/activate"))
 	fmt.Fprintf(w,addDataContent("All sensors activated successfully"))
 	fmt.Fprintf(w,addDataTitle("/measure"))
