@@ -18,7 +18,7 @@ type Sensor struct {
 	Id int `json:"id"`
 	Role string `json:"role"`
 	Mood string `json:"mood"`
-	Legacy string `json:"legacy"`
+	Baseline string `json:"baseline"`
 }
 
 type AllSensors struct {
@@ -39,11 +39,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if processSensorsMeasurement() != "success" {
 		return
 	}
-	pureHappy,existingHappy,pureSad,existingSad,pureAngry,existingAngry := moodAnalysis()
+	pureHappy,totalHappy,pureSad,totalSad,pureAngry,totalAngry := moodAnalysis()
 
 	//render results section
 	fmt.Fprintf(w,addMoodResults(),	pureHappy,pureSad, pureAngry,
-									existingHappy,existingSad,existingAngry)
+									totalHappy,totalSad,totalAngry)
 									
 	//render happy/sad
 	sniffThreshold, err := strconv.ParseFloat(os.Getenv("SNIFF_THRESHOLD"),64)
@@ -112,40 +112,37 @@ func processSensorsMeasurement() (status string) {
 	return
 }
 
-func moodAnalysis () (	float64, float64, //pure happy, pre-existing happy
-						float64, float64, //pure sad, pre-existing sad
-						float64, float64) { //pure angry, pre-existing angry
+func moodAnalysis () (	float64, float64, //pure happy, total happy
+						float64, float64, //pure sad, total sad
+						float64, float64) { //pure angry, total angry
 	
-	var pureHappy,existingHappy,pureSad,existingSad,pureAngry,existingAngry float64 = 0.0,0.0,0.0,0.0,0.0,0.0
+	var pureHappy,totalHappy,pureSad,totalSad,pureAngry,totalAngry float64 = 0.0,0.0,0.0,0.0,0.0,0.0
 	var totalMeasurements float64 = float64(len(AllSensorsData.Sensors))
 	
 	for _, sensor := range AllSensorsData.Sensors {
 		if sensor.Mood == "happy" {
-			if sensor.Legacy == "none" {
+			if sensor.Baseline == "" {
 				pureHappy++
-			} else {
-				existingHappy++
 			}
+			totalHappy++
 		} else if sensor.Mood == "sad" {
-			if sensor.Legacy == "none" {
+			if sensor.Baseline == "" {
 				pureSad++
-			} else {
-				existingSad++
 			}
+			totalSad++
 		} else if sensor.Mood == "angry" {
-			if sensor.Legacy == "none" {
+			if sensor.Baseline == "" {
 				pureAngry++
-			} else {
-				existingAngry++
-			}
+			} 
+			totalAngry++
 		} else { 
 			//error
 		}
 	}
 	
-	return	(pureHappy/totalMeasurements)*100,(existingHappy/totalMeasurements)*100,
-			(pureSad/totalMeasurements)*100,(existingSad/totalMeasurements)*100,
-			(pureAngry/totalMeasurements)*100,(existingAngry/totalMeasurements)*100
+	return	(pureHappy/totalMeasurements)*100,(totalHappy/totalMeasurements)*100,
+			(pureSad/totalMeasurements)*100,(totalSad/totalMeasurements)*100,
+			(pureAngry/totalMeasurements)*100,(totalAngry/totalMeasurements)*100
 	
 }
 
@@ -165,11 +162,11 @@ func addMoodResults () (htmlOutput string) {
 
 	//pre-existing row	
 	htmlOutput += "<tr style='font-size:15px;color:gray'>"
-	htmlOutput += "<td>(%.2f%% pre-existing)</td>"
+	htmlOutput += "<td>(%.2f%% including pre-existing)</td>"
 	htmlOutput += "<td>&nbsp;&nbsp;&nbsp;</td>"
-	htmlOutput += "<td>(%.2f%% pre-existing)</td>"
+	htmlOutput += "<td>(%.2f%% including pre-existing)</td>"
 	htmlOutput += "<td>&nbsp;&nbsp;&nbsp;</td>"
-	htmlOutput += "<td>(%.2f%% pre-existing)</td>"
+	htmlOutput += "<td>(%.2f%% including pre-existing)</td>"
 	htmlOutput += "</tr>"
 	
 	htmlOutput += "</table></p>"
@@ -206,7 +203,7 @@ func addAPICallsTable () (htmlOutput string) {
 		htmlOutput += "<td>" + strconv.Itoa(sensor.Id) + "</td>"
 		htmlOutput += "<td>" + sensor.Role + "&nbsp;</td>"
 		htmlOutput += "<td>" + sensor.Mood + "&nbsp;</td>"
-		htmlOutput += "<td>" + sensor.Legacy + "</td>"
+		htmlOutput += "<td>" + sensor.Baseline + "</td>"
 		htmlOutput += "</tr>"
 	}
 
