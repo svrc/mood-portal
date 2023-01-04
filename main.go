@@ -51,14 +51,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if err != nil { fmt.Fprintf(w,"!!Error in converting sniffing threhold to float64")}
 	
 	if pureHappy > sniffThreshold {
-		fmt.Fprintf(w, addHappyDog())
+		fmt.Fprintf(w, addDog(true),sniffThreshold)
 	} else {
-		fmt.Fprintf(w, addSadDog())
+		fmt.Fprintf(w, addDog(false),sniffThreshold)
 	}
-	fmt.Fprintf(w,addDataTitle("Sniffing threshold: %.2f%%"),sniffThreshold)
-	
+		
 	//render API section
-	
 	fmt.Fprintf(w,addDataTitle("/activate"))
 	fmt.Fprintf(w,addDataContent("All sensors activated successfully"))
 	fmt.Fprintf(w,addDataTitle("/measure"))
@@ -151,17 +149,20 @@ func moodAnalysis () (	float64, float64, //pure happy, pre-existing happy
 
 func addMoodResults () (htmlOutput string) {
 
-	htmlOutput += "<H2><table border='0'><tr align='left'>"
+	htmlOutput += "<H2><table border='0'>"
 	
-	htmlOutput += "<td style='color:DarkGreen'>Happy:</td>"
+	htmlOutput += "<tr style='color:DarkGreen' align='left'>"
+	htmlOutput += "<td>>Happy:</td>"
 	htmlOutput += "<td>%.2f%%</td>"
 	htmlOutput += "<td><small>(%.2f%% w/ pre-existing)</small></td>"
 	
-	htmlOutput += "<td style='color:DarkRed'>Sad:</td>"
+	htmlOutput += "<tr style='color:DarkRed' align='left'>"
+	htmlOutput += "<td>>Sad:</td>"
 	htmlOutput += "<td>%.2f%%</td>"
 	htmlOutput += "<td><small>(%.2f%% w/ pre-existing)</small></td>"
 
-	htmlOutput += "<td style='color:DarkOrange'>Angry:</td>"
+	htmlOutput += "<tr style='color:DarkOrange' align='left'>"
+	htmlOutput += "<td>>Angery:</td>"
 	htmlOutput += "<td>%.2f%%</td>"
 	htmlOutput += "<td><small>(%.2f%% w/ pre-existing) </small></td>"
 	
@@ -177,14 +178,20 @@ func addHeader (myHeader string) (htmlOutput string) {
 	return
 }
 
-func addSadDog () (htmlOutput string) {
+func addDog (happy bool) (htmlOutput string) {
 
-	return "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''><BR><BR>"
-}
+	htmlOutput += "<BR><BR>"
 
-func addHappyDog () (htmlOutput string) {
+	if happy {
+		htmlOutput += "<img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
 
-	return "<BR><BR><img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''><BR><BR>"
+	} else {
+		htmlOutput += "<img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>"
+	}
+	
+	htmlOutput += "&nbsp;&nbsp;&nbsp;"
+	htmlOutput += "<font color='navy'>Sniffing threshold: %.2f%%</font>"
+	return
 }
 
 func addAPICallsTable () (htmlOutput string) {
