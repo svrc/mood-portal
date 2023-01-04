@@ -42,7 +42,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	pureHappy,existingHappy,pureSad,existingSad,pureAngry,existingAngry := moodAnalysis()
 
 	//render happy/sad
-	sniffThreshold, err := strconv.ParseFloat(os.Getenv("SNIFFING_THRESHOLD"),64)
+	sniffThreshold, err := strconv.ParseFloat(os.Getenv("SNIFF_THRESHOLD"),64)
 	if err != nil { fmt.Fprintf(w,"!!Error in converting sniffing threhold to float64")}
 	
 	if pureHappy > sniffThreshold {
@@ -186,7 +186,7 @@ func addMoodResults () (htmlOutput string) {
 	htmlOutput += "<td>Angry></td><td>%.2f percent</td><td><small>(%.2f percent with pre-existing conditions)</td></small>"
 	htmlOutput += "</tr"
 
-	htmlOutput += "</H2>"
+	htmlOutput += "</table></H2>"
 	return
 }
 
