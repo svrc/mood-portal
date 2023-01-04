@@ -29,8 +29,6 @@ var AllSensorsData AllSensors
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	
-	fmt.Fprintf(w,startPage())
-
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
 
 	//process APIs calls and analytics
@@ -64,7 +62,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w,addDataTitle("/measure"))
 	fmt.Fprintf(w,addDataContent(addAPICallsTable()))
 
-	fmt.Fprintf(w,endPage())
 }
 
 func processSensorActivation() (status string) {
@@ -153,7 +150,8 @@ func moodAnalysis () (	float64, float64, //pure happy, pre-existing happy
 
 func addMoodResults () (htmlOutput string) {
 
-	htmlOutput += "<H2><table border='0'>"
+	htmlOutput += "<p style='font-size:50px' align='center'>"
+	htmlOutput += "<table border='0'>"
 	
 	htmlOutput += "<tr style='color:DarkGreen' align='left'>"
 	htmlOutput += "<td>Happy Mood:</td>"
@@ -170,21 +168,21 @@ func addMoodResults () (htmlOutput string) {
 	htmlOutput += "<td>%.2f%%</td>"
 	htmlOutput += "<td><small>(%.2f%%) </small></td>"
 	
-	htmlOutput += "<tr></table></H2>"
+	htmlOutput += "<tr></table></p><BR>"
 	return
 }
 
 func addHeader (myHeader string) (htmlOutput string) {
 
-    htmlOutput += "<H1><font color='navy'>"
+    htmlOutput += "<p style='font-size:60px;color:navy' align='center'>"
 	htmlOutput += myHeader
-	htmlOutput += "</font></H1>"
+	htmlOutput += "</p><BR>"
 	return
 }
 
 func addDog (happy bool) (htmlOutput string) {
 
-	htmlOutput += "<BR><BR>"
+	htmlOutput += "<p style='font-size:35px;color:navy' align='center'>"
 
 	if happy {
 		htmlOutput += "<img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
@@ -193,21 +191,22 @@ func addDog (happy bool) (htmlOutput string) {
 		htmlOutput += "<img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>"
 	}
 	
-	htmlOutput += "&nbsp;&nbsp;&nbsp;"
-	htmlOutput += "<font color='navy'>Sniffing threshold: %.2f%%</font>"
+	htmlOutput += "<BR>Sniffing threshold: %.2f%%<BR>"
+	htmlOutput += "</p><BR>"
 	return
 }
 
 func addAPICallsTable () (htmlOutput string) {
 
+	htmlOutput += "<p style='font-size:30px;color:gray' align='left'>"
 	htmlOutput += "<table border='1'>"
 	
-	htmlOutput += "<tr style='color:grey' align='center'>"
+	htmlOutput += "<tr>"
 	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Current Mood</th>"+ "<th>(Pre-Existing)</th>"
 	htmlOutput += "</tr>"
 
 	for _, sensor := range AllSensorsData.Sensors {
-  		htmlOutput += "<tr style='color:grey' align='left'>"
+  		htmlOutput += "<tr>"
 		htmlOutput += "<td>" + strconv.Itoa(sensor.Id) + "</td>"
 		htmlOutput += "<td>" + sensor.Role + "&nbsp;</td>"
 		htmlOutput += "<td>" + sensor.Mood + "&nbsp;</td>"
@@ -215,33 +214,24 @@ func addAPICallsTable () (htmlOutput string) {
 		htmlOutput += "</tr>"
 	}
 
-	htmlOutput += "</table>"
+	htmlOutput += "</table></p>"
 	return
 }
 
 func addDataTitle (title string) (htmlOutput string) {
 
-	htmlOutput += "<BR><BR>"
-	htmlOutput += "<font color='purple'>"
+	htmlOutput += "<p style='font-size:35px;color:purple' align='left'>"
 	htmlOutput += title
-	htmlOutput += "</font><BR>"
+	htmlOutput += "</p><BR>"
 	return
 }
 
 func addDataContent (content string) (htmlOutput string) {
 
-	htmlOutput += "<font color='gray'>" 
+	htmlOutput += "<p style='font-size:30px;color:gray' align='left'>"
 	htmlOutput += content
-	htmlOutput += "</font>"
+	htmlOutput += "</p><BR>"
 	return
-}
-
-func startPage() (htmlOutput string) {
-	return "<body align='center'>"
-}
-
-func endPage() (htmlOutput string) {
-	return "</body>"
 }
 
 func main() {
