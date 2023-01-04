@@ -153,7 +153,7 @@ func moodAnalysis () (	float64, float64, //pure happy, pre-existing happy
 func addMoodResults () (htmlOutput string) {
 
 	htmlOutput += "<p align='center'>"
-	htmlOutput += "<table border='0'>"
+	htmlOutput += "<table align='center' border='0'>"
 	
 	htmlOutput += "<tr style='font-size:30px;color:DarkGreen'>"
 	htmlOutput += "<td >%.2f%% Happy</td>"
