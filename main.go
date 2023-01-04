@@ -153,36 +153,36 @@ func addMoodResults () (htmlOutput string) {
 	htmlOutput += "<p style='font-size:50px' align='center'>"
 	htmlOutput += "<table border='0'>"
 	
-	htmlOutput += "<tr style='color:DarkGreen' align='left'>"
+	htmlOutput += "<tr style='font-size:40px;color:DarkGreen'>"
 	htmlOutput += "<td>Happy Mood:</td>"
 	htmlOutput += "<td>%.2f%%</td>"
 	htmlOutput += "<td><small>(%.2f%%)</small></td>"
 	
-	htmlOutput += "<tr style='color:DarkRed' align='left'>"
+	htmlOutput += "<tr style='font-size:40px;color:DarkRed'>"
 	htmlOutput += "<td>Sad Mood:</td>"
 	htmlOutput += "<td>%.2f%%</td>"
 	htmlOutput += "<td><small>(%.2f%%)</small></td>"
 
-	htmlOutput += "<tr style='color:DarkOrange' align='left'>"
+	htmlOutput += "<tr style='font-size:40px;color:DarkOrange'>"
 	htmlOutput += "<td>Angery Mood:</td>"
 	htmlOutput += "<td>%.2f%%</td>"
 	htmlOutput += "<td><small>(%.2f%%) </small></td>"
 	
-	htmlOutput += "<tr></table></p><BR>"
+	htmlOutput += "<tr></table></p>"
 	return
 }
 
 func addHeader (myHeader string) (htmlOutput string) {
 
-    htmlOutput += "<p style='font-size:60px;color:navy' align='center'>"
+    htmlOutput += "<body><p style='font-size:50px;color:navy' align='center'>"
 	htmlOutput += myHeader
-	htmlOutput += "</p><BR>"
+	htmlOutput += "</p>"
 	return
 }
 
 func addDog (happy bool) (htmlOutput string) {
 
-	htmlOutput += "<p style='font-size:35px;color:navy' align='center'>"
+	htmlOutput += "<p style='font-size:20px;color:navy' align='center'>"
 
 	if happy {
 		htmlOutput += "<img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
@@ -192,13 +192,13 @@ func addDog (happy bool) (htmlOutput string) {
 	}
 	
 	htmlOutput += "<BR>Sniffing threshold: %.2f%%<BR>"
-	htmlOutput += "</p><BR>"
+	htmlOutput += "</p>"
 	return
 }
 
 func addAPICallsTable () (htmlOutput string) {
 
-	htmlOutput += "<p style='font-size:30px;color:gray' align='left'>"
+	htmlOutput += "<p style='font-size:15px;color:gray' align='left'>"
 	htmlOutput += "<table border='1'>"
 	
 	htmlOutput += "<tr>"
@@ -214,23 +214,23 @@ func addAPICallsTable () (htmlOutput string) {
 		htmlOutput += "</tr>"
 	}
 
-	htmlOutput += "</table></p>"
+	htmlOutput += "</table></p></body>"
 	return
 }
 
 func addDataTitle (title string) (htmlOutput string) {
 
-	htmlOutput += "<p style='font-size:35px;color:purple' align='left'>"
+	htmlOutput += "<p style='font-size:15px;color:purple' align='left'>"
 	htmlOutput += title
-	htmlOutput += "</p><BR>"
+	htmlOutput += "</p>"
 	return
 }
 
 func addDataContent (content string) (htmlOutput string) {
 
-	htmlOutput += "<p style='font-size:30px;color:gray' align='left'>"
+	htmlOutput += "<p style='font-size:15px;color:gray' align='left'>"
 	htmlOutput += content
-	htmlOutput += "</p><BR>"
+	htmlOutput += "</p>"
 	return
 }
 
