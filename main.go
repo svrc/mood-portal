@@ -51,15 +51,17 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if err != nil { fmt.Fprintf(w,"!!Error in converting sniffing threhold to float64")}
 	
 	if pureHappy > sniffThreshold {
-		fmt.Fprintf(w, addDog(true),sniffThreshold)
+		fmt.Fprintf(w, addDog(true))
 	} else {
-		fmt.Fprintf(w, addDog(false),sniffThreshold)
+		fmt.Fprintf(w, addDog(false))
 	}
 		
 	//render API section
-	fmt.Fprintf(w,addDataTitle("/activate"))
+	fmt.Fprintf(w,addDataTitle("Sniffing threshold"))
+	fmt.Fprintf(w,addDataContent("%.2f%% pure happiness"),sniffThreshold)
+	fmt.Fprintf(w,addDataTitle("/activate API"))
 	fmt.Fprintf(w,addDataContent("All sensors activated successfully"))
-	fmt.Fprintf(w,addDataTitle("/measure"))
+	fmt.Fprintf(w,addDataTitle("/measure API"))
 	fmt.Fprintf(w,addDataContent(addAPICallsTable()))
 
 }
@@ -188,7 +190,6 @@ func addDog (happy bool) (htmlOutput string) {
 		htmlOutput += "<img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>"
 	}
 	
-	htmlOutput += "<BR>Sniffing threshold: %.2f%%<BR>"
 	htmlOutput += "</p>"
 	return
 }
