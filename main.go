@@ -12,7 +12,7 @@ import (
 	"strconv"
 )
 
-var SENSORS_ACTIVATION_BATCH int = 10
+var SENSORS_ACTIVATION_BATCH int = 20
 
 type Sensor struct {
 	Id int `json:"id"`
@@ -153,20 +153,17 @@ func addMoodResults () (htmlOutput string) {
 	htmlOutput += "<p align='center'>"
 	htmlOutput += "<table border='0'>"
 	
-	htmlOutput += "<tr style='font-size:40px;color:DarkGreen'>"
-	htmlOutput += "<td>Happy Mood:</td>"
-	htmlOutput += "<td>%.2f%%</td>"
-	htmlOutput += "<td><small>(%.2f%%)</small></td>"
+	htmlOutput += "<tr style='font-size:30px;color:DarkGreen'>"
+	htmlOutput += "<td>%.2f%% Happy</td>"
+	htmlOutput += "<td><small>(%.2f%% pre-existing)</small></td>"
 	
-	htmlOutput += "<tr style='font-size:40px;color:DarkRed'>"
-	htmlOutput += "<td>Sad Mood:</td>"
-	htmlOutput += "<td>%.2f%%</td>"
-	htmlOutput += "<td><small>(%.2f%%)</small></td>"
+	htmlOutput += "<tr style='font-size:30px;color:DarkRed'>"
+	htmlOutput += "<td>%.2f%% Sad</td>"
+	htmlOutput += "<td><small>(%.2f%% pre-existing)</small></td>"
 
 	htmlOutput += "<tr style='font-size:40px;color:DarkOrange'>"
-	htmlOutput += "<td>Angery Mood:</td>"
-	htmlOutput += "<td>%.2f%%</td>"
-	htmlOutput += "<td><small>(%.2f%%) </small></td>"
+	htmlOutput += "<td>%.2f%% Angry</td>"
+	htmlOutput += "<td><small>(%.2f%% pre-existing)</small></td>"
 	
 	htmlOutput += "<tr></table></p>"
 	return
@@ -182,7 +179,7 @@ func addHeader (myHeader string) (htmlOutput string) {
 
 func addDog (happy bool) (htmlOutput string) {
 
-	htmlOutput += "<p style='font-size:20px;color:navy' align='center'>"
+	htmlOutput += "<p style='font-size:20px;color:purple' align='center'>"
 
 	if happy {
 		htmlOutput += "<img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
@@ -202,7 +199,7 @@ func addAPICallsTable () (htmlOutput string) {
 	htmlOutput += "<table style='font-size:15px;color:gray' border='1'>"
 	
 	htmlOutput += "<tr>"
-	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Current Mood</th>"+ "<th>(Pre-Existing)</th>"
+	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Current Mood</th>"+ "<th>Pre-Existing</th>"
 	htmlOutput += "</tr>"
 
 	for _, sensor := range AllSensorsData.Sensors {
