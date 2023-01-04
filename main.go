@@ -155,18 +155,29 @@ func addMoodResults () (htmlOutput string) {
 	htmlOutput += "<p align='center'>"
 	htmlOutput += "<table border='0'>"
 	
-	htmlOutput += "<tr>"
-	htmlOutput += "<td style='font-size:30px;color:DarkGreen'>%.2f%% Happy</td>"
-	htmlOutput += "<td style='font-size:15px;color:gray'>(%.2f%% w/ pre-existing)</td>"
+	htmlOutput += "<tr style='font-size:30px;color:DarkGreen'>"
+	htmlOutput += "<td >%.2f%% Happy</td>"
+	htmlOutput += "<tr><td>&nbsp;</td></tr>"
+	htmlOutput += "<tr style='font-size:15px;color:gray'>"
+	htmlOutput += "<td>(%.2f%% w/ pre-existing)</td>"
+	htmlOutput += "</tr>"
 	
+	htmlOutput += "<tr style='font-size:30px;color:DarkRed'>"
+	htmlOutput += "<td >%.2f%% Sad</td>"
+	htmlOutput += "<tr><td>&nbsp;</td></tr>"
+	htmlOutput += "<tr style='font-size:15px;color:gray'>"
+	htmlOutput += "<td>(%.2f%% w/ pre-existing)</td>"
+	htmlOutput += "</tr>"
 	htmlOutput += "<tr>"
-	htmlOutput += "<td style='font-size:30px;color:DarkRed'>%.2f%% Sad</td>"
-	htmlOutput += "<td style='font-size:15px;color:gray'>(%.2f%% w/ pre-existing)</td>"
 
-	htmlOutput += "<tr>"
-	htmlOutput += "<td style='font-size:30px;color:DarkOrange'>%.2f%% Angry</td>"
-	htmlOutput += "<td style='font-size:15px;color:gray'>(%.2f%% w/ pre-existing)</td>"
-	htmlOutput += "<tr></table></p>"
+	htmlOutput += "<tr style='font-size:30px;color:DarkOrange'>"
+	htmlOutput += "<td >%.2f%% Angry</td>"
+	htmlOutput += "<tr><td>&nbsp;</td></tr>"
+	htmlOutput += "<tr style='font-size:15px;color:gray'>"
+	htmlOutput += "<td>(%.2f%% w/ pre-existing)</td>"
+	htmlOutput += "</tr>"
+
+	htmlOutput += "</table></p>"
 	return
 }
 
