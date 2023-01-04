@@ -51,9 +51,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if err != nil { fmt.Fprintf(w,"!!Error in converting sniffing threhold to float64")}
 	
 	if pureHappy > sniffThreshold {
-		fmt.Fprintf(w, addDog(true))
+		fmt.Fprintf(w, addDog("happy"))
 	} else {
-		fmt.Fprintf(w, addDog(false))
+		fmt.Fprintf(w, addDog("sad"))
 	}
 		
 	//render API section
@@ -179,17 +179,10 @@ func addHeader (myHeader string) (htmlOutput string) {
 	return
 }
 
-func addDog (happy bool) (htmlOutput string) {
+func addDog (imgPrefix string) (htmlOutput string) {
 
 	htmlOutput += "<p style='font-size:20px;color:purple' align='center'>"
-
-	if happy {
-		htmlOutput += "<img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/happy-dog.jpg' alt=''>"
-
-	} else {
-		htmlOutput += "<img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/sad-dog.jpg' alt=''>"
-	}
-	
+	htmlOutput += "<img src='https://raw.githubusercontent.com/dektlong/devx-mood/main/" + imgPrefix + "-dog.jpg' alt=''>"
 	htmlOutput += "</p>"
 	return
 }
