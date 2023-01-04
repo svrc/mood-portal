@@ -150,7 +150,7 @@ func moodAnalysis () (	float64, float64, //pure happy, pre-existing happy
 
 func addMoodResults () (htmlOutput string) {
 
-	htmlOutput += "<p style='font-size:50px' align='center'>"
+	htmlOutput += "<p align='center'>"
 	htmlOutput += "<table border='0'>"
 	
 	htmlOutput += "<tr style='font-size:40px;color:DarkGreen'>"
@@ -198,8 +198,8 @@ func addDog (happy bool) (htmlOutput string) {
 
 func addAPICallsTable () (htmlOutput string) {
 
-	htmlOutput += "<p style='font-size:15px;color:gray' align='left'>"
-	htmlOutput += "<table border='1'>"
+	htmlOutput += "<p align='left'>"
+	htmlOutput += "<table style='font-size:15px;color:gray' border='1'>"
 	
 	htmlOutput += "<tr>"
 	htmlOutput += "<th>Sensor</th>" + "<th>Role</th>" + "<th>Current Mood</th>"+ "<th>(Pre-Existing)</th>"
