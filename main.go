@@ -59,7 +59,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w,addDataTitle("Sniffing threshold"))
 	fmt.Fprintf(w,addDataContent("%.2f%% pure happiness"),sniffThreshold)
 	fmt.Fprintf(w,addDataTitle("/activate API"))
-	fmt.Fprintf(w,addDataContent("All sensors activated successfully"))
+	fmt.Fprintf(w,addDataContent("%v sensors activated successfully"),len(AllSensorsData.Sensors))
 	fmt.Fprintf(w,addDataTitle("/measure API"))
 	fmt.Fprintf(w,addDataContent(addAPICallsTable()))
 
