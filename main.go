@@ -32,8 +32,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, addHeader("DevX Mood Analyzer"))
 
 	//process APIs calls and analytics
-	if processSensorActivation() != "success" {
-		return
+        status := processSensorActivation()
+	if status != "success" {
+               fmt.Fprintf(w, status)
+               return
 	}
 	
 	if processSensorsMeasurement() != "success" {
