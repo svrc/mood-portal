@@ -77,6 +77,7 @@ func processSensorActivation() (status string) {
 		response, err := tlsClient.Get(os.Getenv("SENSORS_ACTIVATE_API"))	
 		if err != nil { 
 			status = "Error in calling activate API: " + err.Error()
+                        return
 		} 	 	
 		defer response.Body.Close()
 	}
